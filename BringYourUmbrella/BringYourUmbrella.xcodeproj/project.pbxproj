@@ -17,6 +17,7 @@
 		DE0C99952BF1DC690059C655 /* BringYourUmbrella.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DE0C99932BF1DC690059C655 /* BringYourUmbrella.xcdatamodeld */; };
 		DE0C99972BF1DC6D0059C655 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE0C99962BF1DC6D0059C655 /* Assets.xcassets */; };
 		DE0C999A2BF1DC6D0059C655 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = DE0C99992BF1DC6D0059C655 /* Base */; };
+		DE0C99A32BF227080059C655 /* KakaoMapsSDK-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = DE0C99A22BF227080059C655 /* KakaoMapsSDK-SPM */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 			files = (
 				CA00E5C82BF20E4000B05D3F /* Alamofire in Frameworks */,
 				CA00E5CB2BF20E4900B05D3F /* SnapKit in Frameworks */,
+				DE0C99A32BF227080059C655 /* KakaoMapsSDK-SPM in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,6 +98,7 @@
 			packageProductDependencies = (
 				CA00E5C72BF20E4000B05D3F /* Alamofire */,
 				CA00E5CA2BF20E4900B05D3F /* SnapKit */,
+				DE0C99A22BF227080059C655 /* KakaoMapsSDK-SPM */,
 			);
 			productName = BringYourUmbrella;
 			productReference = DE0C99872BF1DC690059C655 /* BringYourUmbrella.app */;
@@ -128,6 +131,7 @@
 			packageReferences = (
 				CA00E5C62BF20E4000B05D3F /* XCRemoteSwiftPackageReference "Alamofire" */,
 				CA00E5C92BF20E4900B05D3F /* XCRemoteSwiftPackageReference "SnapKit" */,
+				DE0C99A12BF227080059C655 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */,
 			);
 			productRefGroup = DE0C99882BF1DC690059C655 /* Products */;
 			projectDirPath = "";
@@ -411,6 +415,14 @@
 				minimumVersion = 5.7.1;
 			};
 		};
+		DE0C99A12BF227080059C655 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao-mapsSDK/KakaoMapsSDK-SPM.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.10.4;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -423,6 +435,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CA00E5C92BF20E4900B05D3F /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		DE0C99A22BF227080059C655 /* KakaoMapsSDK-SPM */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DE0C99A12BF227080059C655 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */;
+			productName = "KakaoMapsSDK-SPM";
 		};
 /* End XCSwiftPackageProductDependency section */
 
