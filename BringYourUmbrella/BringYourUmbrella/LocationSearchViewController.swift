@@ -5,8 +5,11 @@
 //  Created by 희라 on 5/13/24.
 //
 
+// ⭐️ 장소검색 ⭐️
+
 import UIKit
 import SnapKit
+import MapKit
 
 
 class LocationSearchViewController: UIViewController {
@@ -14,8 +17,9 @@ class LocationSearchViewController: UIViewController {
     let locationSearchBar = UISearchBar()
     let locationSearchResultTableView = UITableView()
     
-    //데이터모델
-    //var searchResults = []()
+
+    private var searchCompleter = MKLocalSearchCompleter() // 검색을 도와주는 변수
+    private var searchResults = [MKLocalSearchCompletion]() // 검색결과
     
 
     override func viewDidLoad() {
@@ -26,11 +30,22 @@ class LocationSearchViewController: UIViewController {
         setupConstraints()
         configureUI()
         
+        setupSearchCompleter()
+        
+        locationSearchBar.delegate = self
+        
+        locationSearchResultTableView.rowHeight = 50
         locationSearchResultTableView.dataSource = self
         locationSearchResultTableView.delegate = self
         locationSearchResultTableView.register(LocationSearchResultTableViewCell.self, forCellReuseIdentifier: "SearchResultTableViewCell")
 
     }//override func viewDidLoad
+    
+    
+    func setupSearchCompleter() {
+        searchCompleter.delegate = self
+        searchCompleter.resultTypes = .address/// resultTypes은 검색 유형인데 address는 주소를 의미
+    }
     
     func setupConstraints() {
         [locationSearchBar, locationSearchResultTableView].forEach {
@@ -50,13 +65,13 @@ class LocationSearchViewController: UIViewController {
             make.bottom.equalToSuperview().inset(10)
         }
         
+        
     }//func setupConstraints
     
     
     func configureUI() {
         locationSearchBar.placeholder = "지금, 날씨가 궁금한 곳은?"
-        
-        locationSearchResultTableView.backgroundColor = .lightGray
+        //locationSearchResultTableView.backgroundColor = .lightGray
         
     }//func configureUI
 
@@ -65,11 +80,13 @@ class LocationSearchViewController: UIViewController {
 
 extension LocationSearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return searchResults.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultTableViewCell", for: indexPath) as! LocationSearchResultTableViewCell
+        
+        cell.locationName.text = searchResults[indexPath.row].title
         
         return cell
     }
@@ -83,40 +100,19 @@ extension LocationSearchViewController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-
         //입력 텍스트가 있을때만 리턴버튼 활성화
         guard let searchText = searchBar.text, searchText.isEmpty == false else { return }
         
         //키보드 종료
         dismissKeyboard()
-
-        
-        
-//        //API매니저 호출 추가 예정
-//        [api매니저 이름].fetchqueryAPI(with: searchText) { result in
-//            switch result {
-        
-//        //성공적으로 locationInfo를 받아온 경우
-//            case .success(let locationInfo):
-//
-//                print("😺😺😺", "Received LocationInfo: \(locationInfo)")
-//
-//                //배열의 내용을 검색결과로 바꿔라
-//                self.searchResults = locationInfo.documents
-//
-//                //테이블뷰를 업데이트해라
-//                DispatchQueue.main.async {
-//                    self.searchResultTableView.reloadData()
-//                }
-//                                
-//        //locationInfo를 받아오지 못한 경우
-//            case .failure(let error):
-//                print("👹👹👹", "Error fetching LocationInfo: \(error)")
-//            }
-//        }
-        
     }
     
+    // searchText를 queryFragment로 이관
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchCompleter.queryFragment = searchText
+        print(searchResults)
+    }
+
 }
 
 extension LocationSearchViewController: UITableViewDelegate {
@@ -126,4 +122,17 @@ extension LocationSearchViewController: UITableViewDelegate {
 
         present(PreviewVC, animated: true, completion: nil)
         }
+}
+
+extension LocationSearchViewController: MKLocalSearchCompleterDelegate {
+    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
+        // completer.results를 통해 검색한 결과를 searchResults에 담아줍니다
+        searchResults = completer.results
+        locationSearchResultTableView.reloadData()
+    }
+    
+    func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
+        // 에러 확인
+        print(error.localizedDescription)
+    }
 }

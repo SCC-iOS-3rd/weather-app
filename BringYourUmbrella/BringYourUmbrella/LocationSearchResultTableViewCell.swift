@@ -2,8 +2,10 @@
 //  LocationSearchResultTableViewCell.swift
 //  BringYourUmbrella
 //
-//  Created by t2023-m0114 on 5/13/24.
+//  Created by 희라 on 5/13/24.
 //
+
+// ⭐️ 장소검색 테이블 뷰 셀 ⭐️
 
 import UIKit
 
@@ -17,17 +19,16 @@ class LocationSearchResultTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        backgroundColor = .gray
+        //backgroundColor = .gray
         
         [locationName].forEach {
             contentView.addSubview($0)
         }
         
         locationName.font = UIFont.systemFont(ofSize: 16)
-        locationName.text = "지역 이름"
         locationName.textColor = .black
         locationName.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(10)
+            make.centerY.equalToSuperview()
             make.leading.equalToSuperview().offset(10)
             make.trailing.equalToSuperview().inset(10)
         }
