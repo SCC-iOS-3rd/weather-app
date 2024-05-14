@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4D56DC262BF21FE9008EB3E2 /* LocationManagementViewContorller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D56DC252BF21FE9008EB3E2 /* LocationManagementViewContorller.swift */; };
 		4D56DC282BF22045008EB3E2 /* LocationManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D56DC272BF22045008EB3E2 /* LocationManagementView.swift */; };
+		4D56DC2A2BF2FCF8008EB3E2 /* LocationManagementViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D56DC292BF2FCF8008EB3E2 /* LocationManagementViewTableViewCell.swift */; };
 		CA00E5C82BF20E4000B05D3F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = CA00E5C72BF20E4000B05D3F /* Alamofire */; };
 		CA00E5CB2BF20E4900B05D3F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CA00E5CA2BF20E4900B05D3F /* SnapKit */; };
 		CA00E5CD2BF20E5700B05D3F /* LocationSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA00E5CC2BF20E5700B05D3F /* LocationSearchViewController.swift */; };
@@ -24,6 +25,7 @@
 /* Begin PBXFileReference section */
 		4D56DC252BF21FE9008EB3E2 /* LocationManagementViewContorller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagementViewContorller.swift; sourceTree = "<group>"; };
 		4D56DC272BF22045008EB3E2 /* LocationManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagementView.swift; sourceTree = "<group>"; };
+		4D56DC292BF2FCF8008EB3E2 /* LocationManagementViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagementViewTableViewCell.swift; sourceTree = "<group>"; };
 		CA00E5CC2BF20E5700B05D3F /* LocationSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchViewController.swift; sourceTree = "<group>"; };
 		DE0C99872BF1DC690059C655 /* BringYourUmbrella.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BringYourUmbrella.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE0C998A2BF1DC690059C655 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 				DE0C99932BF1DC690059C655 /* BringYourUmbrella.xcdatamodeld */,
 				4D56DC252BF21FE9008EB3E2 /* LocationManagementViewContorller.swift */,
 				4D56DC272BF22045008EB3E2 /* LocationManagementView.swift */,
+				4D56DC292BF2FCF8008EB3E2 /* LocationManagementViewTableViewCell.swift */,
 			);
 			path = BringYourUmbrella;
 			sourceTree = "<group>";
@@ -162,6 +165,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D56DC2A2BF2FCF8008EB3E2 /* LocationManagementViewTableViewCell.swift in Sources */,
 				4D56DC262BF21FE9008EB3E2 /* LocationManagementViewContorller.swift in Sources */,
 				DE0C998F2BF1DC690059C655 /* ViewController.swift in Sources */,
 				DE0C998B2BF1DC690059C655 /* AppDelegate.swift in Sources */,

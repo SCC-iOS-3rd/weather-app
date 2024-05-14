@@ -13,8 +13,9 @@ class LocationManagementView: UIView {
     let titleLabel: UILabel = {
         let tl = UILabel()
         tl.text = "위치"
-        tl.font = .systemFont(ofSize: 20, weight: .semibold)
+        tl.font = .systemFont(ofSize: 22, weight: .bold)
         tl.textAlignment = .center
+        tl.textColor = .white
         return tl
     }()
     
@@ -61,6 +62,7 @@ class LocationManagementView: UIView {
     let favoritesTableView: UITableView = {
         let ft = UITableView()
         ft.backgroundColor = .gray
+        ft.layer.cornerRadius = 12
         return ft
     }()
     
@@ -70,12 +72,47 @@ class LocationManagementView: UIView {
         return sl
     }()
     
-    let searchButton: UIButton = {
-        let sb = UIButton()
-        sb.setTitle("위치 검색 및 추가", for: .normal)
-        sb.backgroundColor = .white
-        sb.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
-        return sb
+    let favoritesLabel: UILabel = {
+        let fl = UILabel()
+        fl.font = .systemFont(ofSize: 20, weight: .bold)
+        fl.textColor = .white
+        fl.text = "즐겨찾기"
+        return fl
+    }()
+    
+    let favoritesEditButton: UIButton = {
+        let feb = UIButton()
+        feb.setTitle("편집", for: .normal)
+        feb.setTitleColor(.white, for: .normal)
+        feb.tintColor = .white
+        feb.backgroundColor = .clear
+        return feb
+    }()
+    
+    let bottomView: UIView = {
+        let bv = UIView()
+        bv.backgroundColor = .lightGray
+        bv.layer.cornerRadius = 12
+        return bv
+    }()
+    
+    let bottomSearchButton: UIButton = {
+        let bsb = UIButton()
+        bsb.setTitle("위치 검색 및 추가", for: .normal)
+        bsb.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        bsb.tintColor = .black
+        bsb.backgroundColor = .white
+        bsb.setTitleColor(.black, for: .normal)
+        bsb.layer.cornerRadius = 12
+        return bsb
+    }()
+    
+    let currentLocationButton: UIButton = {
+        let clb = UIButton()
+        clb.backgroundColor = .clear
+        clb.tintColor = .clear
+        clb.layer.cornerRadius = 12
+        return clb
     }()
     
     // MARK: - methods
@@ -90,11 +127,11 @@ class LocationManagementView: UIView {
     }
     
     func setUI() {
-        self.backgroundColor = .green
+        self.backgroundColor = UIColor(red: 0.4039, green: 0.7765, blue: 0.8902, alpha: 1)
     }
     
     func setConstraints() {
-        [titleLabel, currentLocationView].forEach {
+        [titleLabel, currentLocationView, favoritesTableView, favoritesLabel, favoritesEditButton, bottomView, currentLocationButton].forEach {
             self.addSubview($0)
         }
         
@@ -102,8 +139,79 @@ class LocationManagementView: UIView {
             self.currentLocationView.addSubview($0)
         }
         
+        [bottomSearchButton].forEach {
+            self.bottomView.addSubview($0)
+        }
+        
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide)
+            $0.centerX.equalToSuperview()
+            $0.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(30)
+            $0.height.equalTo(40)
+        }
+        
+        currentLocationView.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(15)
+            $0.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(20)
+            $0.height.equalTo(80)
+        }
+        
+        currentLocationImageView.snp.makeConstraints {
+            $0.leading.equalTo(currentLocationView.snp.leading).offset(14)
+            $0.centerY.equalTo(currentLocationView)
+            $0.width.equalTo(30)
+            $0.height.equalTo(30)
+        }
+        
+        currentLocationLabel.snp.makeConstraints {
+            $0.leading.equalTo(currentLocationImageView.snp.trailing).offset(8)
+            $0.bottom.equalTo(currentLocationImageView.snp.centerY).offset(-2)
+        }
+        
+        currentLocation.snp.makeConstraints {
+            $0.top.equalTo(currentLocationImageView.snp.centerY).offset(2)
+            $0.leading.equalTo(currentLocationLabel.snp.leading)
+        }
+        
+        currentTemperature.snp.makeConstraints {
+            $0.top.equalTo(currentLocationView.snp.top).offset(20)
+            $0.leading.equalTo(currentLocationView.snp.trailing).inset(60)
+            $0.centerY.equalTo(currentLocationView)
+        }
+        
+        currentWeatherImageView.snp.makeConstraints {
+            $0.trailing.equalTo(currentTemperature.snp.leading).offset(-10)
+            $0.centerY.equalTo(currentLocationView)
+        }
+        
+        favoritesLabel.snp.makeConstraints {
+            $0.leading.equalTo(currentLocationView.snp.leading).offset(10)
+            $0.top.equalTo(currentLocationView.snp.bottom).offset(90)
+        }
+        
+        favoritesEditButton.snp.makeConstraints {
+            $0.trailing.equalTo(currentLocationView.snp.trailing).inset(10)
+            $0.top.equalTo(favoritesLabel.snp.top)
+        }
+        
+        favoritesTableView.snp.makeConstraints {
+            $0.top.equalTo(favoritesLabel.snp.bottom).offset(20)
+            $0.horizontalEdges.equalTo(currentLocationView)
+            $0.bottom.equalTo(bottomView.snp.top).offset(-10)
+        }
+        
+        bottomView.snp.makeConstraints {
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.height.equalTo(100)
+        }
+        
+        bottomSearchButton.snp.makeConstraints {
+            $0.horizontalEdges.equalTo(bottomView.snp.horizontalEdges).inset(20)
+            $0.verticalEdges.equalTo(bottomView.snp.verticalEdges).inset(25)
+        }
+        
+        currentLocationButton.snp.makeConstraints {
+            $0.edges.equalTo(currentLocationView)
         }
     }
 }
