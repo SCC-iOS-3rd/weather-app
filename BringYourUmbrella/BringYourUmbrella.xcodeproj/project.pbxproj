@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		398BAFA22BF33797006883F4 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BAFA12BF33797006883F4 /* BaseViewController.swift */; };
+		398BAFA42BF33823006883F4 /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BAFA32BF33823006883F4 /* ModalViewController.swift */; };
+		398BAFA62BF359A6006883F4 /* WeatherDisplayPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BAFA52BF359A6006883F4 /* WeatherDisplayPageViewController.swift */; };
+		398BAFA82BF38893006883F4 /* ModalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BAFA72BF38893006883F4 /* ModalTableViewCell.swift */; };
 		CA00E5C82BF20E4000B05D3F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = CA00E5C72BF20E4000B05D3F /* Alamofire */; };
 		CA00E5CB2BF20E4900B05D3F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CA00E5CA2BF20E4900B05D3F /* SnapKit */; };
 		CA00E5CD2BF20E5700B05D3F /* LocationSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA00E5CC2BF20E5700B05D3F /* LocationSearchViewController.swift */; };
@@ -21,6 +25,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		398BAFA12BF33797006883F4 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		398BAFA32BF33823006883F4 /* ModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
+		398BAFA52BF359A6006883F4 /* WeatherDisplayPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDisplayPageViewController.swift; sourceTree = "<group>"; };
+		398BAFA72BF38893006883F4 /* ModalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalTableViewCell.swift; sourceTree = "<group>"; };
 		CA00E5CC2BF20E5700B05D3F /* LocationSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchViewController.swift; sourceTree = "<group>"; };
 		DE0C99872BF1DC690059C655 /* BringYourUmbrella.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BringYourUmbrella.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE0C998A2BF1DC690059C655 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -66,14 +74,18 @@
 		DE0C99892BF1DC690059C655 /* BringYourUmbrella */ = {
 			isa = PBXGroup;
 			children = (
+				CA00E5CC2BF20E5700B05D3F /* LocationSearchViewController.swift */,
 				DE0C998A2BF1DC690059C655 /* AppDelegate.swift */,
 				DE0C998C2BF1DC690059C655 /* SceneDelegate.swift */,
+				398BAFA52BF359A6006883F4 /* WeatherDisplayPageViewController.swift */,
+				398BAFA32BF33823006883F4 /* ModalViewController.swift */,
+				398BAFA72BF38893006883F4 /* ModalTableViewCell.swift */,
 				DE0C998E2BF1DC690059C655 /* ViewController.swift */,
-				CA00E5CC2BF20E5700B05D3F /* LocationSearchViewController.swift */,
 				DE0C99902BF1DC690059C655 /* Main.storyboard */,
 				DE0C99962BF1DC6D0059C655 /* Assets.xcassets */,
 				DE0C99982BF1DC6D0059C655 /* LaunchScreen.storyboard */,
 				DE0C999B2BF1DC6D0059C655 /* Info.plist */,
+				398BAFA12BF33797006883F4 /* BaseViewController.swift */,
 				DE0C99932BF1DC690059C655 /* BringYourUmbrella.xcdatamodeld */,
 			);
 			path = BringYourUmbrella;
@@ -161,10 +173,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE0C998F2BF1DC690059C655 /* ViewController.swift in Sources */,
+				398BAFA82BF38893006883F4 /* ModalTableViewCell.swift in Sources */,
 				DE0C998B2BF1DC690059C655 /* AppDelegate.swift in Sources */,
 				CA00E5CD2BF20E5700B05D3F /* LocationSearchViewController.swift in Sources */,
+				398BAFA62BF359A6006883F4 /* WeatherDisplayPageViewController.swift in Sources */,
 				DE0C998D2BF1DC690059C655 /* SceneDelegate.swift in Sources */,
 				DE0C99952BF1DC690059C655 /* BringYourUmbrella.xcdatamodeld in Sources */,
+				398BAFA22BF33797006883F4 /* BaseViewController.swift in Sources */,
+				398BAFA42BF33823006883F4 /* ModalViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
