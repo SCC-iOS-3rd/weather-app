@@ -112,16 +112,37 @@ extension LocationSearchViewController: UISearchBarDelegate {
         searchCompleter.queryFragment = searchText
         print(searchResults)
     }
-
+    
+    
+    //위도와 경도 추출
+    func mkLocalSearch(indexPath: IndexPath) {
+        let selectedCompletion = searchResults[indexPath.row]
+        let searchRequest = MKLocalSearch.Request(completion: selectedCompletion)
+        let search = MKLocalSearch(request: searchRequest)
+        
+        search.start { (response, error) in
+            if let error = error {
+                print("검색 중 오류 발생: \(error.localizedDescription)")
+                return
+            }
+            
+            if let response = response, let mapItem = response.mapItems.first {
+                let coordinate = mapItem.placemark.coordinate
+                print("선택장소: \(selectedCompletion)", "선택된 장소의 위도: \(coordinate.latitude), 경도: \(coordinate.longitude)")
+            }
+        }
+    }
 }
 
 extension LocationSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-            let PreviewVC = NewLocationPreviewViewController()
-
+        
+        mkLocalSearch(indexPath: indexPath)
+        
+        let PreviewVC = NewLocationPreviewViewController()
+        
         present(PreviewVC, animated: true, completion: nil)
-        }
+    }
 }
 
 extension LocationSearchViewController: MKLocalSearchCompleterDelegate {
