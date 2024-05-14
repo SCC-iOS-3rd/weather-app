@@ -97,25 +97,49 @@
 			children = (
 				DE0C998A2BF1DC690059C655 /* AppDelegate.swift */,
 				DE0C998C2BF1DC690059C655 /* SceneDelegate.swift */,
-				398BAFA52BF359A6006883F4 /* WeatherDisplayPageViewController.swift */,
-				398BAFA32BF33823006883F4 /* ModalViewController.swift */,
-				398BAFA72BF38893006883F4 /* ModalTableViewCell.swift */,
-				DE0C998E2BF1DC690059C655 /* ViewController.swift */,
-				CA00E5E22BF33FEE00B05D3F /* WeatherAPI */,
-				CA00E5CC2BF20E5700B05D3F /* LocationSearchViewController.swift */,
-				CA00E5D12BF21F6200B05D3F /* LocationSearchResultTableViewCell.swift */,
-				CA00E5D32BF2265700B05D3F /* NewLocationPreviewViewController.swift */,
-				DE0C99902BF1DC690059C655 /* Main.storyboard */,
+				DED5857C2BF3C12A00D1D8FE /* Models */,
+				DED5857B2BF3C12300D1D8FE /* Views */,
+				DED5857A2BF3C11A00D1D8FE /* Controllers */,
 				DE0C99962BF1DC6D0059C655 /* Assets.xcassets */,
-				DE0C99982BF1DC6D0059C655 /* LaunchScreen.storyboard */,
 				DE0C999B2BF1DC6D0059C655 /* Info.plist */,
-				398BAFA12BF33797006883F4 /* BaseViewController.swift */,
-				4D56DC252BF21FE9008EB3E2 /* LocationManagementViewContorller.swift */,
-				4D56DC272BF22045008EB3E2 /* LocationManagementView.swift */,
-				4D56DC292BF2FCF8008EB3E2 /* LocationManagementViewTableViewCell.swift */,
 				DED585772BF3BFAB00D1D8FE /* BringYourUmbrella.xcdatamodeld */,
 			);
 			path = BringYourUmbrella;
+			sourceTree = "<group>";
+		};
+		DED5857A2BF3C11A00D1D8FE /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DE0C998E2BF1DC690059C655 /* ViewController.swift */,
+				398BAFA12BF33797006883F4 /* BaseViewController.swift */,
+				398BAFA52BF359A6006883F4 /* WeatherDisplayPageViewController.swift */,
+				398BAFA32BF33823006883F4 /* ModalViewController.swift */,
+				CA00E5CC2BF20E5700B05D3F /* LocationSearchViewController.swift */,
+				CA00E5D32BF2265700B05D3F /* NewLocationPreviewViewController.swift */,
+				4D56DC252BF21FE9008EB3E2 /* LocationManagementViewContorller.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		DED5857B2BF3C12300D1D8FE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DE0C99902BF1DC690059C655 /* Main.storyboard */,
+				DE0C99982BF1DC6D0059C655 /* LaunchScreen.storyboard */,
+				4D56DC272BF22045008EB3E2 /* LocationManagementView.swift */,
+				398BAFA72BF38893006883F4 /* ModalTableViewCell.swift */,
+				CA00E5D12BF21F6200B05D3F /* LocationSearchResultTableViewCell.swift */,
+				4D56DC292BF2FCF8008EB3E2 /* LocationManagementViewTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		DED5857C2BF3C12A00D1D8FE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CA00E5E22BF33FEE00B05D3F /* WeatherAPI */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
