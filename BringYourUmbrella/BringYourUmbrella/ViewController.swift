@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     // 받아온 데이터를 저장할 프로퍼티
     var weather: Weather?
     var main: Main?
+    var sys: Sys?
     var name: String?
     
     var iconImageView = UIImageView()
@@ -52,8 +53,8 @@ class ViewController: UIViewController {
         }
 
         tempLabel.text = "기온: \(main!.temp)"
-        maxTempLabel.text = "최고기온: \(main!.temp_max)"
-        minTempLabel.text = "최저기온: \(main!.temp_min)"
+        maxTempLabel.text = "최고기온: \(main!.tempmax)"
+        minTempLabel.text = "최저기온: \(main!.tempmin)"
     }
     
     func setupTestVer() {
