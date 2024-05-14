@@ -11,6 +11,8 @@ class LocationManagementViewContorller: UIViewController {
     // MARK: - properties
     let locationManagerView = LocationManagementView()
     
+    let testData: [String] = ["송파구 잠실동", "강남구 서초동", "강남구 대치동"]
+    
     
     // MARK: - methods
     override func viewDidLoad() {
@@ -18,6 +20,7 @@ class LocationManagementViewContorller: UIViewController {
         setAddTarget()
         locationManagerView.favoritesTableView.dataSource = self
         locationManagerView.favoritesTableView.delegate = self
+        locationManagerView.favoritesTableView.register(LocationManagementViewTableViewCell.self, forCellReuseIdentifier: LocationManagementViewTableViewCell.identifier)
     }
     
     override func loadView() {
@@ -27,6 +30,7 @@ class LocationManagementViewContorller: UIViewController {
     private func setAddTarget() {
         locationManagerView.bottomSearchButton.addTarget(self, action: #selector(tappedSearchBtn), for: .touchUpInside)
         locationManagerView.currentLocationButton.addTarget(self, action: #selector(tappedCurrentLocation), for: .touchUpInside)
+        locationManagerView.favoritesEditButton.addTarget(self, action: #selector(tappedEditButton), for: .touchUpInside)
     }
     
     @objc private func tappedSearchBtn() {
@@ -38,20 +42,51 @@ class LocationManagementViewContorller: UIViewController {
     @objc private func tappedCurrentLocation() {
         print("현재 위치")
     }
+    
+    @objc private func tappedEditButton() {
+        if locationManagerView.favoritesTableView.isEditing {
+            locationManagerView.favoritesEditButton.setTitle("편집", for: .normal)
+            locationManagerView.favoritesTableView.setEditing(false, animated: true)
+        } else {
+            locationManagerView.favoritesTableView.dragInteractionEnabled = true
+            locationManagerView.favoritesTableView.dragDelegate = self
+            locationManagerView.favoritesTableView.dropDelegate = self
+            locationManagerView.favoritesEditButton.setTitle("완료", for: .normal)
+            locationManagerView.favoritesTableView.setEditing(true, animated: true)
+        }
+    }
 }
 
 // MARK: - extensions
 extension LocationManagementViewContorller: UITableViewDelegate {
-    
 }
+
+extension LocationManagementViewContorller: UITableViewDragDelegate {
+func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        return [UIDragItem(itemProvider: NSItemProvider())]
+    }
+}
+ 
+// MARK:- UITableView UITableViewDropDelegate
+extension LocationManagementViewContorller: UITableViewDropDelegate {
+    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+        if session.localDragSession != nil {
+            return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+        }
+        return UITableViewDropProposal(operation: .cancel, intent: .unspecified)
+    }
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) { }
+}
+
 
 extension LocationManagementViewContorller: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        5
+        self.testData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = locationManagerView.favoritesTableView.dequeueReusableCell(withIdentifier: LocationManagementViewTableViewCell.identifier) as? LocationManagementViewTableViewCell else { return UITableViewCell() }
+        cell.favoritesLocation.text = testData[indexPath.row]
         
         return cell
     }

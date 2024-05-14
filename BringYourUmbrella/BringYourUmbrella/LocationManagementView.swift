@@ -61,8 +61,9 @@ class LocationManagementView: UIView {
     
     let favoritesTableView: UITableView = {
         let ft = UITableView()
-        ft.backgroundColor = .gray
+        ft.backgroundColor = .clear
         ft.layer.cornerRadius = 12
+        ft.separatorStyle = .none
         return ft
     }()
     
@@ -182,6 +183,7 @@ class LocationManagementView: UIView {
         currentWeatherImageView.snp.makeConstraints {
             $0.trailing.equalTo(currentTemperature.snp.leading).offset(-10)
             $0.centerY.equalTo(currentLocationView)
+            $0.width.height.equalTo(30)
         }
         
         favoritesLabel.snp.makeConstraints {
