@@ -10,6 +10,14 @@
 import UIKit
 
 class NewLocationPreviewViewController: UIViewController {
+    
+    
+    let weatherService = WeatherService()
+    
+    //위도와 경도
+    var latitude: Double = 0.0
+    var longitude: Double = 0.0
+    
     // 받아온 데이터를 저장할 프로퍼티
     var weather: Weather?
     var main: Main?
@@ -19,6 +27,10 @@ class NewLocationPreviewViewController: UIViewController {
     let PreviewtitleLabel = UILabel()
     
     var iconImageView = UIImageView()
+    
+    
+    var country = UILabel()
+    
     var tempLabel = UILabel()
     var maxTempLabel = UILabel()
     var minTempLabel = UILabel()
@@ -34,7 +46,7 @@ class NewLocationPreviewViewController: UIViewController {
         configureUI()
         
         // data fetch
-        WeatherService().getWeather { result in
+        weatherService.getWeather(latitude: latitude, longitude: longitude) { result in
             switch result {
             case .success(let weatherResponse):
                 DispatchQueue.main.async {
@@ -43,12 +55,13 @@ class NewLocationPreviewViewController: UIViewController {
                     self.name = weatherResponse.name
                     self.setWeatherUI()
                 }
-            case .failure(_ ):
-                print("error")
+            case .failure(let error):
+                print("Error: \(error)")
             }
         }
 
     }
+    
     
     private func setWeatherUI() {
         let url = URL(string: "https://openweathermap.org/img/wn/\(self.weather?.icon ?? "00")@2x.png")
@@ -57,7 +70,8 @@ class NewLocationPreviewViewController: UIViewController {
             iconImageView.image = UIImage(data: data)
         }
 
-        tempLabel.text = "기온: \(main!.temp)"
+        country.text = "지역: \(sys?.country)"
+        tempLabel.text = "현재기온: \(main!.temp)"
         maxTempLabel.text = "최고기온: \(main!.tempmax)"
         minTempLabel.text = "최저기온: \(main!.tempmin)"
     }
@@ -74,7 +88,7 @@ class NewLocationPreviewViewController: UIViewController {
         }
     }
     func setupTestVer() {
-        [iconImageView, tempLabel, maxTempLabel, minTempLabel].forEach {
+        [iconImageView, tempLabel, maxTempLabel, minTempLabel, country].forEach {
             view.addSubview($0)
         }
         
@@ -95,6 +109,11 @@ class NewLocationPreviewViewController: UIViewController {
         }
         minTempLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(240)
+            make.leading.equalToSuperview().offset(10)
+            make.trailing.equalToSuperview().inset(10)
+        }
+        country.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(260)
             make.leading.equalToSuperview().offset(10)
             make.trailing.equalToSuperview().inset(10)
         }

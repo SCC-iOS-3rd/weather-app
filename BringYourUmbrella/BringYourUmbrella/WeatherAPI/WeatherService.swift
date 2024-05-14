@@ -17,11 +17,10 @@ enum NetworkError: Error {
 
 class WeatherService {
     
-    func getWeather(completion: @escaping (Result<WeatherResponse, NetworkError>) -> Void) {
+    func getWeather(latitude: Double, longitude: Double, completion: @escaping (Result<WeatherResponse, NetworkError>) -> Void) {
         
-        // API 호출을 위한 URL
-        let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=seoul&appid=a4094dddc54b82d889eea64f442c3280&units=metric&lang=kr")
-        guard let url = url else {
+        let urlString = "https://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&appid=a4094dddc54b82d889eea64f442c3280&units=metric&lang=kr"
+        guard let url = URL(string: urlString) else {
             return completion(.failure(.badUrl))
         }
         
@@ -31,10 +30,7 @@ class WeatherService {
             }
             
             // Data 타입으로 받은 리턴을 디코드
-            let weatherResponse = try? JSONDecoder().decode(WeatherResponse.self, from: data)
-
-            // 성공
-            if let weatherResponse = weatherResponse {
+            if let weatherResponse = try? JSONDecoder().decode(WeatherResponse.self, from: data) {
                 print(weatherResponse)
                 completion(.success(weatherResponse)) // 성공한 데이터 저장
             } else {

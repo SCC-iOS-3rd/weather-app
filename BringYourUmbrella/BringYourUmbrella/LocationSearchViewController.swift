@@ -16,7 +16,7 @@ class LocationSearchViewController: UIViewController {
     
     let locationSearchBar = UISearchBar()
     let locationSearchResultTableView = UITableView()
-    
+    var selectedLocation: CLLocation?
 
     private var searchCompleter = MKLocalSearchCompleter() // 검색을 도와주는 변수
     private var searchResults = [MKLocalSearchCompletion]() // 검색결과
@@ -120,15 +120,17 @@ extension LocationSearchViewController: UISearchBarDelegate {
         let searchRequest = MKLocalSearch.Request(completion: selectedCompletion)
         let search = MKLocalSearch(request: searchRequest)
         
-        search.start { (response, error) in
+        search.start { [weak self] (response, error) in
+            guard let self = self else { return }
+            
             if let error = error {
                 print("검색 중 오류 발생: \(error.localizedDescription)")
                 return
             }
             
             if let response = response, let mapItem = response.mapItems.first {
-                let coordinate = mapItem.placemark.coordinate
-                print("선택장소: \(selectedCompletion)", "선택된 장소의 위도: \(coordinate.latitude), 경도: \(coordinate.longitude)")
+                self.selectedLocation = mapItem.placemark.location
+                print("선택된 장소 이름: \(selectedCompletion.title), 위도: \(mapItem.placemark.coordinate.latitude), 경도: \(mapItem.placemark.coordinate.longitude)")
             }
         }
     }
@@ -139,9 +141,15 @@ extension LocationSearchViewController: UITableViewDelegate {
         
         mkLocalSearch(indexPath: indexPath)
         
-        let PreviewVC = NewLocationPreviewViewController()
-        
-        present(PreviewVC, animated: true, completion: nil)
+        if let selectedLocation = selectedLocation {
+            let previewVC = NewLocationPreviewViewController()
+            previewVC.latitude = selectedLocation.coordinate.latitude
+            previewVC.longitude = selectedLocation.coordinate.longitude
+            present(previewVC, animated: true, completion: nil)
+            print("위치 정보를 가지고 프리뷰페이지로 이동합니다.")
+        } else {
+            print("위치 정보를 가져올 수 없습니다.")
+        }
     }
 }
 
