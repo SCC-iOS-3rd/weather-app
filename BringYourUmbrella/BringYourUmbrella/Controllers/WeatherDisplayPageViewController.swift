@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 
+//날씨 표시 페이지
 class WeatherDisplayPageViewController: BaseViewController {
     
     let plusButton = UIButton()
@@ -96,7 +97,7 @@ class WeatherDisplayPageViewController: BaseViewController {
         nameLabel.text = "우산 챙겨"
         nameLabel.font = UIFont.boldSystemFont(ofSize: 25)
         nameLabel.textColor = .white
-        timeLabel.text = "11:44 AM"
+        timeLabel.text = datefunc()
         timeLabel.textColor = .white
         locationLabel.text = "서울"
         locationLabel.font = UIFont.boldSystemFont(ofSize: 20)
@@ -113,23 +114,45 @@ class WeatherDisplayPageViewController: BaseViewController {
         temperatureButton.addTarget(self, action: #selector(temperatureChange), for: .touchUpInside)
         alarmButton.addTarget(self, action: #selector(alarmButtonMove), for: .touchUpInside)
         plusButton.addTarget(self, action: #selector(plusButtonMove), for: .touchUpInside)
+        swipefunc() //오른쪽화면 스와이프 함수
     }
 }
 //MARK: - 알람,플러스 버튼 화면이동
 extension WeatherDisplayPageViewController {
-    
-        @objc func alarmButtonMove() {
-    //        let alarmVC =
-    //        alarmVC.delegate = self
-    //        present(alarmVC, animated: true)
-        }
-        @objc func plusButtonMove () {
-    //        let plusVC =
-    //        plusVC.delegate = self
-    //        present(alarmVC, animated: true)
+    //알람 화면이동
+    @objc func alarmButtonMove (sender: UIButton) {
+//        let alarmVC =
+//        self.navigationController?.pushViewController(alarmVC, animated: true)
+    }
+    //위치추가 화면이동
+    @objc func plusButtonMove (sender: UIButton) {
+        let plusVC = LocationManagementViewContorller()
+        self.navigationController?.pushViewController(plusVC, animated: true)
+    }
+    //스와이프 함수
+    func swipefunc() {
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
+        swipeLeft.direction = .left
+        self.view.addGestureRecognizer(swipeLeft)
+    }
+    //왼쪽 스와이프 이동 제스쳐
+    @objc func handleSwipe(_ gesture: UISwipeGestureRecognizer) {
+        if gesture.direction == .left {
+            leftfunc()
+            let mainVC = ViewController()
+            self.navigationController?.pushViewController(mainVC, animated: true)
         }
     }
-
+    func leftfunc() {
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        transition.type = .push
+        transition.subtype = .fromRight
+        self.navigationController?.view.layer.add(transition, forKey: kCATransition)
+    }
+}
+//MARK: - 단위변경 모달창
 extension WeatherDisplayPageViewController: BullletinDelegate {
     //단위변경모달창작업(ViewController와동일함)
     @objc func temperatureChange(sender: UIButton) {
@@ -162,4 +185,14 @@ extension WeatherDisplayPageViewController: BullletinDelegate {
         temperatureButton.setTitle(unit, for: .normal)
     }
 }
-
+//MARK: - 시간만 표시
+extension WeatherDisplayPageViewController {
+    func datefunc() -> String {
+        let date = Date()
+        let dateFormatterKR = DateFormatter()
+        dateFormatterKR.dateFormat = "HH:mm a"
+        dateFormatterKR.timeZone = TimeZone(abbreviation: "KST")
+        let datePart = dateFormatterKR.string(from: date)
+        return datePart
+    }
+}

@@ -27,7 +27,6 @@
 		DE0C99922BF1DC690059C655 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = DE0C99912BF1DC690059C655 /* Base */; };
 		DE0C99972BF1DC6D0059C655 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE0C99962BF1DC6D0059C655 /* Assets.xcassets */; };
 		DE0C999A2BF1DC6D0059C655 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = DE0C99992BF1DC6D0059C655 /* Base */; };
-		DED585792BF3BFAB00D1D8FE /* BringYourUmbrella.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DED585772BF3BFAB00D1D8FE /* BringYourUmbrella.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,7 +50,6 @@
 		DE0C99962BF1DC6D0059C655 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE0C99992BF1DC6D0059C655 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DE0C999B2BF1DC6D0059C655 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DED585782BF3BFAB00D1D8FE /* BringYourUmbrella.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BringYourUmbrella.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,7 +100,6 @@
 				DED5857A2BF3C11A00D1D8FE /* Controllers */,
 				DE0C99962BF1DC6D0059C655 /* Assets.xcassets */,
 				DE0C999B2BF1DC6D0059C655 /* Info.plist */,
-				DED585772BF3BFAB00D1D8FE /* BringYourUmbrella.xcdatamodeld */,
 			);
 			path = BringYourUmbrella;
 			sourceTree = "<group>";
@@ -232,7 +229,6 @@
 				398BAFA62BF359A6006883F4 /* WeatherDisplayPageViewController.swift in Sources */,
 				DE0C998D2BF1DC690059C655 /* SceneDelegate.swift in Sources */,
 				CA00E5DA2BF3352D00B05D3F /* Weather.swift in Sources */,
-				DED585792BF3BFAB00D1D8FE /* BringYourUmbrella.xcdatamodeld in Sources */,
 				CA00E5D22BF21F6200B05D3F /* LocationSearchResultTableViewCell.swift in Sources */,
 				4D56DC282BF22045008EB3E2 /* LocationManagementView.swift in Sources */,
 				398BAFA22BF33797006883F4 /* BaseViewController.swift in Sources */,
@@ -501,20 +497,6 @@
 			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
-
-/* Begin XCVersionGroup section */
-		DED585772BF3BFAB00D1D8FE /* BringYourUmbrella.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				DED585782BF3BFAB00D1D8FE /* BringYourUmbrella.xcdatamodel */,
-			);
-			currentVersion = DED585782BF3BFAB00D1D8FE /* BringYourUmbrella.xcdatamodel */;
-			name = BringYourUmbrella.xcdatamodeld;
-			path = /Users/chynmn/Desktop/Chynmn/BringYourUmbrella.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = DE0C997F2BF1DC690059C655 /* Project object */;
 }

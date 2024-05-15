@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 
+//단위변경 모달창 테이블뷰셀
 class ModalTableViewCell: UITableViewCell {
 
     let celsiusLabel = UILabel()
