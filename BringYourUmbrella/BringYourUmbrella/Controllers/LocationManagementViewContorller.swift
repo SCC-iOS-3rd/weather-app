@@ -21,6 +21,7 @@ class LocationManagementViewContorller: UIViewController {
         locationManagerView.favoritesTableView.dataSource = self
         locationManagerView.favoritesTableView.delegate = self
         locationManagerView.favoritesTableView.register(LocationManagementViewTableViewCell.self, forCellReuseIdentifier: LocationManagementViewTableViewCell.identifier)
+        setupLongGestureRecognizerOnTableView()
     }
     
     override func loadView() {
@@ -55,10 +56,37 @@ class LocationManagementViewContorller: UIViewController {
             locationManagerView.favoritesTableView.setEditing(true, animated: true)
         }
     }
+    
+    @objc private func handleLongPress(gestureRecognizer: UILongPressGestureRecognizer) {
+        _ = gestureRecognizer.location(in: locationManagerView.favoritesTableView)
+        
+        if gestureRecognizer.state == .began {
+            tappedEditButton()
+        } else if gestureRecognizer.state == .ended {
+            // 롱 프레스 터치가 끝날 떄
+        } else {
+            return
+        }
+    }
 }
 
 // MARK: - extensions
 extension LocationManagementViewContorller: UITableViewDelegate {
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        <#code#>
+//    }
+}
+
+extension LocationManagementViewContorller: UIGestureRecognizerDelegate {
+    private func setupLongGestureRecognizerOnTableView() {
+        let longPressedGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gestureRecognizer: )))
+        longPressedGesture.minimumPressDuration = 0.5
+        longPressedGesture.delegate = self
+        longPressedGesture.delaysTouchesBegan = true
+        locationManagerView.favoritesTableView.addGestureRecognizer(longPressedGesture)
+    }
+    
+    
 }
 
 extension LocationManagementViewContorller: UITableViewDragDelegate {

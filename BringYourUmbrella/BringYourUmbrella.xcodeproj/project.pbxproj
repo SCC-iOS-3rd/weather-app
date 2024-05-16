@@ -21,7 +21,6 @@
 		CA00E5D42BF2265700B05D3F /* NewLocationPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA00E5D32BF2265700B05D3F /* NewLocationPreviewViewController.swift */; };
 		CA00E5DA2BF3352D00B05D3F /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA00E5D92BF3352D00B05D3F /* Weather.swift */; };
 		CA00E5DE2BF33A3E00B05D3F /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA00E5DD2BF33A3E00B05D3F /* WeatherService.swift */; };
-		CABBFC3C2BF4BA0700DA4E20 /* BringYourUmbrella.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CABBFC3A2BF4BA0700DA4E20 /* BringYourUmbrella.xcdatamodeld */; };
 		DE0C998B2BF1DC690059C655 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0C998A2BF1DC690059C655 /* AppDelegate.swift */; };
 		DE0C998D2BF1DC690059C655 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0C998C2BF1DC690059C655 /* SceneDelegate.swift */; };
 		DE0C998F2BF1DC690059C655 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0C998E2BF1DC690059C655 /* ViewController.swift */; };
@@ -43,7 +42,6 @@
 		CA00E5D32BF2265700B05D3F /* NewLocationPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLocationPreviewViewController.swift; sourceTree = "<group>"; };
 		CA00E5D92BF3352D00B05D3F /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		CA00E5DD2BF33A3E00B05D3F /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
-		CABBFC3B2BF4BA0700DA4E20 /* BringYourUmbrella.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BringYourUmbrella.xcdatamodel; sourceTree = "<group>"; };
 		DE0C99872BF1DC690059C655 /* BringYourUmbrella.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BringYourUmbrella.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE0C998A2BF1DC690059C655 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE0C998C2BF1DC690059C655 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -102,7 +100,6 @@
 				DED5857A2BF3C11A00D1D8FE /* Controllers */,
 				DE0C99962BF1DC6D0059C655 /* Assets.xcassets */,
 				DE0C999B2BF1DC6D0059C655 /* Info.plist */,
-				CABBFC3A2BF4BA0700DA4E20 /* BringYourUmbrella.xcdatamodeld */,
 			);
 			path = BringYourUmbrella;
 			sourceTree = "<group>";
@@ -232,7 +229,6 @@
 				398BAFA62BF359A6006883F4 /* WeatherDisplayPageViewController.swift in Sources */,
 				DE0C998D2BF1DC690059C655 /* SceneDelegate.swift in Sources */,
 				CA00E5DA2BF3352D00B05D3F /* Weather.swift in Sources */,
-				CABBFC3C2BF4BA0700DA4E20 /* BringYourUmbrella.xcdatamodeld in Sources */,
 				CA00E5D22BF21F6200B05D3F /* LocationSearchResultTableViewCell.swift in Sources */,
 				4D56DC282BF22045008EB3E2 /* LocationManagementView.swift in Sources */,
 				398BAFA22BF33797006883F4 /* BaseViewController.swift in Sources */,
@@ -501,20 +497,6 @@
 			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
-
-/* Begin XCVersionGroup section */
-		CABBFC3A2BF4BA0700DA4E20 /* BringYourUmbrella.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				CABBFC3B2BF4BA0700DA4E20 /* BringYourUmbrella.xcdatamodel */,
-			);
-			currentVersion = CABBFC3B2BF4BA0700DA4E20 /* BringYourUmbrella.xcdatamodel */;
-			name = BringYourUmbrella.xcdatamodeld;
-			path = "/Users/t2023-m0114/Downloads/BringYourUmbrella.xcdatamodeld";
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = DE0C997F2BF1DC690059C655 /* Project object */;
 }
