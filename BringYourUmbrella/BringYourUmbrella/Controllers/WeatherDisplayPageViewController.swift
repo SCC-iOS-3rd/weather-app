@@ -11,8 +11,8 @@ import SnapKit
 //날씨 표시 페이지
 class WeatherDisplayPageViewController: BaseViewController {
     
-    let plusButton = UIButton()
-    let alarmButton = UIButton()
+    let plusButton = NoHighlightButton(type: .system)
+    let alarmButton = NoHighlightButton(type: .system)
     let temperatureButton = UIButton()
     let buttonStackView = UIStackView()
     let nameLabel = UILabel()
@@ -102,9 +102,11 @@ class WeatherDisplayPageViewController: BaseViewController {
         locationLabel.text = "서울"
         locationLabel.font = UIFont.boldSystemFont(ofSize: 20)
         locationLabel.textColor = .white
-        buttonStackView.spacing = 15
+        buttonStackView.spacing = 10
+        buttonStackView.distribution = .fillEqually
         temperatureButton.setTitle("ºC", for: .normal)
         temperatureButton.setTitleColor(.white, for: .normal)
+        temperatureButton.titleLabel?.font = UIFont.systemFont(ofSize: 22)
         alarmButton.setImage(UIImage(systemName: "bell.badge"), for: .normal)
         alarmButton.tintColor = .white
         plusButton.setImage(UIImage(systemName: "plus"), for: .normal)

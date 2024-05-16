@@ -112,7 +112,7 @@ extension ModalViewController: UITableViewDelegate, UITableViewDataSource {
             delegate?.didChangeTemperature(unit: selectedUnit)
         }
     }
-    
+    //하나가눌리면 다른게 사라지게하는거
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? ModalTableViewCell {
             cell.checkButton.isHidden = true

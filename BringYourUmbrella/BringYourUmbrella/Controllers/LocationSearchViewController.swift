@@ -20,7 +20,7 @@ class LocationSearchViewController: UIViewController {
 
     private var searchCompleter = MKLocalSearchCompleter() // 검색을 도와주는 변수
     private var searchResults = [MKLocalSearchCompletion]() // 검색결과
-    
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
