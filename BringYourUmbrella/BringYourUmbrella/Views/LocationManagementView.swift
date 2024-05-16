@@ -16,6 +16,7 @@ class LocationManagementView: UIView {
         tl.font = .systemFont(ofSize: 22, weight: .bold)
         tl.textAlignment = .center
         tl.textColor = .white
+        tl.sizeToFit()
         return tl
     }()
     
@@ -36,7 +37,7 @@ class LocationManagementView: UIView {
     let currentLocation: UILabel = {
         let cl = UILabel()
         cl.font = .systemFont(ofSize: 18, weight: .regular)
-        cl.text = "강남구 논현동"
+        cl.text = "서울특별시 강남구"
         return cl
     }()
     
@@ -197,19 +198,19 @@ class LocationManagementView: UIView {
         }
         
         favoritesTableView.snp.makeConstraints {
-            $0.top.equalTo(favoritesLabel.snp.bottom).offset(20)
+            $0.top.equalTo(favoritesLabel.snp.bottom).offset(15)
             $0.horizontalEdges.equalTo(currentLocationView)
             $0.bottom.equalTo(bottomView.snp.top).offset(-10)
         }
         
         bottomView.snp.makeConstraints {
             $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(100)
+            $0.height.equalTo(90)
         }
         
         bottomSearchButton.snp.makeConstraints {
             $0.horizontalEdges.equalTo(bottomView.snp.horizontalEdges).inset(20)
-            $0.verticalEdges.equalTo(bottomView.snp.verticalEdges).inset(25)
+            $0.verticalEdges.equalTo(bottomView.snp.verticalEdges).inset(28)
         }
         
         currentLocationButton.snp.makeConstraints {
