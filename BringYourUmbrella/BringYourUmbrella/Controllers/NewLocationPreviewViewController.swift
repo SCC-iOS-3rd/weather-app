@@ -9,18 +9,23 @@
 
 import UIKit
 import SnapKit
+import CoreData
 
 class NewLocationPreviewViewController: BaseViewController {
     
    // MARK: - 프로퍼티
     //api
     let weatherService = WeatherService()
+    //코어데이터
+    let locationService = LocationService()
     
     var temperatureInCelsius: Double = 0.0
     
     //위도와 경도
     var latitude: Double = 0.0
     var longitude: Double = 0.0
+    var locationName: String = ""
+
     
     // 받아온 데이터를 저장할 프로퍼티
     var weather: Weather?
@@ -63,6 +68,8 @@ class NewLocationPreviewViewController: BaseViewController {
    // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.locationName = tranceSubAdministrativeArea(latitude: self.latitude, longitude: self.longitude)
         
         // data fetch
         weatherService.getWeather(latitude: latitude, longitude: longitude) { result in
@@ -224,19 +231,23 @@ class NewLocationPreviewViewController: BaseViewController {
         addNewLocationButton.setTitle("추가", for: .normal)
         addNewLocationButton.setTitleColor(.white, for: .normal)
         addNewLocationButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+      
         alphaView.backgroundColor = .black
         alphaView.alpha = 0
-        addNewLocationButton.addTarget(self, action: #selector(addNewLocationButtonMove), for: .touchUpInside)
-    
+      
+        addNewLocationButton.addTarget(self, action: #selector(addNewLocationButtonAction), for: .touchUpInside)
     }
     
-    //뷰 스타일 통일
+    //뷰 스타일 양식
     func styleView(_ view: UIView, backgroundColor: UIColor = .white, cornerRadius: CGFloat = 10) {
         view.backgroundColor = backgroundColor
         view.layer.cornerRadius = cornerRadius
     }
     
-    @objc func addNewLocationButtonMove() {
+    //추가 버튼 액션 함수
+    @objc func addNewLocationButtonAction() {
+        locationService.saveLocation(cityTitle: locationName, latitude: latitude, longitude: longitude)
+        
         let mainPageVC = ViewController()
         //self.navigationController?.pushViewController(mainPageVC, animated: true)
         let navigationController = UINavigationController(rootViewController: mainPageVC)
@@ -244,6 +255,28 @@ class NewLocationPreviewViewController: BaseViewController {
         UIApplication.shared.windows.first?.makeKeyAndVisible()
     }
     
+    
+//    //코어데이터에 위도/경도값을 저장
+//    func saveLocationBookmark(latitude: Double, longitude: Double) {
+//        guard let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext else {
+//            return
+//        }
+//        
+//        //LocationBookmark = 엔터티 이름과 싱크 맞춰야 함
+//        if let entity = NSEntityDescription.entity(forEntityName: "LocationBookmark", in: context) {
+//            let location = LocationBookmark(entity: entity, insertInto: context)
+//            
+//            location.latitude = latitude
+//            location.longitude = longitude
+//            
+//            do {
+//                try context.save()
+//                print("Location bookmark saved successfully.")
+//            } catch {
+//                print("Error saving location bookmark: \(error.localizedDescription)")
+//            }
+//        }
+//    }
 
 }
 //시간표시 함수
