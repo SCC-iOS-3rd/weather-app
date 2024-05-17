@@ -32,7 +32,6 @@ class ViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     //MARK: - 오토레이아웃
     override func setupConstraints() {
@@ -121,6 +120,7 @@ class ViewController: BaseViewController {
     //MARK: - UI속성
     override func configureUI() {
         view.backgroundColor = UIColor(red: 0.4039, green: 0.7765, blue: 0.8902, alpha: 1)
+        self.navigationController?.isNavigationBarHidden = true
         umbrellaImage.image = UIImage(named: "umbrella")
         sunImage.image = UIImage(named: "sun")
         buttonStackView.spacing = 15
@@ -133,7 +133,7 @@ class ViewController: BaseViewController {
         nameLabel.text = "우산 챙겨"
         nameLabel.font = UIFont.boldSystemFont(ofSize: 25)
         nameLabel.textColor = .white
-        timeLabel.text = "5/13 (월) 11:44 AM"
+        timeLabel.text = datefunc()
         timeLabel.textColor = .white
         locationLabel.text = "현재 위치"
         locationLabel.textColor = .white
@@ -154,21 +154,47 @@ class ViewController: BaseViewController {
         temperatureButton.addTarget(self, action: #selector(temperatureChange), for: .touchUpInside)
         alarmButton.addTarget(self, action: #selector(alarmButtonMove), for: .touchUpInside)
         plusButton.addTarget(self, action: #selector(plusButtonMove), for: .touchUpInside)
+        swipefunc() //왼쪽화면 스와이프 함수
     }
 }
-//MARK: - 알람,플러스 버튼 화면이동
+//MARK: - 알람,플러스,왼쪽스와이프 화면이동
 extension ViewController {
+    //알람 화면이동
+    @objc func alarmButtonMove(sender: UIButton) {
+        //        let alarmVC =
+        //        present(alarmVC, animated: true)
+    }
+    //위치추가 화면이동
+    @objc func plusButtonMove (sender: UIButton) {
+        let plusVC = LocationManagementViewContorller()
+        self.navigationController?.pushViewController(plusVC, animated: true)
+    }
+    //스와이프 함수
+    func swipefunc() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
+        swipeRight.direction = .right
+        self.view.addGestureRecognizer(swipeRight)
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
+        swipeLeft.direction = .left
+        self.view.addGestureRecognizer(swipeLeft)
+    }
+    //왼쪽 스와이프 이동 제스쳐
+    @objc func handleSwipe(_ gesture: UISwipeGestureRecognizer) {
+        if gesture.direction == .right {
+            rightfunc()
+            let weatherVC = WeatherDisplayPageViewController()
+            self.navigationController?.pushViewController(weatherVC, animated: true)
+        }
+    }
+    func rightfunc() {
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        transition.type = .push
+        transition.subtype = .fromLeft
+        self.navigationController?.view.layer.add(transition, forKey: kCATransition)
+    }
     
-    @objc func alarmButtonMove() {
-//        let alarmVC =
-//        alarmVC.delegate = self
-//        present(alarmVC, animated: true)
-    }
-    @objc func plusButtonMove () {
-//        let plusVC =
-//        plusVC.delegate = self
-//        present(alarmVC, animated: true)
-    }
 }
 //MARK: - 단위변경 모달창
 extension ViewController: BullletinDelegate {
@@ -204,9 +230,29 @@ extension ViewController: BullletinDelegate {
     func onTapClose() {
         self.removeAlpha()
     }
+    //단위 버튼타이틀 바뀌는함수
     func didChangeTemperature(unit: String) {
         temperatureButton.setTitle(unit, for: .normal)
     }
+    
 }
-
-
+//MARK: - 시간표시
+extension ViewController {
+    
+    func datefunc() -> String {
+        let date = Date()
+        let dateFormatterKR = DateFormatter()
+        dateFormatterKR.dateFormat = "M/dd (E) HH:mm"
+        dateFormatterKR.locale = Locale(identifier: "ko_KR")
+        dateFormatterKR.timeZone = TimeZone(abbreviation: "KST")
+        let datePart = dateFormatterKR.string(from: date)
+        
+        let dateFormatterDefault = DateFormatter()
+        dateFormatterDefault.dateFormat = "a"
+        dateFormatterDefault.timeZone = TimeZone(abbreviation: "KST")
+        let dateDefault = dateFormatterDefault.string(from: date)
+        
+        let todayDate = "\(datePart) \(dateDefault)"
+        return todayDate
+    }
+}

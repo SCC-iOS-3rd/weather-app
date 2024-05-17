@@ -8,12 +8,13 @@
 import UIKit
 import SnapKit
 
-//모달창 프로퍼티
+//모달창 프로토콜
 protocol BullletinDelegate: AnyObject {
     func onTapClose()
     func didChangeTemperature(unit: String)
 }
 
+//단위변경 모달창 페이지
 class ModalViewController: BaseViewController {
     
     weak var delegate: BullletinDelegate?
@@ -48,7 +49,7 @@ class ModalViewController: BaseViewController {
             $0.top.equalTo(temperatureSettingLabel.snp.bottom).offset(5)
             $0.horizontalEdges.equalTo(modalView.snp.horizontalEdges)
             $0.height.equalTo(200)
-            }
+        }
     }
     //MARK: - UI속성
     override func configureUI() {
@@ -101,21 +102,20 @@ extension ModalViewController: UITableViewDelegate, UITableViewDataSource {
     }
     // 원하는 셀 높이 설정
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-           return 60
-       }
-    
+        return 60
+    }
+    //단위변경 되면 화면에 버튼타이틀 변경되는 부분
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-           if let cell = tableView.cellForRow(at: indexPath) as? ModalTableViewCell {
-               cell.checkButton.isHidden = false
-               let selectedUnit = indexPath.row == 0 ? "ºC" : "ºF"
-               delegate?.didChangeTemperature(unit: selectedUnit)
-           }
-       }
-
-       func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-           if let cell = tableView.cellForRow(at: indexPath) as? ModalTableViewCell {
-               cell.checkButton.isHidden = true
-           }
-       }
+        if let cell = tableView.cellForRow(at: indexPath) as? ModalTableViewCell {
+            cell.checkButton.isHidden = false
+            let selectedUnit = indexPath.row == 0 ? "ºC" : "ºF"
+            delegate?.didChangeTemperature(unit: selectedUnit)
+        }
+    }
     
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) as? ModalTableViewCell {
+            cell.checkButton.isHidden = true
+        }
+    }
 }
