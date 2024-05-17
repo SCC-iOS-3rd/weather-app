@@ -9,6 +9,7 @@
 
 import UIKit
 import SnapKit
+import CoreData
 
 class NewLocationPreviewViewController: BaseViewController {
     
@@ -238,7 +239,7 @@ class NewLocationPreviewViewController: BaseViewController {
         addNewLocationButton.setTitleColor(.white, for: .normal)
         addNewLocationButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
         
-        addNewLocationButton.addTarget(self, action: #selector(addNewLocationButtonMove), for: .touchUpInside)
+        addNewLocationButton.addTarget(self, action: #selector(addNewLocationButtonAction), for: .touchUpInside)
     }
     
     //뷰 스타일 통일
@@ -247,7 +248,9 @@ class NewLocationPreviewViewController: BaseViewController {
         view.layer.cornerRadius = cornerRadius
     }
     
-    @objc func addNewLocationButtonMove() {
+    @objc func addNewLocationButtonAction() {
+//        saveLocationBookmark(latitude: latitude, longitude: longitude) 코어데이터에 위도/경도값을 저장
+        
         let mainPageVC = ViewController()
         //self.navigationController?.pushViewController(mainPageVC, animated: true)
         let navigationController = UINavigationController(rootViewController: mainPageVC)
@@ -255,6 +258,28 @@ class NewLocationPreviewViewController: BaseViewController {
         UIApplication.shared.windows.first?.makeKeyAndVisible()
     }
     
+    
+//    //코어데이터에 위도/경도값을 저장
+//    func saveLocationBookmark(latitude: Double, longitude: Double) {
+//        guard let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext else {
+//            return
+//        }
+//        
+//        //LocationBookmark = 엔터티 이름과 싱크 맞춰야 함
+//        if let entity = NSEntityDescription.entity(forEntityName: "LocationBookmark", in: context) {
+//            let location = LocationBookmark(entity: entity, insertInto: context)
+//            
+//            location.latitude = latitude
+//            location.longitude = longitude
+//            
+//            do {
+//                try context.save()
+//                print("Location bookmark saved successfully.")
+//            } catch {
+//                print("Error saving location bookmark: \(error.localizedDescription)")
+//            }
+//        }
+//    }
 
 }
 

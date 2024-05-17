@@ -2,8 +2,10 @@
 //  Weather.swift
 //  BringYourUmbrella
 //
-//  Created by t2023-m0114 on 5/14/24.
+//  Created by 희라 on 5/14/24.
 //
+
+// ⭐️ 오픈웨더맵 데이터 모델 ⭐️
 
 import Foundation
 
