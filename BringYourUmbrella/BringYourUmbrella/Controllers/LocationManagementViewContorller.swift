@@ -11,13 +11,19 @@ import CoreData
 class LocationManagementViewContorller: UIViewController {
     // MARK: - properties
     let locationManagerView = LocationManagementView()
-    let locationManagerViewTableViewCell = LocationManagementViewTableViewCell()
+    let weatherService = WeatherService()
     
-    var testData: [String] = ["서울특별시 강남구", "서울특별시 송파구", "서울특별시 광진구"]
+    var locationList: [Location] = []
     
-    var persistentContainer: NSPersistentContainer? {
-        (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
-    }
+    lazy var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "LocationModel")
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        })
+        return container
+    }()
     
     weak var delegate: LocationManagementDelegate?
     
@@ -41,17 +47,17 @@ class LocationManagementViewContorller: UIViewController {
         locationManagerView.favoritesEditButton.addTarget(self, action: #selector(tappedEditButton), for: .touchUpInside)
     }
     
-    //    func fetchLocations() {
-    //        let context = persistentContainer.viewContext
-    //         코어데이터 생성 후 Entity의 이름으로 변경해줄것
-    //        let fetchRequest: NSFetchRequest<Locations> = Locations.fetchRequest()
-    //
-    //        do {
-    //            Favorites = try context.fetch(fetchRequest)
-    //        } catch {
-    //            print("Failed to fetch saved Locations: \(error.localizedDescription)")
-    //        }
-    //    }
+    func fetchLocations() {
+        let context = persistentContainer.viewContext
+        // 코어데이터 생성 후 Entity의 이름으로 변경해줄것
+        let fetchRequest: NSFetchRequest<Location> = Location.fetchRequest()
+        
+        do {
+            locationList = try context.fetch(fetchRequest)
+        } catch {
+            print("Failed to fetch saved Locations: \(error.localizedDescription)")
+        }
+    }
     
     @objc private func tappedSearchBtn() {
         let nextVc = LocationSearchViewController()
@@ -141,13 +147,15 @@ extension LocationManagementViewContorller: UITableViewDropDelegate {
 
 extension LocationManagementViewContorller: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.testData.count
+        self.locationList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = locationManagerView.favoritesTableView.dequeueReusableCell(withIdentifier: LocationManagementViewTableViewCell.identifier) as? LocationManagementViewTableViewCell else { return UITableViewCell() }
-        // 데이터가 바뀌면 갈아끼워줄 것
-        cell.favoritesLocation.text = testData[indexPath.row]
+        
+        let locationList = locationList[indexPath.row]
+        
+        cell.favoritesLocation.text = locationList.cityTitle
         
         return cell
     }
@@ -158,24 +166,22 @@ extension LocationManagementViewContorller: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         guard locationManagerView.favoritesTableView.isEditing else {
-            // 데이터가 바뀌면 갈아끼워줄것
             print("\(sourceIndexPath.row) -> \(destinationIndexPath.row)")
-            let moveCell = self.testData[sourceIndexPath.row]
-            self.testData.remove(at: sourceIndexPath.row)
-            self.testData.insert(moveCell, at: destinationIndexPath.row)
+            let moveCell = self.locationList[sourceIndexPath.row]
+            self.locationList.remove(at: sourceIndexPath.row)
+            self.locationList.insert(moveCell, at: destinationIndexPath.row)
             return
         }
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        // 데이터가 바뀌면 갈아끼워줄것
         if editingStyle == .delete {
-            let context = self.persistentContainer?.viewContext
-            //            let favoritesToRemove = testData[indexPath.row]
-            //            context.delete(favoritesToRemove)
+            let context = self.persistentContainer.viewContext
+            let favoritesToRemove = locationList[indexPath.row]
+            context.delete(favoritesToRemove)
             do {
-                try context?.save()
-                testData.remove(at: indexPath.row)
+                try context.save()
+                locationList.remove(at: indexPath.row)
                 locationManagerView.favoritesTableView.deleteRows(at: [indexPath], with: .fade)
             } catch {
                 print("한줄 삭제에 실패했습니다: \(error.localizedDescription)")
