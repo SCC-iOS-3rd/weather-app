@@ -19,6 +19,8 @@ class NewLocationPreviewViewController: BaseViewController {
     //코어데이터
     let locationService = LocationService()
     
+    var temperatureInCelsius: Double = 0.0
+    
     //위도와 경도
     var latitude: Double = 0.0
     var longitude: Double = 0.0
@@ -33,16 +35,12 @@ class NewLocationPreviewViewController: BaseViewController {
     
     //메인페이지 구성요소
     //1.상단 ui (프리뷰페이지라 기능 제외)
-    let viewStackView = UIStackView()
+    let todayWeatherStackView = UIStackView()
     
     let umbrellaImage = UIImageView() //LOGO
     let nameLabel = UILabel() //"우산챙겨"
     let timeLabel = UILabel() //"5/13 (월) 11:44 AM"
     
-    let buttonStackView = UIStackView()
-    let plusButton = UIButton()
-    let alarmButton = UIButton()
-    let temperatureButton = UIButton()
     
     let locationLabel = UILabel() // 현재 위치
     
@@ -63,6 +61,8 @@ class NewLocationPreviewViewController: BaseViewController {
     
     //3. 플로팅 버튼
     let addNewLocationButton = UIButton()
+    //모달창부분
+    let alphaView = UIView()
      
     
    // MARK: - viewDidLoad
@@ -92,10 +92,11 @@ class NewLocationPreviewViewController: BaseViewController {
     // MARK: - setWeatherUI
     
     private func setWeatherUI() {
+        temperatureInCelsius = main!.temp
         let url = URL(string: "https://openweathermap.org/img/wn/\(self.weather?.icon ?? "00")@2x.png")
         let data = try? Data(contentsOf: url!)
         if let data = data {
-            iconImageView.image = UIImage(data: data)
+            iconImageView.image = UIImage(named: weather!.icon)
         }
         todayWeatherViewLabel.text = "\(weather!.description)"
         temperatureLabel.text = "\(main!.temp)º"
@@ -106,16 +107,13 @@ class NewLocationPreviewViewController: BaseViewController {
     //MARK: - 레이아웃, addSubview
     
     override func setupConstraints() {
-        [umbrellaImage, nameLabel, buttonStackView, timeLabel, locationLabel, todayWeatherView, highloweTemperatureView, styleView, weatherDescriptionView, addNewLocationButton].forEach {
+        [umbrellaImage, nameLabel, timeLabel, locationLabel, todayWeatherView, highloweTemperatureView, styleView, weatherDescriptionView, addNewLocationButton].forEach {
             view.addSubview($0)
         }
-        [temperatureButton, alarmButton, plusButton].forEach {
-            buttonStackView.addArrangedSubview($0)
-        }
         [todayWeatherViewLabel, temperatureLabel].forEach {
-            viewStackView.addArrangedSubview($0)
+            todayWeatherStackView.addArrangedSubview($0)
         }
-        [iconImageView, viewStackView].forEach { // 썬 이미지에서 변경
+        [iconImageView, todayWeatherStackView].forEach { // 썬 이미지에서 변경
             todayWeatherView.addSubview($0)
         }
         highloweTemperatureView.addSubview(highloweViewLabel)
@@ -123,17 +121,13 @@ class NewLocationPreviewViewController: BaseViewController {
         weatherDescriptionView.addSubview(weatherDescriptionViewLabel)
         
         umbrellaImage.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(10)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
             $0.leading.equalToSuperview().offset(20)
             $0.height.width.equalTo(30)
         }
         nameLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
             $0.leading.equalTo(umbrellaImage.snp.trailing).offset(10)
-        }
-        buttonStackView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
-            $0.trailing.equalToSuperview().offset(-30)
         }
         timeLabel.snp.makeConstraints {
             $0.top.equalTo(umbrellaImage.snp.bottom).offset(23)
@@ -147,29 +141,28 @@ class NewLocationPreviewViewController: BaseViewController {
             $0.top.equalTo(locationLabel.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(20)
             $0.height.equalTo(55)
-            $0.width.equalTo(200)
+            $0.width.greaterThanOrEqualTo(todayWeatherStackView.snp.width).offset(20)
         }
         highloweTemperatureView.snp.makeConstraints {
             $0.top.equalTo(todayWeatherView.snp.bottom).offset(20)
             $0.leading.equalToSuperview().offset(20)
             $0.height.equalTo(55)
-            $0.width.equalTo(225)
+            $0.width.greaterThanOrEqualTo(highloweViewLabel.snp.width).offset(20)
         }
         styleView.snp.makeConstraints {
             $0.top.equalTo(highloweTemperatureView.snp.bottom).offset(20)
             $0.leading.equalToSuperview().offset(20)
             $0.height.equalTo(55)
-            $0.width.equalTo(235)
+            $0.width.greaterThanOrEqualTo(styleViewLabel.snp.width).offset(20)
         }
         weatherDescriptionView.snp.makeConstraints {
             $0.top.equalTo(styleView.snp.bottom).offset(20)
             $0.leading.equalToSuperview().offset(20)
             $0.height.equalTo(55)
-            $0.width.equalTo(250)
+            $0.width.greaterThanOrEqualTo(weatherDescriptionViewLabel.snp.width).offset(20)
         }
-        viewStackView.snp.makeConstraints {
-            $0.verticalEdges.equalToSuperview()
-            $0.leading.equalToSuperview().offset(50)
+        todayWeatherStackView.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: 50, bottom: 0, right: 10))
         }
         highloweViewLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -184,8 +177,9 @@ class NewLocationPreviewViewController: BaseViewController {
             $0.leading.equalToSuperview().offset(10)
         }
         iconImageView.snp.makeConstraints { // 썬 이미지에서 변경
-            $0.leading.equalToSuperview()
-            $0.trailing.equalTo(viewStackView.snp.leading)
+            $0.leading.equalToSuperview().offset(10)
+            $0.verticalEdges.equalToSuperview().inset(15)
+            $0.trailing.equalTo(todayWeatherStackView.snp.leading)
             $0.centerY.equalToSuperview()
         }
         addNewLocationButton.snp.makeConstraints { make in
@@ -201,11 +195,12 @@ class NewLocationPreviewViewController: BaseViewController {
     
     override func configureUI() {
         view.backgroundColor = UIColor(red: 0.4039, green: 0.7765, blue: 0.8902, alpha: 1)
-        umbrellaImage.image = UIImage(named: "umbrella")
+        umbrellaImage.image = UIImage(systemName: "umbrella")
+        umbrellaImage.tintColor = .white
         
-        buttonStackView.spacing = 15
-        viewStackView.spacing = 3
-        viewStackView.distribution = .fill
+    
+        todayWeatherStackView.spacing = 10
+        todayWeatherStackView.distribution = .equalSpacing
         styleView(todayWeatherView)
         styleView(highloweTemperatureView)
         styleView(styleView)
@@ -213,30 +208,22 @@ class NewLocationPreviewViewController: BaseViewController {
         nameLabel.text = "우산 챙겨"
         nameLabel.font = UIFont.boldSystemFont(ofSize: 25)
         nameLabel.textColor = .white
-        timeLabel.text = "5/13 (월) 11:44 AM"
+        timeLabel.text = datefunc()
         timeLabel.textColor = .white
         locationLabel.text = "현재 위치"
         locationLabel.textColor = .white
         locationLabel.font = UIFont.boldSystemFont(ofSize: 20)
-        temperatureButton.setTitle("ºC", for: .normal)
-        temperatureButton.setTitleColor(.white, for: .normal)
-        alarmButton.setImage(UIImage(systemName: "bell.badge"), for: .normal)
-        alarmButton.tintColor = .white
-        plusButton.setImage(UIImage(systemName: "plus"), for: .normal)
-        plusButton.tintColor = .white
-        
+      
         // 날씨 정보 label
         //1. 오늘의 날씨
-        iconImageView.image = UIImage(named: "sun") //
         iconImageView.contentMode = .scaleAspectFit
-        todayWeatherViewLabel.text = "비온뒤갬"
-        temperatureLabel.text = "22º"
+        todayWeatherViewLabel.text = "지역을 찾고 있어요"
         //2. 최고/최저 기온
-        highloweViewLabel.text = "최고, 최저기온"
+        highloweViewLabel.text = "최고 ~ 최저기온"
         //3. 미정
-        styleViewLabel.text = "스타일추천?"
+        styleViewLabel.text = "날씨에 따른 스타일을 추천해 드릴게요"
         //4. 추천문구
-        weatherDescriptionViewLabel.text = "야외 활동이 잘 어울리는 날씨에오"
+        weatherDescriptionViewLabel.text = "날씨에 따른 정보를 제공해드릴게요"
         //프리뷰 페이지 > 액션 제외
         
         addNewLocationButton.backgroundColor = .black
@@ -244,7 +231,10 @@ class NewLocationPreviewViewController: BaseViewController {
         addNewLocationButton.setTitle("추가", for: .normal)
         addNewLocationButton.setTitleColor(.white, for: .normal)
         addNewLocationButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
-        
+      
+        alphaView.backgroundColor = .black
+        alphaView.alpha = 0
+      
         addNewLocationButton.addTarget(self, action: #selector(addNewLocationButtonAction), for: .touchUpInside)
     }
     
@@ -289,4 +279,23 @@ class NewLocationPreviewViewController: BaseViewController {
 //    }
 
 }
-
+//시간표시 함수
+extension NewLocationPreviewViewController {
+    
+    func datefunc() -> String {
+        let date = Date()
+        let dateFormatterKR = DateFormatter()
+        dateFormatterKR.dateFormat = "M/dd (E) HH:mm"
+        dateFormatterKR.locale = Locale(identifier: "ko_KR")
+        dateFormatterKR.timeZone = TimeZone(abbreviation: "KST")
+        let datePart = dateFormatterKR.string(from: date)
+        
+        let dateFormatterDefault = DateFormatter()
+        dateFormatterDefault.dateFormat = "a"
+        dateFormatterDefault.timeZone = TimeZone(abbreviation: "KST")
+        let dateDefault = dateFormatterDefault.string(from: date)
+        
+        let todayDate = "\(datePart) \(dateDefault)"
+        return todayDate
+    }
+}

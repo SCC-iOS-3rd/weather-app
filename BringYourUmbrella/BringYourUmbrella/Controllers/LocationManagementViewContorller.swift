@@ -15,6 +15,11 @@ class LocationManagementViewContorller: UIViewController {
     
     var locationList: [Location] = []
     
+
+    //위도와 경도
+    var latitude: Double = 0.0
+    var longitude: Double = 0.0
+
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "LocationModel")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -35,6 +40,7 @@ class LocationManagementViewContorller: UIViewController {
         locationManagerView.favoritesTableView.delegate = self
         locationManagerView.favoritesTableView.register(LocationManagementViewTableViewCell.self, forCellReuseIdentifier: LocationManagementViewTableViewCell.identifier)
         setupLongGestureRecognizerOnTableView()
+
     }
     
     override func loadView() {

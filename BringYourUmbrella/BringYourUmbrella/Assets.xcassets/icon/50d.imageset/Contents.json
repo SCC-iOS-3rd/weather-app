@@ -1,11 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "brightness_18pt_1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "50d@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
