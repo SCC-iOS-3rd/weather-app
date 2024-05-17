@@ -114,7 +114,7 @@ class NewLocationPreviewViewController: BaseViewController {
         weatherDescriptionView.addSubview(weatherDescriptionViewLabel)
         
         umbrellaImage.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(10)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
             $0.leading.equalToSuperview().offset(20)
             $0.height.width.equalTo(30)
         }
@@ -188,7 +188,8 @@ class NewLocationPreviewViewController: BaseViewController {
     
     override func configureUI() {
         view.backgroundColor = UIColor(red: 0.4039, green: 0.7765, blue: 0.8902, alpha: 1)
-        umbrellaImage.image = UIImage(named: "umbrella")
+        umbrellaImage.image = UIImage(systemName: "umbrella")
+        umbrellaImage.tintColor = .white
         
     
         todayWeatherStackView.spacing = 10
@@ -209,14 +210,13 @@ class NewLocationPreviewViewController: BaseViewController {
         // 날씨 정보 label
         //1. 오늘의 날씨
         iconImageView.contentMode = .scaleAspectFit
-        todayWeatherViewLabel.text = "지역을 찾고있습니다"
-        temperatureLabel.text = ""
+        todayWeatherViewLabel.text = "지역을 찾고 있어요"
         //2. 최고/최저 기온
         highloweViewLabel.text = "최고 ~ 최저기온"
         //3. 미정
-        styleViewLabel.text = "스타일추천?"
+        styleViewLabel.text = "날씨에 따른 스타일을 추천해 드릴게요"
         //4. 추천문구
-        weatherDescriptionViewLabel.text = "야외 활동이 잘 어울리는 날씨에오"
+        weatherDescriptionViewLabel.text = "날씨에 따른 정보를 제공해드릴게요"
         //프리뷰 페이지 > 액션 제외
         
         addNewLocationButton.backgroundColor = .black

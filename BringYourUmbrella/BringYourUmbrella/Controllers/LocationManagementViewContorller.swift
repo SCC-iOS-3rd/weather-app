@@ -13,6 +13,10 @@ class LocationManagementViewContorller: UIViewController {
     
     let testData: [String] = ["송파구 잠실동", "강남구 서초동", "강남구 대치동"]
     
+    //위도와 경도
+    var latitude: Double = 0.0
+    var longitude: Double = 0.0
+  
     
     // MARK: - methods
     override func viewDidLoad() {
@@ -22,6 +26,7 @@ class LocationManagementViewContorller: UIViewController {
         locationManagerView.favoritesTableView.delegate = self
         locationManagerView.favoritesTableView.register(LocationManagementViewTableViewCell.self, forCellReuseIdentifier: LocationManagementViewTableViewCell.identifier)
         setupLongGestureRecognizerOnTableView()
+
     }
     
     override func loadView() {
