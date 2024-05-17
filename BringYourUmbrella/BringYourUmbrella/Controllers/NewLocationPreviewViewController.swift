@@ -16,10 +16,14 @@ class NewLocationPreviewViewController: BaseViewController {
    // MARK: - 프로퍼티
     //api
     let weatherService = WeatherService()
+    //코어데이터
+    let locationService = LocationService()
     
     //위도와 경도
     var latitude: Double = 0.0
     var longitude: Double = 0.0
+    var locationName: String = ""
+
     
     // 받아온 데이터를 저장할 프로퍼티
     var weather: Weather?
@@ -64,6 +68,8 @@ class NewLocationPreviewViewController: BaseViewController {
    // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.locationName = tranceSubAdministrativeArea(latitude: self.latitude, longitude: self.longitude)
         
         // data fetch
         weatherService.getWeather(latitude: latitude, longitude: longitude) { result in
@@ -242,14 +248,15 @@ class NewLocationPreviewViewController: BaseViewController {
         addNewLocationButton.addTarget(self, action: #selector(addNewLocationButtonAction), for: .touchUpInside)
     }
     
-    //뷰 스타일 통일
+    //뷰 스타일 양식
     func styleView(_ view: UIView, backgroundColor: UIColor = .white, cornerRadius: CGFloat = 10) {
         view.backgroundColor = backgroundColor
         view.layer.cornerRadius = cornerRadius
     }
     
+    //추가 버튼 액션 함수
     @objc func addNewLocationButtonAction() {
-//        saveLocationBookmark(latitude: latitude, longitude: longitude) 코어데이터에 위도/경도값을 저장
+        locationService.saveLocation(cityTitle: locationName, latitude: latitude, longitude: longitude)
         
         let mainPageVC = ViewController()
         //self.navigationController?.pushViewController(mainPageVC, animated: true)

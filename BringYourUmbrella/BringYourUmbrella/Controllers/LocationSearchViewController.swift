@@ -131,10 +131,10 @@ extension LocationSearchViewController: UISearchBarDelegate {
             if let response = response, let mapItem = response.mapItems.first {
                 let latitude = mapItem.placemark.coordinate.latitude
                 let longitude = mapItem.placemark.coordinate.longitude
-                tranceLocationName(latitude: latitude, longitude: longitude)
+                let subAdminArea = tranceLocationName(latitude: latitude, longitude: longitude)
                 
                 self.selectedLocation = mapItem.placemark.location
-                print("선택된 장소 이름: \(selectedCompletion.title), 위도: \(latitude), 경도: \(longitude)")
+                print("선택된 장소 이름: \(subAdminArea), 위도: \(latitude), 경도: \(longitude)")
             }
         }
     }
