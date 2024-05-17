@@ -131,10 +131,10 @@ extension LocationSearchViewController: UISearchBarDelegate {
             if let response = response, let mapItem = response.mapItems.first {
                 let latitude = mapItem.placemark.coordinate.latitude
                 let longitude = mapItem.placemark.coordinate.longitude
-                let subAdminArea = tranceLocationName(latitude: latitude, longitude: longitude)
                 
-                self.selectedLocation = mapItem.placemark.location
-                print("선택된 장소 이름: \(subAdminArea), 위도: \(latitude), 경도: \(longitude)")
+                tranceLocationName(latitude: latitude, longitude: longitude) { locationName in
+                    self.selectedLocation = mapItem.placemark.location
+                    print("선택된 장소 이름: \(locationName), 위도: \(latitude), 경도: \(longitude)") }
             }
         }
     }
@@ -149,6 +149,7 @@ extension LocationSearchViewController: UITableViewDelegate {
             let previewVC = NewLocationPreviewViewController()
             previewVC.latitude = selectedLocation.coordinate.latitude
             previewVC.longitude = selectedLocation.coordinate.longitude
+            
             present(previewVC, animated: true, completion: nil)
             print("위치 정보를 가지고 프리뷰페이지로 이동합니다.")
         } else {

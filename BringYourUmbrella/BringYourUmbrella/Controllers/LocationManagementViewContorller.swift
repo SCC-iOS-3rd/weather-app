@@ -19,6 +19,14 @@ class LocationManagementViewContorller: UIViewController {
     //위도와 경도
     var latitude: Double = 0.0
     var longitude: Double = 0.0
+    var mylocation: String = ""
+    
+    // 받아온 데이터를 저장할 프로퍼티
+    var weather: Weather?
+    var main: Main?
+    var sys: Sys?
+    var name: String?
+    
 
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "LocationModel")
@@ -35,6 +43,22 @@ class LocationManagementViewContorller: UIViewController {
     // MARK: - methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // datafetch
+        weatherService.getWeather(latitude: latitude, longitude: longitude) { result in
+            switch result {
+            case .success(let weatherResponse):
+                DispatchQueue.main.async {
+                    self.weather = weatherResponse.weather.first
+                    self.main = weatherResponse.main
+                    self.name = weatherResponse.name
+                    self.UpdateCurrentLocation()
+                }
+            case .failure(let error):
+                print("Error: \(error)")
+            }
+        }
+        
         setAddTarget()
         locationManagerView.favoritesTableView.dataSource = self
         locationManagerView.favoritesTableView.delegate = self
@@ -45,6 +69,21 @@ class LocationManagementViewContorller: UIViewController {
     
     override func loadView() {
         view = locationManagerView
+    }
+    
+    private func UpdateCurrentLocation() {
+        //현재위치명, 아이콘, 온도로 업데이트
+        tranceLocationName(latitude: latitude, longitude: longitude) { locationName in
+            self.locationManagerView.currentLocation.text = "\(locationName)"
+        }
+        
+        let url = URL(string: "https://openweathermap.org/img/wn/\(self.weather?.icon ?? "00")@2x.png")
+        let data = try? Data(contentsOf: url!)
+        if let data = data {
+            locationManagerView.currentWeatherImageView.image = UIImage(named: weather!.icon)
+        }
+        
+        locationManagerView.currentTemperature.text = "\(main!.temp)º"
     }
     
     private func setAddTarget() {

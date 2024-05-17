@@ -5,7 +5,7 @@
 //  Created by 희라 on 5/13/24.
 //
 
-// ⭐️ 장소검색>테이블뷰셀 탭 했을 때 뜨는 미리보기 페이지 ⭐️
+// ⭐️ 프리뷰페이지 : 장소검색>테이블뷰셀 탭 했을 때 뜨는 미리보기 페이지 ⭐️
 
 import UIKit
 import SnapKit
@@ -32,6 +32,9 @@ class NewLocationPreviewViewController: BaseViewController {
     var main: Main?
     var sys: Sys?
     var name: String?
+    
+    //로딩창
+    weak var sv: UIView!
     
     //메인페이지 구성요소
     //1.상단 ui (프리뷰페이지라 기능 제외)
@@ -68,8 +71,8 @@ class NewLocationPreviewViewController: BaseViewController {
    // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.locationName = tranceSubAdministrativeArea(latitude: self.latitude, longitude: self.longitude)
+        sv = UIViewController.displaySpinner(onView: self.view)
+        //self.locationName = tranceSubAdministrativeArea(latitude: self.latitude, longitude: self.longitude)
         
         // data fetch
         weatherService.getWeather(latitude: latitude, longitude: longitude) { result in
@@ -85,13 +88,15 @@ class NewLocationPreviewViewController: BaseViewController {
                 print("Error: \(error)")
             }
         }
-
+        
     }
     
 
     // MARK: - setWeatherUI
     
     private func setWeatherUI() {
+        
+        
         temperatureInCelsius = main!.temp
         let url = URL(string: "https://openweathermap.org/img/wn/\(self.weather?.icon ?? "00")@2x.png")
         let data = try? Data(contentsOf: url!)
@@ -101,6 +106,8 @@ class NewLocationPreviewViewController: BaseViewController {
         todayWeatherViewLabel.text = "\(weather!.description)"
         temperatureLabel.text = "\(main!.temp)º"
         highloweViewLabel.text = "최고 \(main!.tempmax)º ~ 최저 \(main!.tempmin)º"
+        
+        self.sv.removeFromSuperview()
     }//func setWeatherUI()
     
     
@@ -254,30 +261,6 @@ class NewLocationPreviewViewController: BaseViewController {
         UIApplication.shared.windows.first?.rootViewController = navigationController
         UIApplication.shared.windows.first?.makeKeyAndVisible()
     }
-    
-    
-//    //코어데이터에 위도/경도값을 저장
-//    func saveLocationBookmark(latitude: Double, longitude: Double) {
-//        guard let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext else {
-//            return
-//        }
-//        
-//        //LocationBookmark = 엔터티 이름과 싱크 맞춰야 함
-//        if let entity = NSEntityDescription.entity(forEntityName: "LocationBookmark", in: context) {
-//            let location = LocationBookmark(entity: entity, insertInto: context)
-//            
-//            location.latitude = latitude
-//            location.longitude = longitude
-//            
-//            do {
-//                try context.save()
-//                print("Location bookmark saved successfully.")
-//            } catch {
-//                print("Error saving location bookmark: \(error.localizedDescription)")
-//            }
-//        }
-//    }
-
 }
 //시간표시 함수
 extension NewLocationPreviewViewController {
@@ -299,3 +282,5 @@ extension NewLocationPreviewViewController {
         return todayDate
     }
 }
+
+
