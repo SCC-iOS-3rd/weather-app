@@ -52,7 +52,7 @@ class LocationManagementViewContorller: UIViewController {
                     self.weather = weatherResponse.weather.first
                     self.main = weatherResponse.main
                     self.name = weatherResponse.name
-                    self.UpdateCurrentLocation()
+                    self.updateCurrentLocation()
                 }
             case .failure(let error):
                 print("Error: \(error)")
@@ -64,6 +64,7 @@ class LocationManagementViewContorller: UIViewController {
         locationManagerView.favoritesTableView.delegate = self
         locationManagerView.favoritesTableView.register(LocationManagementViewTableViewCell.self, forCellReuseIdentifier: LocationManagementViewTableViewCell.identifier)
         setupLongGestureRecognizerOnTableView()
+        fetchLocations()
 
     }
     
@@ -71,19 +72,33 @@ class LocationManagementViewContorller: UIViewController {
         view = locationManagerView
     }
     
-    private func UpdateCurrentLocation() {
+    private func updateCurrentLocation() {
         //현재위치명, 아이콘, 온도로 업데이트
         tranceLocationName(latitude: latitude, longitude: longitude) { locationName in
-            self.locationManagerView.currentLocation.text = "\(locationName)"
+            DispatchQueue.main.async {
+                self.locationManagerView.currentLocation.text = "\(locationName)"
+            }
         }
+        guard let weatherIcon = weather?.icon else { return }
+        guard let url = URL(string: "https://openweathermap.org/img/wn/\(weatherIcon)@2x.png") else { return }
         
-        let url = URL(string: "https://openweathermap.org/img/wn/\(self.weather?.icon ?? "00")@2x.png")
-        let data = try? Data(contentsOf: url!)
-        if let data = data {
-            locationManagerView.currentWeatherImageView.image = UIImage(named: weather!.icon)
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, error == nil else {
+                print("Failed to fetch image data: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+            
+            DispatchQueue.main.async {
+                if let image = UIImage(data: data) {
+                    self.locationManagerView.currentWeatherImageView.image = image
+                }
+            }
         }
+        task.resume()
         
-        locationManagerView.currentTemperature.text = "\(main!.temp)º"
+        DispatchQueue.main.async {
+            self.locationManagerView.currentTemperature.text = "\(self.main?.temp ?? 0)º"
+        }
     }
     
     private func setAddTarget() {
@@ -129,7 +144,7 @@ class LocationManagementViewContorller: UIViewController {
     }
     
     @objc private func handleLongPress(gestureRecognizer: UILongPressGestureRecognizer) {
-        let location = gestureRecognizer.location(in: locationManagerView.favoritesTableView)
+        _ = gestureRecognizer.location(in: locationManagerView.favoritesTableView)
         
         if gestureRecognizer.state == .began {
             tappedEditButton()
@@ -149,9 +164,8 @@ protocol LocationManagementDelegate: AnyObject {
 // MARK: - extensions
 extension LocationManagementViewContorller: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = locationManagerView.favoritesTableView.cellForRow(at: indexPath) as? LocationManagementViewTableViewCell else {
-            return
-        }
+        guard let cell = locationManagerView.favoritesTableView.cellForRow(at: indexPath) as? LocationManagementViewTableViewCell else { return }
+        
     }
 }
 
@@ -200,7 +214,7 @@ extension LocationManagementViewContorller: UITableViewDataSource {
         
         let locationList = locationList[indexPath.row]
         
-        cell.favoritesLocation.text = locationList.cityTitle
+        cell.updateWeather(for: locationList)
         
         return cell
     }

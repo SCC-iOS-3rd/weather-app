@@ -9,9 +9,11 @@ import UIKit
 import SnapKit
 
 class LocationManagementViewTableViewCell: UITableViewCell {
-
+    
     // MARK: - properties
     static let identifier = String(describing: LocationManagementViewTableViewCell.self)
+    let weatherService = WeatherService()
+    let controller = LocationManagementViewContorller()
     
     let favoritesView: UIView = {
         let fv = UIView()
@@ -46,10 +48,10 @@ class LocationManagementViewTableViewCell: UITableViewCell {
         
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
     
@@ -96,6 +98,32 @@ class LocationManagementViewTableViewCell: UITableViewCell {
             $0.trailing.equalTo(favoritesTemperature.snp.leading).offset(-14)
             $0.centerY.equalTo(favoritesView)
             $0.width.height.equalTo(30)
+        }
+    }
+    
+    func updateWeather(for location: Location) {
+        weatherService.getWeather(latitude: location.latitude, longitude: location.longitude) { result in
+            switch result {
+            case .success(let weatherResponse):
+                DispatchQueue.main.async {
+                    self.favoritesLocation.text = "\(weatherResponse.name)"
+                    self.favoritesTemperature.text = "\(weatherResponse.main.temp)º"
+                    
+                    if let icon = weatherResponse.weather.first?.icon {
+                        let urlString = "https://openweathermap.org/img/wn/\(icon)@2x.png"
+                        if let url = URL(string: urlString) {
+                            URLSession.shared.dataTask(with: url) { data, response, error in
+                                guard let data = data, error == nil else { return }
+                                DispatchQueue.main.async {
+                                    self.favoritesWeatherImageView.image = UIImage(data: data)
+                                }
+                            }.resume()
+                        }
+                    }
+                }
+            case .failure(let error):
+                print("Failed to get weather data: \(error)")
+            }
         }
     }
 }
