@@ -13,7 +13,6 @@ class LocationManagementViewTableViewCell: UITableViewCell {
     // MARK: - properties
     static let identifier = String(describing: LocationManagementViewTableViewCell.self)
     let weatherService = WeatherService()
-    let controller = LocationManagementViewContorller()
     
     let favoritesView: UIView = {
         let fv = UIView()
@@ -25,7 +24,7 @@ class LocationManagementViewTableViewCell: UITableViewCell {
     let favoritesLocation: UILabel = {
         let cl = UILabel()
         cl.font = .systemFont(ofSize: 18, weight: .regular)
-        cl.text = "강남구 논현동"
+        cl.text = ""
         return cl
     }()
     
@@ -38,7 +37,7 @@ class LocationManagementViewTableViewCell: UITableViewCell {
     let favoritesTemperature: UILabel = {
         let ct = UILabel()
         ct.font = .systemFont(ofSize: 15, weight: .medium)
-        ct.text = "20°C"
+        ct.text = "00.00°C"
         return ct
     }()
     
@@ -102,27 +101,31 @@ class LocationManagementViewTableViewCell: UITableViewCell {
     }
     
     func updateWeather(for location: Location) {
+        // 현재 위치명, 아이콘, 온도로 업데이트
+        tranceAdministrativeArea(latitude: location.latitude, longitude: location.longitude) { locationName in
+            DispatchQueue.main.async {
+                self.favoritesLocation.text = locationName
+            }
+        }
+        
         weatherService.getWeather(latitude: location.latitude, longitude: location.longitude) { result in
             switch result {
             case .success(let weatherResponse):
-                DispatchQueue.main.async {
-                    self.favoritesLocation.text = "\(weatherResponse.name)"
-                    self.favoritesTemperature.text = "\(weatherResponse.main.temp)º"
-                    
-                    if let icon = weatherResponse.weather.first?.icon {
-                        let urlString = "https://openweathermap.org/img/wn/\(icon)@2x.png"
-                        if let url = URL(string: urlString) {
-                            URLSession.shared.dataTask(with: url) { data, response, error in
-                                guard let data = data, error == nil else { return }
-                                DispatchQueue.main.async {
-                                    self.favoritesWeatherImageView.image = UIImage(data: data)
-                                }
-                            }.resume()
-                        }
+                let urlString = "https://openweathermap.org/img/wn/\(weatherResponse.weather.first?.icon ?? "00")@2x.png"
+                guard let url = URL(string: urlString) else { return }
+                
+                URLSession.shared.dataTask(with: url) { data, response, error in
+                    guard let data = data, error == nil else { return }
+                    DispatchQueue.main.async {
+                        self.favoritesWeatherImageView.image = UIImage(data: data)
                     }
+                }.resume()
+                
+                DispatchQueue.main.async {
+                    self.favoritesTemperature.text = "\(weatherResponse.main.temp)º"
                 }
             case .failure(let error):
-                print("Failed to get weather data: \(error)")
+                print("Failed to fetch weather data: \(error)")
             }
         }
     }
