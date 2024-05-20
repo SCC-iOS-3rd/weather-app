@@ -117,6 +117,13 @@ class LocationManagementView: UIView {
         return clb
     }()
     
+    let backButton: UIButton = {
+        let bb = UIButton()
+        bb.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
+        bb.tintColor = .white
+        return bb
+    }()
+    
     // MARK: - methods
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -133,7 +140,7 @@ class LocationManagementView: UIView {
     }
     
     func setConstraints() {
-        [titleLabel, currentLocationView, favoritesTableView, favoritesLabel, favoritesEditButton, bottomView, currentLocationButton].forEach {
+        [titleLabel, backButton, currentLocationView, favoritesTableView, favoritesLabel, favoritesEditButton, bottomView, currentLocationButton].forEach {
             self.addSubview($0)
         }
         
@@ -148,8 +155,14 @@ class LocationManagementView: UIView {
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide)
             $0.centerX.equalToSuperview()
-            $0.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(30)
+            $0.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(60)
             $0.height.equalTo(40)
+        }
+        
+        backButton.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.top)
+            $0.height.equalTo(titleLabel.snp.height)
+            $0.trailing.equalTo(titleLabel.snp.leading)
         }
         
         currentLocationView.snp.makeConstraints {
