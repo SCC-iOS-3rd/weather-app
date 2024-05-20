@@ -38,8 +38,6 @@ class LocationManagementViewContorller: UIViewController {
         return container
     }()
     
-    weak var delegate: LocationManagementDelegate?
-    
     // MARK: - methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,47 +50,60 @@ class LocationManagementViewContorller: UIViewController {
                     self.weather = weatherResponse.weather.first
                     self.main = weatherResponse.main
                     self.name = weatherResponse.name
-                    self.UpdateCurrentLocation()
+                    self.updateCurrentLocation()
                 }
             case .failure(let error):
                 print("Error: \(error)")
             }
         }
-        
         setAddTarget()
-        locationManagerView.favoritesTableView.dataSource = self
-        locationManagerView.favoritesTableView.delegate = self
-        locationManagerView.favoritesTableView.register(LocationManagementViewTableViewCell.self, forCellReuseIdentifier: LocationManagementViewTableViewCell.identifier)
+        setTableView()
         setupLongGestureRecognizerOnTableView()
-
+        fetchLocations()
+        setRefreshControl()
     }
     
     override func loadView() {
         view = locationManagerView
     }
     
-    private func UpdateCurrentLocation() {
+    private func updateCurrentLocation() {
         //현재위치명, 아이콘, 온도로 업데이트
         tranceLocationName(latitude: latitude, longitude: longitude) { locationName in
-            self.locationManagerView.currentLocation.text = "\(locationName)"
+            DispatchQueue.main.async {
+                self.locationManagerView.currentLocation.text = "\(locationName)"
+            }
         }
+        guard let weatherIcon = weather?.icon else { return }
+        guard let url = URL(string: "https://openweathermap.org/img/wn/\(weatherIcon)@2x.png") else { return }
         
-        let url = URL(string: "https://openweathermap.org/img/wn/\(self.weather?.icon ?? "00")@2x.png")
-        let data = try? Data(contentsOf: url!)
-        if let data = data {
-            locationManagerView.currentWeatherImageView.image = UIImage(named: weather!.icon)
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, error == nil else {
+                print("Failed to fetch image data: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+            
+            DispatchQueue.main.async {
+                if let image = UIImage(data: data) {
+                    self.locationManagerView.currentWeatherImageView.image = image
+                }
+            }
         }
+        task.resume()
         
-        locationManagerView.currentTemperature.text = "\(main!.temp)º"
+        DispatchQueue.main.async {
+            self.locationManagerView.currentTemperature.text = "\(self.main?.temp ?? 0)º"
+        }
     }
     
     private func setAddTarget() {
         locationManagerView.bottomSearchButton.addTarget(self, action: #selector(tappedSearchBtn), for: .touchUpInside)
         locationManagerView.currentLocationButton.addTarget(self, action: #selector(tappedCurrentLocation), for: .touchUpInside)
         locationManagerView.favoritesEditButton.addTarget(self, action: #selector(tappedEditButton), for: .touchUpInside)
+        locationManagerView.backButton.addTarget(self, action: #selector(tappedBackButton), for: .touchUpInside)
     }
     
-    func fetchLocations() {
+    private func fetchLocations() {
         let context = persistentContainer.viewContext
         // 코어데이터 생성 후 Entity의 이름으로 변경해줄것
         let fetchRequest: NSFetchRequest<Location> = Location.fetchRequest()
@@ -102,6 +113,17 @@ class LocationManagementViewContorller: UIViewController {
         } catch {
             print("Failed to fetch saved Locations: \(error.localizedDescription)")
         }
+    }
+    
+    private func setRefreshControl() {
+        locationManagerView.favoritesTableView.refreshControl = UIRefreshControl()
+        locationManagerView.favoritesTableView.refreshControl?.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+    }
+    
+    private func setTableView() {
+        locationManagerView.favoritesTableView.dataSource = self
+        locationManagerView.favoritesTableView.delegate = self
+        locationManagerView.favoritesTableView.register(LocationManagementViewTableViewCell.self, forCellReuseIdentifier: LocationManagementViewTableViewCell.identifier)
     }
     
     @objc private func tappedSearchBtn() {
@@ -129,7 +151,7 @@ class LocationManagementViewContorller: UIViewController {
     }
     
     @objc private func handleLongPress(gestureRecognizer: UILongPressGestureRecognizer) {
-        let location = gestureRecognizer.location(in: locationManagerView.favoritesTableView)
+        _ = gestureRecognizer.location(in: locationManagerView.favoritesTableView)
         
         if gestureRecognizer.state == .began {
             tappedEditButton()
@@ -139,19 +161,30 @@ class LocationManagementViewContorller: UIViewController {
             return
         }
     }
+    
+    @objc private func pullToRefresh() {
+        locationManagerView.favoritesTableView.reloadData()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+            self.locationManagerView.favoritesTableView.refreshControl?.endRefreshing()
+        }
+    }
+    
+    @objc private func tappedBackButton() {
+        navigationController?.popToRootViewController(animated: true)
+    }
 }
-
-protocol LocationManagementDelegate: AnyObject {
-    func didSelectLocation(_ location: String)
-}
-
 
 // MARK: - extensions
 extension LocationManagementViewContorller: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = locationManagerView.favoritesTableView.cellForRow(at: indexPath) as? LocationManagementViewTableViewCell else {
-            return
-        }
+        guard let cell = locationManagerView.favoritesTableView.cellForRow(at: indexPath) as? LocationManagementViewTableViewCell else { return }
+        let selectedLocation = locationList[indexPath.row]
+        let mainVC = ViewController()
+        mainVC.latitude = selectedLocation.latitude
+        mainVC.longitude = selectedLocation.longitude
+        
+        navigationController?.pushViewController(mainVC, animated: true)
     }
 }
 
@@ -200,7 +233,7 @@ extension LocationManagementViewContorller: UITableViewDataSource {
         
         let locationList = locationList[indexPath.row]
         
-        cell.favoritesLocation.text = locationList.cityTitle
+        cell.updateWeather(for: locationList)
         
         return cell
     }

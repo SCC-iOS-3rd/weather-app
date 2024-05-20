@@ -8,7 +8,7 @@ class ViewController: BaseViewController {
     
     //현재위치 부분
     var locationManager = CLLocationManager()
- 
+    
     //api
     let weatherService = WeatherService()
     var weather: Weather?
@@ -47,14 +47,42 @@ class ViewController: BaseViewController {
     //모달창부분
     let alphaView = UIView()
     
+    //날씨표시 페이지
+    let weatherIndicationView = UIView()
+    let yesterdayLabel = UILabel()
+    let todayLabel = UILabel()
+    //차트용 얇은뷰
+    let chartViewYesterdayView = UIView()
+    let chartViewTodayView = UIView()
+    //어제,오늘 날씨 Label
+    let yesterdayWeatherLabel = UILabel()
+    let todayWeatherLabel = UILabel()
+    //어제,오늘 날씨 최저~최고
+    let yesterdayHighLowehLabel = UILabel()
+    let todayHighLoweLabel = UILabel()
+    //어제,오늘 기온 Label
+    let yesterdayTemperatureLabel = UILabel()
+    let todayTemperatureLabel = UILabel()
+    //날씨표시 페이지 아이콘이미지
+    let yesterdayweatherImageView = UIImageView()
+    let todayweatherImageView = UIImageView()
+    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         setLocationManager()
+        //처음 보여질 페이지
+        if let firstVC = dataViewControllers.first {
+            pageViewController.setViewControllers([firstVC], direction: .forward, animated: true)
+        }
     }
-    //MARK: - 오토레이아웃
+    //MARK: - 오토레이아웃/vc1 메인 화면
     override func setupConstraints() {
-        [umbrellaImage, nameLabel, buttonStackView, timeLabel, locationLabel, todayWeatherView, highloweTemperatureView, styleView, weatherDescriptionView].forEach {
-            view.addSubview($0)
+        [umbrellaImage, nameLabel, buttonStackView, timeLabel, locationLabel].forEach {
+            navigationView.addSubview($0)
+        }
+        [todayWeatherView, highloweTemperatureView, styleView, weatherDescriptionView].forEach {
+            vc1.view.addSubview($0)
         }
         [temperatureButton, alarmButton, plusButton].forEach {
             buttonStackView.addArrangedSubview($0)
@@ -70,33 +98,33 @@ class ViewController: BaseViewController {
         weatherDescriptionView.addSubview(weatherDescriptionViewLabel)
         //우산이미지
         umbrellaImage.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.top.equalTo(navigationView.snp.top).offset(60)
             $0.leading.equalToSuperview().offset(20)
             $0.height.width.equalTo(30)
         }
         //우산챙겨
         nameLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.top.equalTo(navigationView.snp.top).offset(60)
             $0.leading.equalTo(umbrellaImage.snp.trailing).offset(10)
         }
         //단위변경,알람,위치추가 버튼 스택뷰
         buttonStackView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.top.equalTo(navigationView.snp.top).offset(55)
             $0.trailing.equalToSuperview().offset(-30)
         }
         //현재시각Label
         timeLabel.snp.makeConstraints {
-            $0.top.equalTo(umbrellaImage.snp.bottom).offset(23)
+            $0.top.equalTo(umbrellaImage.snp.bottom).offset(15)
             $0.leading.equalToSuperview().offset(20)
         }
         //현재위치Label
         locationLabel.snp.makeConstraints {
-            $0.top.equalTo(timeLabel.snp.bottom).offset(20)
+            $0.top.equalTo(timeLabel.snp.bottom).offset(15)
             $0.leading.equalToSuperview().offset(20)
         }
         //뷰 종류4가지 순서대로
         todayWeatherView.snp.makeConstraints {
-            $0.top.equalTo(locationLabel.snp.bottom).offset(10)
+            $0.top.equalTo(vc1.view.safeAreaLayoutGuide).offset(20)
             $0.leading.equalToSuperview().offset(20)
             $0.height.equalTo(55)
             $0.width.greaterThanOrEqualTo(todayWeatherStackView.snp.width).offset(20)
@@ -143,6 +171,20 @@ class ViewController: BaseViewController {
             $0.trailing.equalTo(todayWeatherStackView.snp.leading)
             $0.centerY.equalToSuperview()
         }
+        view.addSubview(navigationView)
+        addChild(pageViewController)
+        view.addSubview(pageViewController.view)
+        //상단 네비게이션 뷰
+        navigationView.snp.makeConstraints {
+            $0.width.top.equalToSuperview()
+            $0.height.equalTo(180)
+        }
+        pageViewController.view.snp.makeConstraints {
+            $0.top.equalTo(navigationView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+        pageViewController.didMove(toParent: self)
+        setupConstranintsvc2()
     }
     //MARK: - UI속성
     override func configureUI() {
@@ -159,6 +201,7 @@ class ViewController: BaseViewController {
         styleView(highloweTemperatureView)
         styleView(styleView)
         styleView(weatherDescriptionView)
+        styleView(weatherIndicationView)
         nameLabel.text = "우산 챙겨"
         nameLabel.font = UIFont.boldSystemFont(ofSize: 25)
         nameLabel.textColor = .white
@@ -180,11 +223,103 @@ class ViewController: BaseViewController {
         weatherDescriptionViewLabel.text = "날씨에 따른 정보를 제공해드릴게요"
         alphaView.backgroundColor = .black
         alphaView.alpha = 0
+        //화면이동+섭씨화씨 버튼들
         temperatureButton.addTarget(self, action: #selector(temperatureChange), for: .touchUpInside)
         alarmButton.addTarget(self, action: #selector(alarmButtonMove), for: .touchUpInside)
         plusButton.addTarget(self, action: #selector(plusButtonMove), for: .touchUpInside)
-        swipefunc() //왼쪽화면 스와이프 함수
+        //페이지뷰컨트롤러 델리게이트,데이터소스
+        pageViewController.delegate = self
+        pageViewController.dataSource = self
+        yesterdayLabel.text = "어제"
+        todayLabel.text = "오늘"
+        //weather!.description 정보가들어가야하는 레이블
+        yesterdayWeatherLabel.text = "어제날씨"
+        todayWeatherLabel.font = UIFont.systemFont(ofSize: 13)
+        yesterdayWeatherLabel.font = UIFont.systemFont(ofSize: 13)
+        todayHighLoweLabel.font = UIFont.systemFont(ofSize: 12)
+        yesterdayHighLowehLabel.font = UIFont.systemFont(ofSize: 12)
+        todayTemperatureLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        todayHighLoweLabel.textAlignment = .center
     }
+    //MARK: - 오토레이아웃/vc2 날씨표시 화면
+    func setupConstranintsvc2() {
+        [weatherIndicationView, yesterdayLabel, todayLabel].forEach {
+            vc2.view.addSubview($0)
+        }
+        [yesterdayWeatherLabel, todayWeatherLabel, todayweatherImageView, todayHighLoweLabel, todayTemperatureLabel].forEach {
+            weatherIndicationView.addSubview($0)
+        }
+        weatherIndicationView.snp.makeConstraints {
+            $0.top.equalTo(vc2.view.safeAreaLayoutGuide).offset(20)
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(370)
+            $0.width.equalTo(250)
+        }
+        yesterdayLabel.snp.makeConstraints {
+            $0.leading.equalTo(weatherIndicationView.snp.leading).offset(60)
+            $0.top.equalToSuperview().offset(80)
+        }
+        todayLabel.snp.makeConstraints {
+            $0.trailing.equalTo(weatherIndicationView.snp.trailing).offset(-60)
+            $0.top.equalToSuperview().offset(80)
+        }
+        yesterdayWeatherLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(60)
+            $0.bottom.equalToSuperview().offset(-60)
+        }
+        todayWeatherLabel.snp.makeConstraints {
+            $0.trailing.equalToSuperview().offset(-60)
+            $0.bottom.equalToSuperview().offset(-60)
+        }
+//        yesterdayweatherImageView.snp.makeConstraints {
+//            $0.bottom.equalTo(yesterdayWeatherLabel.snp.top).offset(-5)
+//            $0.width.height.equalTo(25)
+//            $0.leading.equalToSuperview().offset(60)
+//        }
+        todayweatherImageView.snp.makeConstraints {
+            $0.bottom.equalTo(todayWeatherLabel.snp.top).offset(-5)
+            $0.width.height.equalTo(25)
+            $0.trailing.equalToSuperview().offset(-60)
+        }
+        todayHighLoweLabel.snp.makeConstraints {
+            $0.top.equalTo(todayWeatherLabel.snp.bottom).offset(5)
+            $0.trailing.equalToSuperview().offset(-30)
+        }
+        todayTemperatureLabel.snp.makeConstraints {
+            $0.top.equalTo(todayLabel.snp.bottom).offset(10)
+            $0.trailing.equalToSuperview().offset(-40)
+        }
+    }
+    //상단 네비게이션뷰
+    let navigationView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red: 0.4039, green: 0.7765, blue: 0.8902, alpha: 1)
+        return view
+    }()
+    
+    lazy var pageViewController: UIPageViewController = {
+        let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+        return vc
+    }()
+    
+    //첫번째 뜨는 뷰(메인)
+    lazy var vc1: UIViewController = {
+        let vc = UIViewController()
+        vc.view.backgroundColor = UIColor(red: 0.4039, green: 0.7765, blue: 0.8902, alpha: 1)
+        return vc
+    }()
+    
+    //왼쪽 뷰(날씨표시)
+    lazy var vc2: UIViewController = {
+        let vc = UIViewController()
+        vc.view.backgroundColor = UIColor(red: 0.4039, green: 0.7765, blue: 0.8902, alpha: 1)
+        return vc
+    }()
+
+    lazy var dataViewControllers: [UIViewController] = {
+        return [vc1, vc2]
+    }()
+    
 }
 //MARK: - 단위변경 모달창
 extension ViewController: BullletinDelegate {
@@ -223,11 +358,12 @@ extension ViewController: BullletinDelegate {
     //단위 버튼타이틀 바뀌는함수
     func didChangeTemperature(unit: String) {
         temperatureButton.setTitle(unit, for: .normal)
-        updateTemperatureLabel()
+        updateTemperatureLabelvc1()
+        updateTemperatureLabelvc2()
     }
     
     // 버튼에 맞게 섭씨/화씨 변경 뒤에 두자리까지 나오게
-    func updateTemperatureLabel() {
+    func updateTemperatureLabelvc1() {
         if temperatureButton.title(for: .normal) == "ºC" {
             temperatureLabel.text = String(format: "%.2fº", temperatureInCelsius)
         } else {
@@ -235,8 +371,16 @@ extension ViewController: BullletinDelegate {
             temperatureLabel.text = String(format: "%.2fº", temperatureInFahrenheit)
         }
     }
+    func updateTemperatureLabelvc2() {
+        if temperatureButton.title(for: .normal) == "ºC" {
+            todayTemperatureLabel.text = String(format: "%.2fº", temperatureInCelsius)
+        } else {
+            let temperatureInFahrenheit = temperatureInCelsius * 9 / 5 + 32
+            todayTemperatureLabel.text = String(format: "%.2fº", temperatureInFahrenheit)
+        }
+    }
     
-//    //버튼에맞게 섭씨화씨 변경부분
+//    //버튼에맞게 섭씨화씨 변경부분 (뒤에 소수점 짤린버젼)
 //    func updateTemperatureLabel() {
 //        if temperatureButton.title(for: .normal) == "ºC" {
 //            temperatureLabel.text = "\(Int(temperatureInCelsius))ºC"
@@ -266,7 +410,7 @@ extension ViewController {
         return todayDate
     }
 }
-//MARK: - 알람,플러스,왼쪽스와이프 화면이동
+//MARK: - 알람,플러스 화면이동
 extension ViewController {
     //알람 화면이동
     @objc func alarmButtonMove(sender: UIButton) {
@@ -280,35 +424,8 @@ extension ViewController {
         plusVC.longitude = longitude
         self.navigationController?.pushViewController(plusVC, animated: true)
     }
-
-    //스와이프 함수
-    func swipefunc() {
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
-        swipeRight.direction = .right
-        self.view.addGestureRecognizer(swipeRight)
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
-        swipeLeft.direction = .left
-        self.view.addGestureRecognizer(swipeLeft)
-    }
-    //왼쪽 스와이프 이동 제스쳐
-    @objc func handleSwipe(_ gesture: UISwipeGestureRecognizer) {
-        if gesture.direction == .right {
-            rightfunc()
-            let weatherVC = WeatherDisplayPageViewController()
-            self.navigationController?.pushViewController(weatherVC, animated: true)
-        }
-    }
-    func rightfunc() {
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        transition.type = .push
-        transition.subtype = .fromLeft
-        self.navigationController?.view.layer.add(transition, forKey: kCATransition)
-    }
-    
 }
-//MARK: - 현재위치
+//MARK: - 현재위치,날씨가져오기
 extension ViewController: CLLocationManagerDelegate {
 
     private func setLocationManager() {
@@ -352,7 +469,6 @@ extension ViewController: CLLocationManagerDelegate {
         }
     }
     private func featchWeatherData() {
-        
         // data fetch
         weatherService.getWeather(latitude: latitude, longitude: longitude) { result in
             switch result {
@@ -374,11 +490,15 @@ extension ViewController: CLLocationManagerDelegate {
             iconImageView.image = UIImage(named: weather!.icon)
             todayWeatherViewLabel.text = "\(weather!.description)"
             temperatureLabel.text = "\(main!.temp)º"
+            todayTemperatureLabel.text = "\(main!.temp)º"
             highloweViewLabel.text = "최고 \(main!.tempmax)º ~ 최저 \(main!.tempmin)º"
             styleViewLabel.text = styleRecommend()
             weatherDescriptionViewLabel.text = informationRecommend()
+            //날씨표시 페이지
+            todayWeatherLabel.text = "\(weather!.description)"
+            todayweatherImageView.image = UIImage(named: weather!.icon)
+            todayHighLoweLabel.text = "\(main!.tempmax)º \(main!.tempmin)º"
         }
-    
 }
 //MARK: - 스타일추천,정보추천
 extension ViewController {
@@ -430,6 +550,26 @@ extension ViewController {
                 
             }
         }
-    
-    
 }
+//MARK: - 페이지뷰컨트롤러
+extension ViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        guard let index = dataViewControllers.firstIndex(of: viewController) else { return nil }
+        let previousIndex = index - 1
+        if previousIndex < 0 {
+            return nil
+        }
+        return dataViewControllers[previousIndex]
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        guard let index = dataViewControllers.firstIndex(of: viewController) else { return nil }
+        let nextIndex = index + 1
+        if nextIndex == dataViewControllers.count {
+            return nil
+        }
+        return dataViewControllers[nextIndex]
+    }
+}
+
