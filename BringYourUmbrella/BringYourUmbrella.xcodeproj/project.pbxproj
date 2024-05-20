@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		398BAFA22BF33797006883F4 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BAFA12BF33797006883F4 /* BaseViewController.swift */; };
 		398BAFA42BF33823006883F4 /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BAFA32BF33823006883F4 /* ModalViewController.swift */; };
-		398BAFA62BF359A6006883F4 /* WeatherDisplayPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BAFA52BF359A6006883F4 /* WeatherDisplayPageViewController.swift */; };
 		398BAFA82BF38893006883F4 /* ModalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BAFA72BF38893006883F4 /* ModalTableViewCell.swift */; };
 		39B423352BF596CF000E5C75 /* NoHighlightButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B423342BF596CF000E5C75 /* NoHighlightButton.swift */; };
 		4D56DC262BF21FE9008EB3E2 /* LocationManagementViewContorller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D56DC252BF21FE9008EB3E2 /* LocationManagementViewContorller.swift */; };
@@ -66,7 +65,6 @@
 /* Begin PBXFileReference section */
 		398BAFA12BF33797006883F4 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		398BAFA32BF33823006883F4 /* ModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
-		398BAFA52BF359A6006883F4 /* WeatherDisplayPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDisplayPageViewController.swift; sourceTree = "<group>"; };
 		398BAFA72BF38893006883F4 /* ModalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalTableViewCell.swift; sourceTree = "<group>"; };
 		39B423342BF596CF000E5C75 /* NoHighlightButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoHighlightButton.swift; sourceTree = "<group>"; };
 		4D56DC252BF21FE9008EB3E2 /* LocationManagementViewContorller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagementViewContorller.swift; sourceTree = "<group>"; };
@@ -186,7 +184,6 @@
 			children = (
 				DE0C998E2BF1DC690059C655 /* ViewController.swift */,
 				398BAFA12BF33797006883F4 /* BaseViewController.swift */,
-				398BAFA52BF359A6006883F4 /* WeatherDisplayPageViewController.swift */,
 				398BAFA32BF33823006883F4 /* ModalViewController.swift */,
 				CA00E5CC2BF20E5700B05D3F /* LocationSearchViewController.swift */,
 				CA00E5D32BF2265700B05D3F /* NewLocationPreviewViewController.swift */,
@@ -348,7 +345,6 @@
 				398BAFA82BF38893006883F4 /* ModalTableViewCell.swift in Sources */,
 				DE0C998B2BF1DC690059C655 /* AppDelegate.swift in Sources */,
 				CA00E5CD2BF20E5700B05D3F /* LocationSearchViewController.swift in Sources */,
-				398BAFA62BF359A6006883F4 /* WeatherDisplayPageViewController.swift in Sources */,
 				DE0C998D2BF1DC690059C655 /* SceneDelegate.swift in Sources */,
 				CA00E5DA2BF3352D00B05D3F /* Weather.swift in Sources */,
 				4DEC6EF72BF6EF7F00475B3D /* LocationModel.xcdatamodeld in Sources */,
