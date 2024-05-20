@@ -56,14 +56,11 @@ class LocationManagementViewContorller: UIViewController {
                 print("Error: \(error)")
             }
         }
-        
         setAddTarget()
-        locationManagerView.favoritesTableView.dataSource = self
-        locationManagerView.favoritesTableView.delegate = self
-        locationManagerView.favoritesTableView.register(LocationManagementViewTableViewCell.self, forCellReuseIdentifier: LocationManagementViewTableViewCell.identifier)
+        setTableView()
         setupLongGestureRecognizerOnTableView()
         fetchLocations()
-
+        setRefreshControl()
     }
     
     override func loadView() {
@@ -103,9 +100,10 @@ class LocationManagementViewContorller: UIViewController {
         locationManagerView.bottomSearchButton.addTarget(self, action: #selector(tappedSearchBtn), for: .touchUpInside)
         locationManagerView.currentLocationButton.addTarget(self, action: #selector(tappedCurrentLocation), for: .touchUpInside)
         locationManagerView.favoritesEditButton.addTarget(self, action: #selector(tappedEditButton), for: .touchUpInside)
+        locationManagerView.backButton.addTarget(self, action: #selector(tappedBackButton), for: .touchUpInside)
     }
     
-    func fetchLocations() {
+    private func fetchLocations() {
         let context = persistentContainer.viewContext
         // 코어데이터 생성 후 Entity의 이름으로 변경해줄것
         let fetchRequest: NSFetchRequest<Location> = Location.fetchRequest()
@@ -115,6 +113,17 @@ class LocationManagementViewContorller: UIViewController {
         } catch {
             print("Failed to fetch saved Locations: \(error.localizedDescription)")
         }
+    }
+    
+    private func setRefreshControl() {
+        locationManagerView.favoritesTableView.refreshControl = UIRefreshControl()
+        locationManagerView.favoritesTableView.refreshControl?.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+    }
+    
+    private func setTableView() {
+        locationManagerView.favoritesTableView.dataSource = self
+        locationManagerView.favoritesTableView.delegate = self
+        locationManagerView.favoritesTableView.register(LocationManagementViewTableViewCell.self, forCellReuseIdentifier: LocationManagementViewTableViewCell.identifier)
     }
     
     @objc private func tappedSearchBtn() {
@@ -152,8 +161,19 @@ class LocationManagementViewContorller: UIViewController {
             return
         }
     }
+    
+    @objc private func pullToRefresh() {
+        locationManagerView.favoritesTableView.reloadData()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+            self.locationManagerView.favoritesTableView.refreshControl?.endRefreshing()
+        }
+    }
+    
+    @objc private func tappedBackButton() {
+        navigationController?.popToRootViewController(animated: true)
+    }
 }
-
 
 // MARK: - extensions
 extension LocationManagementViewContorller: UITableViewDelegate {
