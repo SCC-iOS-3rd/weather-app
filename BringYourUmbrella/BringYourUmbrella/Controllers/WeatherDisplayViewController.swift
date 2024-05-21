@@ -44,18 +44,22 @@ class WeatherDisplayViewController: BaseViewController {
     //섭씨 화씨 변경 임의값 넣어둔것
     var temperatureInCelsius: Double = 0.0
     
+    var yesterdayTemperature: Double = 0.0
+    var todayTemperature:Double = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchyesterdayweather()
+        yesterdayDate()
     }
+   
     
     //MARK: - 오토레이아웃
     override func setupConstraints() {
         [weatherIndicationView, yesterdayLabel, todayLabel].forEach {
             view.addSubview($0)
         }
-        [yesterdayWeatherLabel, todayWeatherLabel, todayweatherImageView, todayHighLoweLabel, todayTemperatureLabel, yesterdayHighLowehLabel, yesterdayweatherImageView, yesterdayTemperatureLabel].forEach {
+        [yesterdayWeatherLabel, todayWeatherLabel, todayweatherImageView, todayHighLoweLabel, todayTemperatureLabel, yesterdayHighLowehLabel, yesterdayweatherImageView, yesterdayTemperatureLabel, chartViewTodayView, chartViewYesterdayView].forEach {
             weatherIndicationView.addSubview($0)
         }
         weatherIndicationView.snp.makeConstraints {
@@ -67,56 +71,72 @@ class WeatherDisplayViewController: BaseViewController {
         //어제
         yesterdayLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(80)
-            $0.leading.equalTo(weatherIndicationView.snp.leading).offset(60)
+            $0.centerX.equalToSuperview().offset(55)
         }
         //오늘
         todayLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(80)
-            $0.trailing.equalTo(weatherIndicationView.snp.trailing).offset(-60)
+            $0.centerX.equalToSuperview().offset(-55)
         }
         //어제날씨 표현
         yesterdayWeatherLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(60)
-            $0.bottom.equalToSuperview().offset(-60)
+            $0.bottom.equalTo(yesterdayHighLowehLabel.snp.top).offset(-5)
+            $0.centerX.equalToSuperview().offset(-55)
         }
         //오늘날씨 표현
         todayWeatherLabel.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-60)
-            $0.bottom.equalToSuperview().offset(-60)
+            $0.bottom.equalTo(todayHighLoweLabel.snp.top).offset(-5)
+            $0.centerX.equalToSuperview().offset(55)
         }
-        //어제이미지
+        //어제날씨이미지
         yesterdayweatherImageView.snp.makeConstraints {
             $0.bottom.equalTo(yesterdayWeatherLabel.snp.top).offset(-5)
+            $0.centerX.equalToSuperview().offset(-55)
             $0.width.height.equalTo(25)
-            $0.leading.equalToSuperview().offset(60)
         }
-        //오늘이미지
+        //오늘날씨이미지
         todayweatherImageView.snp.makeConstraints {
             $0.bottom.equalTo(todayWeatherLabel.snp.top).offset(-5)
+            $0.centerX.equalToSuperview().offset(55)
             $0.width.height.equalTo(25)
-            $0.trailing.equalToSuperview().offset(-60)
         }
         //어제최고~최저
         yesterdayHighLowehLabel.snp.makeConstraints {
-            $0.top.equalTo(yesterdayWeatherLabel.snp.bottom).offset(5)
-            $0.leading.equalToSuperview().offset(55)
+            $0.bottom.equalToSuperview().offset(-40)
+            $0.centerX.equalToSuperview().offset(-55)
+            $0.centerY.equalToSuperview().offset(140)
         }
         //오늘최고~최저
         todayHighLoweLabel.snp.makeConstraints {
-            $0.top.equalTo(todayWeatherLabel.snp.bottom).offset(5)
-            $0.trailing.equalToSuperview().offset(-50)
+            $0.bottom.equalToSuperview().offset(-40)
+            $0.centerX.equalToSuperview().offset(55)
+            $0.centerY.equalToSuperview().offset(140)
         }
-        //큰글씨레이블오늘꺼
+        //큰글씨오늘날씨
         todayTemperatureLabel.snp.makeConstraints {
-            $0.top.equalTo(todayLabel.snp.bottom).offset(10)
-            $0.trailing.equalToSuperview().offset(-45)
+            $0.bottom.equalTo(chartViewTodayView.snp.top)
+            $0.centerX.equalToSuperview().offset(60)
         }
-        //큰글씨레이블어제꺼
+        //큰글씨어제날씨
         yesterdayTemperatureLabel.snp.makeConstraints {
-            $0.top.equalTo(yesterdayLabel.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().offset(55)
+            $0.bottom.equalTo(chartViewYesterdayView.snp.top)
+            $0.centerX.equalToSuperview().offset(-50)
         }
-        
+        //얇은 차트 View
+        chartViewTodayView.snp.makeConstraints {
+            $0.top.equalTo(todayTemperatureLabel).offset(50)
+            $0.bottom.equalTo(todayweatherImageView.snp.top).offset(-10)
+            $0.centerX.equalToSuperview().offset(55)
+            $0.width.equalTo(8)
+            $0.height.equalTo(yesterdayTemperature>todayTemperature ? 100 : 80)
+        }
+        chartViewYesterdayView.snp.makeConstraints {
+            $0.top.equalTo(yesterdayTemperatureLabel).offset(50)
+            $0.bottom.equalTo(yesterdayweatherImageView.snp.top).offset(-10)
+            $0.leading.equalToSuperview().offset(70)
+            $0.width.equalTo(8)
+            $0.height.equalTo(todayTemperature<yesterdayTemperature ? 80 : 100)
+        }
     }
     //MARK: - UI속성
     override func configureUI() {
@@ -129,8 +149,12 @@ class WeatherDisplayViewController: BaseViewController {
         yesterdayHighLowehLabel.font = UIFont.systemFont(ofSize: 12)
         todayTemperatureLabel.font = UIFont.boldSystemFont(ofSize: 30)
         yesterdayTemperatureLabel.font = UIFont.boldSystemFont(ofSize: 30)
-        todayHighLoweLabel.textAlignment = .center
-        yesterdayHighLowehLabel.textAlignment = .center
+        chartViewTodayView.backgroundColor = UIColor(red: 0.8275, green: 0.8275, blue: 0.8275, alpha: 1)
+        chartViewTodayView.layer.cornerRadius = 4
+        chartViewYesterdayView.backgroundColor = UIColor(red: 0.8275, green: 0.8275, blue: 0.8275, alpha: 1)
+        chartViewYesterdayView.layer.cornerRadius = 4
+        todayTemperatureLabel.textAlignment = .center
+        yesterdayTemperatureLabel.textAlignment = .center
     }
     //view의 색상,코너값
     func styleView(_ view: UIView, backgroundColor: UIColor = .white, cornerRadius: CGFloat = 10) {
@@ -141,9 +165,23 @@ class WeatherDisplayViewController: BaseViewController {
 //MARK: - 어제,오늘 날씨데이터
 extension WeatherDisplayViewController {
     
+    func yesterdayDate() -> (String,String) {
+        let now = Date()
+        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: now)!
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let yesterdayDate = dateFormatter.string(from: yesterday)
+        dateFormatter.dateFormat = "HH"
+        let currentHour = dateFormatter.string(from: now)
+        print("전일자구하기",yesterdayDate, currentHour)
+        return (yesterdayDate, currentHour)
+    }
+    
     //어제날씨데이터 가져오기
     func fetchyesterdayweather() {
-        guard let url = URL(string: "http://api.weatherapi.com/v1/history.json?key=c9b70526c91341798a493546241305&q=\(latitude),\(longitude)&dt=2024-05-19&hour=17&lang=ko") else { return }
+        //어제의날짜,현재의시간가져오기
+        let (yesterdayDate, currentHour) = yesterdayDate()
+        guard let url = URL(string: "http://api.weatherapi.com/v1/history.json?key=c9b70526c91341798a493546241305&q=\(latitude),\(longitude)&dt=\(yesterdayDate)&hour=\(currentHour)&lang=ko") else { return }
         let urlRequest = URLRequest(url: url)
         let task = URLSession.shared.dataTask(with: urlRequest) {data, response, error in
             if let error = error {
@@ -159,6 +197,7 @@ extension WeatherDisplayViewController {
             DispatchQueue.main.async {
                 self.yesterdayHighLowehLabel.text = "\(Int(self.forecastday!.day.maxtempC))º \(Int(self.forecastday!.day.mintempC))º"
                 self.yesterdayTemperatureLabel.text = "\(Int(self.forecastday!.day.avgtempC))º"
+                self.yesterdayTemperature = self.forecastday!.day.avgtempC
                 self.yesterdayWeatherLabel.text = "\(self.forecastday!.day.condition.text)"
                 // icon URL에서 파일명 추출
                 let iconUrlString = self.forecastday!.day.condition.icon
@@ -191,6 +230,7 @@ extension WeatherDisplayViewController {
       //이미지랑 레이블정보 띄우는부분
         private func setWeatherUI() {
             todayTemperatureLabel.text = "\(Int(main!.temp))º"
+            todayTemperature = main!.temp
             todayWeatherLabel.text = "\(weather!.description)"
             todayweatherImageView.image = UIImage(named: weather!.icon)
             todayHighLoweLabel.text = "\(Int(main!.tempmax))º \(Int(main!.tempmin))º"

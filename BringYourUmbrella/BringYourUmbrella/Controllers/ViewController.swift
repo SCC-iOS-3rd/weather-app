@@ -9,19 +9,17 @@ class ViewController: BaseViewController {
     var longitude: Double = 0.0
     //우산이미지
     let umbrellaImage = UIImageView()
-    //위치추가 플러스버튼
-    let plusButton = NoHighlightButton(type: .system)
-    //알람버튼
-    let alarmButton = NoHighlightButton(type: .system)
-    //온도버튼
+    //섭씨화씨,알람,플러스버튼
     let temperatureButton = UIButton()
+    let alarmButton = NoHighlightButton(type: .system)
+    let plusButton = NoHighlightButton(type: .system)
+    //버튼들을 스텍뷰로묶음
     let buttonStackView = UIStackView()
     //우산챙겨 Label
     let nameLabel = UILabel()
     let timeLabel = UILabel()
     //현재위치 Label
     let locationLabel = UILabel()
-  
     //모달창부분
     let alphaView = UIView()
     
@@ -34,6 +32,39 @@ class ViewController: BaseViewController {
             pageViewController.setViewControllers([firstVC], direction: .forward, animated: true)
         }
     }
+    
+    //상단 네비게이션뷰
+    let navigationView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red: 0.4039, green: 0.7765, blue: 0.8902, alpha: 1)
+        return view
+    }()
+    
+    lazy var pageViewController: UIPageViewController = {
+        let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+        return vc
+    }()
+    
+    //첫번째 뜨는 뷰(메인)
+    lazy var vc1: MainViewController = {
+        let vc = MainViewController()
+        vc.view.backgroundColor = UIColor(red: 0.4039, green: 0.7765, blue: 0.8902, alpha: 1)
+        return vc
+    }()
+    
+    //왼쪽 뷰(날씨표시)
+    lazy var vc2: WeatherDisplayViewController = {
+        let vc = WeatherDisplayViewController()
+        vc.latitude = latitude
+        vc.longitude = longitude
+        vc.view.backgroundColor = UIColor(red: 0.4039, green: 0.7765, blue: 0.8902, alpha: 1)
+        return vc
+    }()
+
+    lazy var dataViewControllers: [UIViewController] = {
+        return [vc1, vc2]
+    }()
+    
     //MARK: - 오토레이아웃
     override func setupConstraints() {
         [umbrellaImage, nameLabel, buttonStackView, timeLabel, locationLabel].forEach {
@@ -82,7 +113,7 @@ class ViewController: BaseViewController {
         }
         pageViewController.didMove(toParent: self)
     }
-    //MARK: - UI속성
+    //MARK: - UI속성,버튼정보
     override func configureUI() {
         view.backgroundColor = UIColor(red: 0.4039, green: 0.7765, blue: 0.8902, alpha: 1)
         self.navigationController?.isNavigationBarHidden = true
@@ -115,39 +146,6 @@ class ViewController: BaseViewController {
         pageViewController.delegate = self
         pageViewController.dataSource = self
     }
- 
-    //상단 네비게이션뷰
-    let navigationView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(red: 0.4039, green: 0.7765, blue: 0.8902, alpha: 1)
-        return view
-    }()
-    
-    lazy var pageViewController: UIPageViewController = {
-        let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-        return vc
-    }()
-    
-    //첫번째 뜨는 뷰(메인)
-    lazy var vc1: MainViewController = {
-        let vc = MainViewController()
-        vc.view.backgroundColor = UIColor(red: 0.4039, green: 0.7765, blue: 0.8902, alpha: 1)
-        return vc
-    }()
-    
-    //왼쪽 뷰(날씨표시)
-    lazy var vc2: WeatherDisplayViewController = {
-        let vc = WeatherDisplayViewController()
-        vc.latitude = latitude
-        vc.longitude = longitude
-        vc.view.backgroundColor = UIColor(red: 0.4039, green: 0.7765, blue: 0.8902, alpha: 1)
-        return vc
-    }()
-
-    lazy var dataViewControllers: [UIViewController] = {
-        return [vc1, vc2]
-    }()
-    
 }
 //MARK: - 단위변경 모달창
 extension ViewController: BullletinDelegate {
@@ -227,6 +225,7 @@ extension ViewController: LocationDelegate {
         vc2.latitude = latitude
         vc2.longitude = longitude
         vc2.fetchyesterdayweather()
+        updateLocationName()
     }
 }
 //MARK: - 페이지뷰컨트롤러
@@ -248,5 +247,17 @@ extension ViewController: UIPageViewControllerDelegate, UIPageViewControllerData
             return nil
         }
         return dataViewControllers[nextIndex]
+    }
+}
+//MARK: - 현재위치
+extension ViewController {
+    
+    func updateLocationName() {
+        //현재위치명, 아이콘, 온도로 업데이트
+        tranceLocationName(latitude: latitude, longitude: longitude) { locationName in
+            DispatchQueue.main.async {
+                self.locationLabel.text = "\(locationName)"
+            }
+        }
     }
 }

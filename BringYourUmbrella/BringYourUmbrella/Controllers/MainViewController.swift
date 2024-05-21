@@ -64,52 +64,58 @@ class MainViewController: BaseViewController {
         [iconImageView, todayWeatherStackView].forEach {
             todayWeatherView.addSubview($0)
         }
+        //View안에 Label넣기
         highloweTemperatureView.addSubview(highloweViewLabel)
         styleView.addSubview(styleViewLabel)
         weatherDescriptionView.addSubview(weatherDescriptionViewLabel)
-        //뷰 종류4가지 순서대로
+        //오늘날씨View
         todayWeatherView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
             $0.leading.equalToSuperview().offset(20)
             $0.height.equalTo(55)
             $0.width.greaterThanOrEqualTo(todayWeatherStackView.snp.width).offset(20)
         }
+        //최고~최저기온View
         highloweTemperatureView.snp.makeConstraints {
             $0.top.equalTo(todayWeatherView.snp.bottom).offset(20)
             $0.leading.equalToSuperview().offset(20)
             $0.height.equalTo(55)
             $0.width.greaterThanOrEqualTo(highloweViewLabel.snp.width).offset(20)
         }
+        //스타일추천View
         styleView.snp.makeConstraints {
             $0.top.equalTo(highloweTemperatureView.snp.bottom).offset(20)
             $0.leading.equalToSuperview().offset(20)
             $0.height.equalTo(55)
             $0.width.greaterThanOrEqualTo(styleViewLabel.snp.width).offset(20)
         }
+        //날씨정보View
         weatherDescriptionView.snp.makeConstraints {
             $0.top.equalTo(styleView.snp.bottom).offset(20)
             $0.leading.equalToSuperview().offset(20)
             $0.height.equalTo(55)
             $0.width.greaterThanOrEqualTo(weatherDescriptionViewLabel.snp.width).offset(20)
         }
-        //최상단 뷰안에 날씨+온도 스텍뷰
+        //날씨정보 뷰안에 날씨+온도 스텍
         todayWeatherStackView.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: 50, bottom: 0, right: 10))
         }
-        //뷰 순서대로 Label
+        //최고~최저기온Label
         highloweViewLabel.snp.makeConstraints {
             $0.verticalEdges.equalToSuperview().inset(10)
             $0.leading.equalToSuperview().inset(10)
         }
+        //스타일추천View
         styleViewLabel.snp.makeConstraints {
             $0.verticalEdges.equalToSuperview().inset(10)
             $0.leading.equalToSuperview().inset(10)
         }
+        //날씨정보View
         weatherDescriptionViewLabel.snp.makeConstraints {
             $0.verticalEdges.equalToSuperview().inset(10)
             $0.leading.equalToSuperview().inset(10)
         }
-        //최상단 뷰의 날씨이미지
+        //오늘날씨 View의 날씨Icon
         iconImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(10)
             $0.verticalEdges.equalToSuperview().inset(15)
