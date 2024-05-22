@@ -22,6 +22,8 @@ class ViewController: BaseViewController {
     
     //섭씨 화씨 변경 임의값 넣어둔것
     var temperatureInCelsius: Double = 0.0
+    var maxTemperatureInCelsius: Double = 0.0
+    var minTemperatureInCelsius: Double = 0.0
     
     let umbrellaImage = UIImageView()
     let plusButton = NoHighlightButton(type: .system)
@@ -74,6 +76,14 @@ class ViewController: BaseViewController {
         //처음 보여질 페이지
         if let firstVC = dataViewControllers.first {
             pageViewController.setViewControllers([firstVC], direction: .forward, animated: true)
+        }
+        
+        //저장된 위도 경도값이 있는지 확인하는용도
+        if let location = UserDefaults.standard.getLocation() {
+            print("Saved latitude: \(location.latitude)")
+            print("Saved longitude: \(location.longitude)")
+        } else {
+            print("No saved location found")
         }
     }
     //MARK: - 오토레이아웃/vc1 메인 화면
@@ -358,7 +368,8 @@ extension ViewController: BullletinDelegate {
     //단위 버튼타이틀 바뀌는함수
     func didChangeTemperature(unit: String) {
         temperatureButton.setTitle(unit, for: .normal)
-        updateTemperatureLabelvc1()
+        updateTemperatureLabel()
+        //updateTemperatureLabelvc1()
         updateTemperatureLabelvc2()
     }
     
@@ -366,11 +377,17 @@ extension ViewController: BullletinDelegate {
     func updateTemperatureLabelvc1() {
         if temperatureButton.title(for: .normal) == "ºC" {
             temperatureLabel.text = String(format: "%.2fº", temperatureInCelsius)
+            highloweViewLabel.text = "최고 \(String(format: "%.2fº", maxTemperatureInCelsius)) ~ 최저 \(String(format: "%.2fº", minTemperatureInCelsius))"
         } else {
             let temperatureInFahrenheit = temperatureInCelsius * 9 / 5 + 32
             temperatureLabel.text = String(format: "%.2fº", temperatureInFahrenheit)
+            let maxTemperatureInFahrenheit = maxTemperatureInCelsius * 9 / 5 + 32
+            let minTemperatureInFahrenheit = minTemperatureInCelsius * 9 / 5 + 32
+            highloweViewLabel.text = "최고 \(String(format: "%.2fº", maxTemperatureInFahrenheit)) ~ 최저 \(String(format: "%.2fº", minTemperatureInFahrenheit))"
         }
     }
+    
+    
     func updateTemperatureLabelvc2() {
         if temperatureButton.title(for: .normal) == "ºC" {
             todayTemperatureLabel.text = String(format: "%.2fº", temperatureInCelsius)
@@ -380,15 +397,19 @@ extension ViewController: BullletinDelegate {
         }
     }
     
-//    //버튼에맞게 섭씨화씨 변경부분 (뒤에 소수점 짤린버젼)
-//    func updateTemperatureLabel() {
-//        if temperatureButton.title(for: .normal) == "ºC" {
-//            temperatureLabel.text = "\(Int(temperatureInCelsius))ºC"
-//        } else {
-//            let temperatureInFahrenheit = temperatureInCelsius * 9 / 5 + 32
-//            temperatureLabel.text = "\(Int(temperatureInFahrenheit))ºF"
-//        }
-//    }
+    //버튼에맞게 섭씨화씨 변경부분 (뒤에 소수점 짤린버젼)
+    func updateTemperatureLabel() {
+        if temperatureButton.title(for: .normal) == "ºC" {
+            temperatureLabel.text = "\(Int(temperatureInCelsius))ºC"
+            highloweViewLabel.text = "최고 \(Int(maxTemperatureInCelsius))ºC ~ 최저 \(Int(minTemperatureInCelsius))ºC "
+        } else {
+            let temperatureInFahrenheit = temperatureInCelsius * 9 / 5 + 32
+            temperatureLabel.text = "\(Int(temperatureInFahrenheit))ºF"
+            let maxTemperatureInFahrenheit = maxTemperatureInCelsius * 9 / 5 + 32
+            let minTemperatureInFahrenheit = minTemperatureInCelsius * 9 / 5 + 32
+            highloweViewLabel.text = "최고 \(Int(maxTemperatureInFahrenheit))ºF ~ 최저 \(Int(minTemperatureInFahrenheit))ºF "
+        }
+    }
 }
 //MARK: - 시간표시
 extension ViewController {
@@ -486,12 +507,20 @@ extension ViewController: CLLocationManagerDelegate {
     }
       //이미지랑 레이블정보 띄우는부분
         private func setWeatherUI() {
+            //현재위치명 업데이트
+            tranceLocationName(latitude: latitude, longitude: longitude) { locationName in
+                DispatchQueue.main.async {
+                    self.locationLabel.text = "\(locationName)"
+                }
+            }
             temperatureInCelsius = main!.temp
+            maxTemperatureInCelsius = main!.tempmax
+            minTemperatureInCelsius = main!.tempmin
             iconImageView.image = UIImage(named: weather!.icon)
             todayWeatherViewLabel.text = "\(weather!.description)"
-            temperatureLabel.text = "\(main!.temp)º"
+            temperatureLabel.text = "\(Int(main!.temp))º"
             todayTemperatureLabel.text = "\(main!.temp)º"
-            highloweViewLabel.text = "최고 \(main!.tempmax)º ~ 최저 \(main!.tempmin)º"
+            highloweViewLabel.text = "최고 \(Int(main!.tempmax))º ~ 최저 \(Int(main!.tempmin))º"
             styleViewLabel.text = styleRecommend()
             weatherDescriptionViewLabel.text = informationRecommend()
             //날씨표시 페이지
