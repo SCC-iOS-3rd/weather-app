@@ -116,26 +116,11 @@ class LocationViewController: UIViewController {
     
     private func setNewVCWeatherUI() {
         temperatureInCelsius = main!.temp
-        guard let weatherIcon = weather?.icon else { return }
-        guard let url = URL(string: "https://openweathermap.org/img/wn/\(weatherIcon)@2x.png") else { return }
-        
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else {
-                print("Failed to fetch image data: \(error?.localizedDescription ?? "Unknown error")")
-                return
-            }
-            
-            DispatchQueue.main.async {
-                if let image = UIImage(data: data) {
-                    self.locationView.todayweatherImageView.image = image
-                }
-            }
-        }
-        task.resume()
-        
         DispatchQueue.main.async {
+            if let image = UIImage(named: self.weather!.icon) {
+                self.locationView.iconImageView.image = image
+                    }
             self.temperatureInCelsius = self.main!.temp
-            self.locationView.iconImageView.image = UIImage(named: self.weather!.icon)
             self.locationView.todayWeatherViewLabel.text = "\(self.weather!.description)"
             self.locationView.temperatureLabel.text = "\(Int(self.main!.temp))º"
             self.locationView.todayTemperatureLabel.text = "\(self.main!.temp)º"

@@ -98,24 +98,10 @@ class NewLocationPreviewViewController: BaseViewController {
     
     private func setWeatherUI() {
         temperatureInCelsius = main!.temp
-        guard let weatherIcon = weather?.icon else { return }
-        guard let url = URL(string: "https://openweathermap.org/img/wn/\(weatherIcon)@2x.png") else { return }
-        
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else {
-                print("Failed to fetch image data: \(error?.localizedDescription ?? "Unknown error")")
-                return
-            }
-            
-            DispatchQueue.main.async {
-                if let image = UIImage(data: data) {
-                    self.iconImageView.image = image
-                }
-            }
-        }
-        task.resume()
-        
         DispatchQueue.main.async {
+            if let image = UIImage(named: self.weather!.icon) {
+                self.iconImageView.image = image
+            }
             self.todayWeatherViewLabel.text = "\(self.weather!.description)"
             self.temperatureLabel.text = "\(Int(self.main!.temp))º"
             self.highloweViewLabel.text = "최고 \(Int(self.main!.tempmax))º ~ 최저 \(Int(self.main!.tempmin))º"
