@@ -14,7 +14,7 @@ class LocationViewController: UIViewController {
     // MARK: - properties
     var viewControllersList = [UIViewController]()
     var currentViewController: UIViewController?
-    let mainView = MainView()
+    let locationView = LocationView()
     let weatherService = WeatherService()
     let locationService = LocationService()
     let viewController = ViewController()
@@ -52,10 +52,18 @@ class LocationViewController: UIViewController {
             }
         }
         swipefunc()
+        updateLocationName()
+        setAddTarget()
     }
     
     override func loadView() {
-        self.view = mainView
+        self.view = locationView
+    }
+    
+    private func setAddTarget() {
+        locationView.temperatureButton.addTarget(self, action: #selector(temperatureChange), for: .touchUpInside)
+        locationView.alarmButton.addTarget(self, action: #selector(alarmButtonMove), for: .touchUpInside)
+        locationView.plusButton.addTarget(self, action: #selector(plusButtonMove), for: .touchUpInside)
     }
     
     func styleRecommend() -> String {
@@ -119,7 +127,7 @@ class LocationViewController: UIViewController {
             
             DispatchQueue.main.async {
                 if let image = UIImage(data: data) {
-                    self.mainView.todayweatherImageView.image = image
+                    self.locationView.todayweatherImageView.image = image
                 }
             }
         }
@@ -127,19 +135,18 @@ class LocationViewController: UIViewController {
         
         DispatchQueue.main.async {
             self.temperatureInCelsius = self.main!.temp
-            self.mainView.iconImageView.image = UIImage(named: self.weather!.icon)
-            self.mainView.todayWeatherViewLabel.text = "\(self.weather!.description)"
-            self.mainView.temperatureLabel.text = "\(Int(self.main!.temp))º"
-            self.mainView.todayTemperatureLabel.text = "\(self.main!.temp)º"
-            self.mainView.highloweViewLabel.text = "최고 \(Int(self.main!.tempmax))º ~ 최저 \(Int(self.main!.tempmin))º"
-            self.mainView.todayWeatherLabel.text = "\(self.weather!.description)"
-            self.mainView.todayHighLoweLabel.text = "\(Int(self.main!.tempmax))º \(Int(self.main!.tempmin))º"
+            self.locationView.iconImageView.image = UIImage(named: self.weather!.icon)
+            self.locationView.todayWeatherViewLabel.text = "\(self.weather!.description)"
+            self.locationView.temperatureLabel.text = "\(Int(self.main!.temp))º"
+            self.locationView.todayTemperatureLabel.text = "\(self.main!.temp)º"
+            self.locationView.highloweViewLabel.text = "최고 \(Int(self.main!.tempmax))º ~ 최저 \(Int(self.main!.tempmin))º"
+            self.locationView.todayWeatherLabel.text = "\(self.weather!.description)"
+            self.locationView.todayHighLoweLabel.text = "\(Int(self.main!.tempmax))º \(Int(self.main!.tempmin))º"
             
         }
-        mainView.weatherDescriptionViewLabel.text = informationRecommend()
-        mainView.styleViewLabel.text = styleRecommend()
-//        mainView.locationLabel.text = locationName
-        mainView.timeLabel.text = viewController.datefunc()
+        locationView.weatherDescriptionViewLabel.text = informationRecommend()
+        locationView.styleViewLabel.text = styleRecommend()
+        locationView.timeLabel.text = viewController.datefunc()
     }
     
     func swipefunc() {
@@ -179,4 +186,57 @@ class LocationViewController: UIViewController {
         self.navigationController?.view.layer.add(transition, forKey: kCATransition)
       }
     
+    func updateLocationName() {
+        //현재위치명, 아이콘, 온도로 업데이트
+        tranceLocationName(latitude: latitude, longitude: longitude) { locationName in
+            DispatchQueue.main.async {
+                self.locationView.locationLabel.text = "\(locationName)"
+            }
+        }
+    }
+}
+
+extension LocationViewController: BullletinDelegate {
+
+    //단위변경모달창작업
+    @objc func temperatureChange(sender: UIButton) {
+        let modalVC = ModalViewController.instance()
+        modalVC.delegate = self
+        screenAlpha()
+        present(modalVC, animated: true)
+    }
+    private func screenAlpha() {
+        view.addSubview(locationView.alphaView)
+        locationView.alphaView.snp.makeConstraints {
+            $0.edges.equalTo(0)
+        }
+        DispatchQueue.main.async { [weak self] in
+            self?.locationView.alphaView.alpha = 0.2
+        }
+    }
+    private func removeAlpha() {
+        DispatchQueue.main.async { [weak self] in
+            self?.locationView.alphaView.removeFromSuperview()
+        }
+    }
+    static func instance() -> LocationViewController {
+        return LocationViewController(nibName: nil, bundle: nil)
+    }
+    func onTapClose() {
+        self.removeAlpha()
+    }
+    //단위 버튼타이틀 바뀌는함수
+    func didChangeTemperature(unit: String) {
+        locationView.temperatureButton.setTitle(unit, for: .normal)
+        self.updateTemperatureLabel(unit: unit)
+    }
+    
+    func updateTemperatureLabel(unit: String) {
+        if unit == "ºC" {
+            locationView.temperatureLabel.text = "\(Int(temperatureInCelsius))º"
+        } else {
+            let temperatureInFahrenheit = Int(temperatureInCelsius * 9 / 5 + 32)
+            locationView.temperatureLabel.text = "\(temperatureInFahrenheit)º"
+        }
+    }
 }

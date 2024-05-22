@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class MainView: UIView {
+class LocationView: UIView {
     
     let umbrellaImage = UIImageView()
     let plusButton = NoHighlightButton(type: .system)
