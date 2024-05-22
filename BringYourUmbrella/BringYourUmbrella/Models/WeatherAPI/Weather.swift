@@ -43,3 +43,4 @@ struct Sys: Decodable {
     let sunrise: Int
     let sunset: Int
 }
+
