@@ -180,11 +180,12 @@ extension LocationManagementViewContorller: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = locationManagerView.favoritesTableView.cellForRow(at: indexPath) as? LocationManagementViewTableViewCell else { return }
         let selectedLocation = locationList[indexPath.row]
-        let mainVC = ViewController()
-        mainVC.latitude = selectedLocation.latitude
-        mainVC.longitude = selectedLocation.longitude
+        let movedVC = LocationViewController()
+        movedVC.locationName = selectedLocation.cityTitle ?? "현재 위치"
+        movedVC.latitude = selectedLocation.latitude
+        movedVC.longitude = selectedLocation.longitude
         
-        navigationController?.pushViewController(mainVC, animated: true)
+        navigationController?.pushViewController(movedVC, animated: true)
     }
 }
 

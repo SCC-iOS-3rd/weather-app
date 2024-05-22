@@ -13,6 +13,7 @@ class LocationManagementViewTableViewCell: UITableViewCell {
     // MARK: - properties
     static let identifier = String(describing: LocationManagementViewTableViewCell.self)
     let weatherService = WeatherService()
+    var locationName: String = ""
     
     let favoritesView: UIView = {
         let fv = UIView()
