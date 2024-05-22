@@ -16,35 +16,30 @@ class HourlyWeatherCollectionViewCell : UICollectionViewCell {
     // MARK: - UI properties
     private let temperatureLabel : UILabel = {
         let label = UILabel()
-        label.text = "ºC" // 현재 온도
+        label.text = "22º" // 현재 온도
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         return label
     }()
 
     private let barGraphView : UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 0.8275, green: 0.8275, blue: 0.8275, alpha: 1)
+        view.backgroundColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1.0)
+        view.layer.cornerRadius = 4
         return view
     }()
     
     private let weatherImageView : UIImageView = {
         let imageView = UIImageView()
+        imageView.image = UIImage(named: "01d")
         return imageView
     }()
     
     private let timePassageLabel : UILabel = {
         let label = UILabel()
-        label.text = ""
+        label.text = "지금"
+        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
         return label
     }()
-    
-//    private lazy var stackView : UIStackView = {
-//        let stview = UIStackView(arrangedSubviews: [temperatureLabel, barGraphView, weatherImageView, timePassageLabel])
-//        stview.spacing = 5
-//        stview.axis = .vertical
-//        stview.distribution = .fill
-//        return stview
-//    }()
     
     // MARK: - init
     override init(frame: CGRect) {
@@ -59,7 +54,7 @@ class HourlyWeatherCollectionViewCell : UICollectionViewCell {
     }
     
     private func setUp() {
-        
+        self.contentView.backgroundColor = .clear
     }
     
     private func configureConstraints() {
@@ -67,33 +62,33 @@ class HourlyWeatherCollectionViewCell : UICollectionViewCell {
             addSubview($0)
         }
         timePassageLabel.snp.makeConstraints {
-            $0.bottom.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(-8)
             $0.centerX.equalToSuperview()
         }
         weatherImageView.snp.makeConstraints {
-            $0.bottom.equalTo(timePassageLabel.snp.top).offset(-10)
+            $0.bottom.equalTo(timePassageLabel.snp.top).offset(-8)
             $0.centerX.equalToSuperview()
+            $0.width.height.equalTo(25)
         }
         barGraphView.snp.makeConstraints {
-            $0.bottom.equalTo(weatherImageView.snp.top).offset(-10)
+            $0.bottom.equalTo(weatherImageView.snp.top).offset(-8)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(2)
+            $0.width.equalTo(8)
             $0.height.equalTo(100)
         }
         temperatureLabel.snp.makeConstraints {
-            $0.bottom.equalTo(barGraphView.snp.top).offset(-10)
+            $0.bottom.equalTo(barGraphView.snp.top).offset(-8)
             $0.centerX.equalToSuperview()
         }
     }
+
     
+    // MARK: - methods
 //    private func graphHeightControl() {
 //        switch barGraphView {
 //
 //        }
 //    }
-    
-    // MARK: - methods
-
     
     
 }

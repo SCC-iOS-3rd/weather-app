@@ -13,6 +13,16 @@ class WeeklyWeatherCollectionViewCell: UICollectionViewCell {
     // MARK: - properties
     static let identifier = String(describing: WeeklyWeatherCollectionViewCell.self)
     
+    //api
+    let weatherService = WeatherService()
+    var weather: Weather?
+    var sys: Sys?
+    var main: Main?
+    var name: String?
+    //위도 경도
+    var latitude: Double = 0.0
+    var longitude: Double = 0.0
+    
     let daysLabel: UILabel = {
         let tl = UILabel()
         tl.text = "오늘"
@@ -104,4 +114,25 @@ class WeeklyWeatherCollectionViewCell: UICollectionViewCell {
             $0.height.equalTo(20)
         }
     }
+    
+    private func forecastWeatherData() {
+        weatherService.getForecastWeather(latitude: latitude, longitude: longitude) { result in
+            switch result {
+            case .success(let weatherResponse):
+                DispatchQueue.main.async {
+                    self.weather = weatherResponse.weather.first
+                    self.main = weatherResponse.main
+                    self.name = weatherResponse.name
+                    self.setWeatherData()
+                }
+            case .failure(let error):
+                print("Error : \(error)")
+            }
+        }
+    }
+    
+    private func setWeatherData() {
+        
+    }
+    
 }

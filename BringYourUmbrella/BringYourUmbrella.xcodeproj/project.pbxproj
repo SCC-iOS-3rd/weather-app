@@ -238,10 +238,10 @@
 				4D56DC292BF2FCF8008EB3E2 /* LocationManagementViewTableViewCell.swift */,
 				DED585822BF60D8500D1D8FE /* WeatherChangeView.swift */,
 				DEC023CF2BFC40D700904795 /* HourlyWeatherCollectionViewCell.swift */,
+				4D00E43E2BFE304B00033427 /* WeeklyWeatherCollectionViewCell.swift */,
 				4D6AF87F2BFB58EF00F0BCE0 /* LocationView.swift */,
 				CA8D11272BFDE5550031E5A1 /* SplashScreen.swift */,
 				CA8D112B2BFE10B40031E5A1 /* Animation0522.json */,
-				4D00E43E2BFE304B00033427 /* WeeklyWeatherCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

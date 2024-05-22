@@ -54,13 +54,6 @@ class WeatherChangeView : UIView {
     
     private let divisionLineView : UIView = {
         let view = UIView()
-        return view
-    }()
-    
-
-    
-    private let divisionLineView : UIView = {
-        let view = UIView()
         view.layer.borderColor = UIColor.black.cgColor
         view.layer.borderWidth = 2
         return view
@@ -118,7 +111,7 @@ class WeatherChangeView : UIView {
         hourlyCollectionView.snp.makeConstraints {
             $0.top.equalTo(hourlyWeatherLabel.snp.bottom).offset(15)
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(180)
+            $0.height.equalTo(200)
             $0.width.equalTo(343)
         }
         divisionLineView.snp.makeConstraints {
@@ -135,7 +128,7 @@ class WeatherChangeView : UIView {
         weeklyCollectionView.snp.makeConstraints {
             $0.top.equalTo(weeklyWeatherLabel.snp.bottom).offset(15)
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(180)
+            $0.height.equalTo(200)
             $0.width.equalTo(343)
         }
     }
@@ -156,9 +149,6 @@ class WeatherChangeView : UIView {
         
     }
     
-//    private func Constraints() {
-//        
-//    }
     
     // MARK: - <#내용입력#>
     
