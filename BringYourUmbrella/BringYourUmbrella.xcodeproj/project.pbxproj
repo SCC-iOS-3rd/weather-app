@@ -38,7 +38,7 @@
 		CA61F8932BFD8DAA004F7B47 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA61F8922BFD8DAA004F7B47 /* UserDefaults.swift */; };
 		CA8D11262BFDE50D0031E5A1 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = CA8D11252BFDE50D0031E5A1 /* Lottie */; };
 		CA8D11282BFDE5550031E5A1 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8D11272BFDE5550031E5A1 /* SplashScreen.swift */; };
-		CA8D112A2BFDEA780031E5A1 /* Animation0522.json in Resources */ = {isa = PBXBuildFile; fileRef = CA8D11292BFDEA780031E5A1 /* Animation0522.json */; };
+		CA8D112C2BFE10B40031E5A1 /* Animation0522.json in Resources */ = {isa = PBXBuildFile; fileRef = CA8D112B2BFE10B40031E5A1 /* Animation0522.json */; };
 		DE0C998B2BF1DC690059C655 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0C998A2BF1DC690059C655 /* AppDelegate.swift */; };
 		DE0C998D2BF1DC690059C655 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0C998C2BF1DC690059C655 /* SceneDelegate.swift */; };
 		DE0C998F2BF1DC690059C655 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0C998E2BF1DC690059C655 /* ViewController.swift */; };
@@ -101,7 +101,7 @@
 		CA61F82A2BF7543F004F7B47 /* Geocoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geocoder.swift; sourceTree = "<group>"; };
 		CA61F8922BFD8DAA004F7B47 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		CA8D11272BFDE5550031E5A1 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
-		CA8D11292BFDEA780031E5A1 /* Animation0522.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Animation0522.json; path = ../../../../../../Downloads/Animation0522.json; sourceTree = "<group>"; };
+		CA8D112B2BFE10B40031E5A1 /* Animation0522.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Animation0522.json; path = BringYourUmbrella/Animation0522.json; sourceTree = SOURCE_ROOT; };
 		DE0C99872BF1DC690059C655 /* BringYourUmbrella.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BringYourUmbrella.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE0C998A2BF1DC690059C655 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE0C998C2BF1DC690059C655 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -226,7 +226,7 @@
 				4D56DC292BF2FCF8008EB3E2 /* LocationManagementViewTableViewCell.swift */,
 				4D6AF87F2BFB58EF00F0BCE0 /* LocationView.swift */,
 				CA8D11272BFDE5550031E5A1 /* SplashScreen.swift */,
-				CA8D11292BFDEA780031E5A1 /* Animation0522.json */,
+				CA8D112B2BFE10B40031E5A1 /* Animation0522.json */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -345,7 +345,7 @@
 				DE0C99972BF1DC6D0059C655 /* Assets.xcassets in Resources */,
 				DE0C999A2BF1DC6D0059C655 /* Base in Resources */,
 				DE0C99922BF1DC690059C655 /* Base in Resources */,
-				CA8D112A2BFDEA780031E5A1 /* Animation0522.json in Resources */,
+				CA8D112C2BFE10B40031E5A1 /* Animation0522.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
