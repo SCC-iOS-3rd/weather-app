@@ -248,6 +248,7 @@ extension WeatherDisplayViewController {
             let yesterdayTemperatureInFahrenheit = Int(forecastday!.day.avgtempC * 9 / 5 + 32)
             todayTemperatureLabel.text = "\(temperatureInFahrenheit)º"
             yesterdayTemperatureLabel.text = "\(yesterdayTemperatureInFahrenheit)º"
+
         }
     }
 }
