@@ -1,6 +1,7 @@
 
 import UIKit
 import SnapKit
+import Lottie
 
 class ViewController: BaseViewController {
  
@@ -31,6 +32,9 @@ class ViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupAnimationView()
+        
         vc1.locationDelegate = self
         //처음 보여질 페이지
         if let firstVC = dataViewControllers.first {
@@ -45,6 +49,31 @@ class ViewController: BaseViewController {
             print("No saved location found")
         }
     }
+    
+    
+    //런치스크린
+    func setupAnimationView() {
+            view.addSubview(animationView)
+            
+            animationView.frame = view.bounds
+            animationView.center = view.center
+            animationView.contentMode = .scaleAspectFill
+            animationView.loopMode = .playOnce
+            
+            animationView.play { (finished) in
+                if finished {
+                    UIView.animate(withDuration: 0.3, animations: {
+                       animationView.alpha = 0
+                    }, completion: { _ in
+                        animationView.isHidden = true
+                        animationView.removeFromSuperview()
+                    })
+                } else {
+                    print("Animation interrupted")
+                }
+            }
+        }
+    
     
     //상단 네비게이션뷰
     let navigationView: UIView = {
