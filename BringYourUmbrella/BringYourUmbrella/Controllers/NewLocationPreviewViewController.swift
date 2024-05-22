@@ -19,7 +19,7 @@ class NewLocationPreviewViewController: BaseViewController {
     //코어데이터
     let locationService = LocationService()
     
-    let mainViewController = ViewController()
+    let mainViewController = MainViewController()
     
     var temperatureInCelsius: Double = 0.0
     
