@@ -159,6 +159,8 @@ class ViewController: BaseViewController {
         pageViewController.delegate = self
         pageViewController.dataSource = self
     }
+    
+    
 }
 //MARK: - 단위변경 모달창
 extension ViewController: BullletinDelegate {
