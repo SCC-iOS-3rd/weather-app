@@ -34,6 +34,7 @@ class HourlyWeatherCollectionViewCell : UICollectionViewCell {
     
     private let timePassageLabel : UILabel = {
         let label = UILabel()
+        label.text = ""
         return label
     }()
     
@@ -65,11 +66,30 @@ class HourlyWeatherCollectionViewCell : UICollectionViewCell {
         [temperatureLabel, barGraphView, weatherImageView, timePassageLabel].forEach {
             addSubview($0)
         }
-        
+        timePassageLabel.snp.makeConstraints {
+            $0.bottom.equalToSuperview()
+            $0.centerX.equalToSuperview()
+        }
+        weatherImageView.snp.makeConstraints {
+            $0.bottom.equalTo(timePassageLabel.snp.top).offset(-10)
+            $0.centerX.equalToSuperview()
+        }
+        barGraphView.snp.makeConstraints {
+            $0.bottom.equalTo(weatherImageView.snp.top).offset(-10)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(2)
+            $0.height.equalTo(100)
+        }
+        temperatureLabel.snp.makeConstraints {
+            $0.bottom.equalTo(barGraphView.snp.top).offset(-10)
+            $0.centerX.equalToSuperview()
+        }
     }
     
-//    private func stackViewConstraints() {
-//        
+//    private func graphHeightControl() {
+//        switch barGraphView {
+//
+//        }
 //    }
     
     // MARK: - methods

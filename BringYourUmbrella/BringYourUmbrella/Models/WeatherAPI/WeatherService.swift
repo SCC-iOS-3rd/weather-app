@@ -39,4 +39,26 @@ class WeatherService {
             }
         }.resume() // 이 dataTask 시작
     }
+    
+    func getForecastWeather(latitude: Double, longitude: Double, completion: @escaping(Result<WeatherResponse, NetworkError>) -> Void) {
+        
+        let urlString = "https://api.openweathermap.org/data/2.5/forecast?lat=\(latitude)&lon=\(longitude)&appid=a4094dddc54b82d889eea64f442c3280&units=metric&lang=kr"
+        
+        guard let url = URL(string: urlString) else {
+            return completion(.failure(.badUrl))
+        }
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, error == nil else {
+                return completion(.failure(.noData))
+            }
+            
+            if let weatherResponse = try? JSONDecoder().decode(WeatherResponse.self, from: data) {
+                print(weatherResponse)
+                completion(.success(weatherResponse))
+            } else {
+                completion(.failure(.decodingError))
+            }
+        }.resume()
+    }
 }

@@ -52,12 +52,10 @@ class WeatherChangeView : UIView {
         return label
     }()
     
-    
-
-    
-//    private let divisionLineView : UIView = {
-//        let view
-//    }()
+    private let divisionLineView : UIView = {
+        let view = UIView()
+        return view
+    }()
     
     // MARK: - 주간 날씨(5d)
     private let weeklyWeatherLabel : UILabel = {
