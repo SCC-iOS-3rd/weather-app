@@ -52,7 +52,7 @@ class ViewController: BaseViewController {
         return vc
     }()
     
-    //왼쪽 뷰(날씨표시)
+    //왼쪽 1번째 뷰(날씨표시)
     lazy var vc2: WeatherDisplayViewController = {
         let vc = WeatherDisplayViewController()
         vc.latitude = latitude
@@ -60,9 +60,18 @@ class ViewController: BaseViewController {
         vc.view.backgroundColor = UIColor(red: 0.4039, green: 0.7765, blue: 0.8902, alpha: 1)
         return vc
     }()
+    
+    //왼쪽 2번째 뷰(날씨차트)
+    lazy var vc3: WeatherChangeViewController = {
+        let vc = WeatherChangeViewController()
+        vc.latitude = latitude
+        vc.longitude = longitude
+//        vc.view.backgroundColor = UIColor(red: 0.4039, green: 0.7765, blue: 0.8902, alpha: 1)
+        return vc
+    }()
 
     lazy var dataViewControllers: [UIViewController] = {
-        return [vc1, vc2]
+        return [vc1, vc2, vc3]
     }()
     
     //MARK: - 오토레이아웃
