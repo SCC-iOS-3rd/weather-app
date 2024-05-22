@@ -1,5 +1,5 @@
 {
-  "originHash" : "832902a74f4c48d2aaf0793cad2b3c8743f784d295021fe9efe86247c045b51c",
+  "originHash" : "38b225e8c3dd2cc4a331efff89d969c39b4651b2684c40324f84f962dc770a59",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -11,12 +11,12 @@
       }
     },
     {
-      "identity" : "charts",
+      "identity" : "lottie-spm",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ChartsOrg/Charts",
+      "location" : "https://github.com/airbnb/lottie-spm.git",
       "state" : {
-        "revision" : "dd9c72e3d7e751e769971092a6bd72d39198ae63",
-        "version" : "5.1.0"
+        "revision" : "1d29eccc24cc8b75bff9f6804155112c0ffc9605",
+        "version" : "4.4.3"
       }
     },
     {
