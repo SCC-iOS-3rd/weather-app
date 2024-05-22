@@ -44,8 +44,9 @@ class NewLocationPreviewViewController: BaseViewController {
     
     let umbrellaImage = UIImageView() //LOGO
     let nameLabel = UILabel() //"우산챙겨"
-    let timeLabel = UILabel() //"5/13 (월) 11:44 AM"
+    let timeLabel = UILabel() //"5/13 (월) 11:44 AM" 코
     
+    let xButton = UIButton() //모달창 닫기 버튼
     
     let locationLabel = UILabel() // 현재 위치
     
@@ -115,7 +116,7 @@ class NewLocationPreviewViewController: BaseViewController {
     //MARK: - 레이아웃, addSubview
     
     override func setupConstraints() {
-        [umbrellaImage, nameLabel, timeLabel, locationLabel, todayWeatherView, highloweTemperatureView, styleView, weatherDescriptionView, addNewLocationButton].forEach {
+        [umbrellaImage, nameLabel, timeLabel, locationLabel, todayWeatherView, highloweTemperatureView, styleView, weatherDescriptionView, addNewLocationButton, xButton].forEach {
             view.addSubview($0)
         }
         [todayWeatherViewLabel, temperatureLabel].forEach {
@@ -197,6 +198,10 @@ class NewLocationPreviewViewController: BaseViewController {
             make.bottom.equalToSuperview().offset(-60)
             make.height.equalTo(47)
         }
+        xButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(20)
+            make.trailing.equalToSuperview().offset(-20)
+        }
     }
     
     //MARK: - UI 속성
@@ -244,6 +249,7 @@ class NewLocationPreviewViewController: BaseViewController {
         alphaView.alpha = 0
         
         addNewLocationButton.addTarget(self, action: #selector(addNewLocationButtonAction), for: .touchUpInside)
+        xButton.addTarget(self, action: #selector(dismissModal), for: .touchUpInside)
     }
     
     //뷰 스타일 양식
@@ -363,10 +369,15 @@ class NewLocationPreviewViewController: BaseViewController {
 //        print(mainViewController.dataViewControllers)
         
         let mainPageVC = ViewController()
-        //self.navigationController?.pushViewController(mainPageVC, animated: true)
+//        self.navigationController?.pushViewController(mainPageVC, animated: true)
         let navigationController = UINavigationController(rootViewController: mainPageVC)
         UIApplication.shared.windows.first?.rootViewController = navigationController
         UIApplication.shared.windows.first?.makeKeyAndVisible()
+    }
+    
+    //x버튼 액션 함수
+    @objc func dismissModal() {
+        dismiss(animated: true, completion: nil)
     }
 }
 //시간표시 함수

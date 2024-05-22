@@ -91,7 +91,7 @@ private func fetchLocations() {
     let context = persistentContainer.viewContext
     // 코어데이터 생성 후 Entity의 이름으로 변경해줄것
     let fetchRequest: NSFetchRequest<Location> = Location.fetchRequest()
-    
+  
     do {
         locationList = try context.fetch(fetchRequest)
     } catch {
