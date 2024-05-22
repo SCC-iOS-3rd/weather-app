@@ -13,11 +13,13 @@ import CoreData
 
 class NewLocationPreviewViewController: BaseViewController {
     
-   // MARK: - 프로퍼티
+    // MARK: - 프로퍼티
     //api
     let weatherService = WeatherService()
     //코어데이터
     let locationService = LocationService()
+    
+    let mainViewController = MainViewController()
     
     var temperatureInCelsius: Double = 0.0
     
@@ -25,7 +27,7 @@ class NewLocationPreviewViewController: BaseViewController {
     var latitude: Double = 0.0
     var longitude: Double = 0.0
     var locationName: String = ""
-
+    
     
     // 받아온 데이터를 저장할 프로퍼티
     var weather: Weather?
@@ -67,9 +69,9 @@ class NewLocationPreviewViewController: BaseViewController {
     let addNewLocationButton = UIButton()
     //모달창부분
     let alphaView = UIView()
-     
     
-   // MARK: - viewDidLoad
+    
+    // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         sv = UIViewController.displaySpinner(onView: self.view)
@@ -92,27 +94,21 @@ class NewLocationPreviewViewController: BaseViewController {
         
     }
     
-
+    
     // MARK: - setWeatherUI
     
     private func setWeatherUI() {
-        //현재위치명 업데이트
-        tranceLocationName(latitude: latitude, longitude: longitude) { locationName in
-            DispatchQueue.main.async {
-                self.locationLabel.text = "\(locationName)"
-            }
-        }
-        //날씨정보 업데이트
         temperatureInCelsius = main!.temp
-        let url = URL(string: "https://openweathermap.org/img/wn/\(self.weather?.icon ?? "00")@2x.png")
-        let data = try? Data(contentsOf: url!)
-        if let data = data {
-            iconImageView.image = UIImage(named: weather!.icon)
+        DispatchQueue.main.async {
+            if let image = UIImage(named: self.weather!.icon) {
+                self.iconImageView.image = image
+            }
+            self.todayWeatherViewLabel.text = "\(self.weather!.description)"
+            self.temperatureLabel.text = "\(Int(self.main!.temp))º"
+            self.highloweViewLabel.text = "최고 \(Int(self.main!.tempmax))º ~ 최저 \(Int(self.main!.tempmin))º"
         }
-        todayWeatherViewLabel.text = "\(weather!.description)"
-        temperatureLabel.text = "\(Int(main!.temp))ºC "
-        highloweViewLabel.text = "최고 \(Int(main!.tempmax))ºC ~ 최저 \(Int(main!.tempmin))ºC "
-        
+        self.styleViewLabel.text = mainViewController.styleRecommend()
+        self.weatherDescriptionViewLabel.text = mainViewController.informationRecommend()
         self.sv.removeFromSuperview()
     }//func setWeatherUI()
     
@@ -215,7 +211,7 @@ class NewLocationPreviewViewController: BaseViewController {
         umbrellaImage.image = UIImage(systemName: "umbrella")
         umbrellaImage.tintColor = .white
         
-    
+        
         todayWeatherStackView.spacing = 10
         todayWeatherStackView.distribution = .equalSpacing
         styleView(todayWeatherView)
@@ -230,7 +226,7 @@ class NewLocationPreviewViewController: BaseViewController {
         locationLabel.text = "현재 위치"
         locationLabel.textColor = .white
         locationLabel.font = UIFont.boldSystemFont(ofSize: 20)
-      
+        
         // 날씨 정보 label
         //1. 오늘의 날씨
         iconImageView.contentMode = .scaleAspectFit
@@ -248,15 +244,10 @@ class NewLocationPreviewViewController: BaseViewController {
         addNewLocationButton.setTitle("추가", for: .normal)
         addNewLocationButton.setTitleColor(.white, for: .normal)
         addNewLocationButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
-      
-        xButton.setTitle("X", for: .normal)
-        xButton.setTitleColor(.white, for: .normal)
-        xButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
-        
         
         alphaView.backgroundColor = .black
         alphaView.alpha = 0
-      
+        
         addNewLocationButton.addTarget(self, action: #selector(addNewLocationButtonAction), for: .touchUpInside)
         xButton.addTarget(self, action: #selector(dismissModal), for: .touchUpInside)
     }
@@ -270,6 +261,112 @@ class NewLocationPreviewViewController: BaseViewController {
     //추가 버튼 액션 함수
     @objc func addNewLocationButtonAction() {
         locationService.saveLocation(cityTitle: locationName, latitude: latitude, longitude: longitude)
+//        let newVC = UIViewController()
+//        let mainView = MainView()
+//        newVC.view = mainView
+//        
+//        func setNewVCWeatherUI() {
+//            temperatureInCelsius = main!.temp
+//            guard let weatherIcon = weather?.icon else { return }
+//            guard let url = URL(string: "https://openweathermap.org/img/wn/\(weatherIcon)@2x.png") else { return }
+//            
+//            let task = URLSession.shared.dataTask(with: url) { data, response, error in
+//                guard let data = data, error == nil else {
+//                    print("Failed to fetch image data: \(error?.localizedDescription ?? "Unknown error")")
+//                    return
+//                }
+//                
+//                DispatchQueue.main.async {
+//                    if let image = UIImage(data: data) {
+//                        mainView.todayweatherImageView.image = image
+//                    }
+//                }
+//            }
+//            task.resume()
+//            
+//            DispatchQueue.main.async {
+//                self.temperatureInCelsius = self.main!.temp
+//                mainView.iconImageView.image = UIImage(named: self.weather!.icon)
+//                mainView.todayWeatherViewLabel.text = "\(self.weather!.description)"
+//                mainView.temperatureLabel.text = "\(self.main!.temp)º"
+//                mainView.todayTemperatureLabel.text = "\(self.main!.temp)º"
+//                mainView.highloweViewLabel.text = "최고 \(self.main!.tempmax)º ~ 최저 \(self.main!.tempmin)º"
+//                mainView.todayWeatherLabel.text = "\(self.weather!.description)"
+//                mainView.todayHighLoweLabel.text = "\(self.main!.tempmax)º \(self.main!.tempmin)º"
+//                
+//            }
+//            mainView.weatherDescriptionViewLabel.text = informationRecommend()
+//            mainView.styleViewLabel.text = styleRecommend()
+//            
+//            func datefunc() -> String {
+//                let date = Date()
+//                let dateFormatterKR = DateFormatter()
+//                dateFormatterKR.dateFormat = "M/dd (E) HH:mm"
+//                dateFormatterKR.locale = Locale(identifier: "ko_KR")
+//                dateFormatterKR.timeZone = TimeZone(abbreviation: "KST")
+//                let datePart = dateFormatterKR.string(from: date)
+//                
+//                let dateFormatterDefault = DateFormatter()
+//                dateFormatterDefault.dateFormat = "a"
+//                dateFormatterDefault.timeZone = TimeZone(abbreviation: "KST")
+//                let dateDefault = dateFormatterDefault.string(from: date)
+//                
+//                let todayDate = "\(datePart) \(dateDefault)"
+//                return todayDate
+//            }
+//            
+//            func styleRecommend() -> String {
+//                    switch temperatureInCelsius {
+//                    case 27...:
+//                        return "민소매,반바지,원피스를 추천드려요"
+//                    case 23..<27:
+//                        return "반팔,얇은셔츠,면바지를 추천드려요"
+//                    case 20..<23:
+//                        return "얇은가디건,긴팔,청바지를 추천드려요"
+//                    case 17..<20:
+//                        return "가디건,얇은니트,청바지를 추천드려요"
+//                    case 12..<17:
+//                        return "자켓,가디건,야상을 추천드려요"
+//                    case 10..<12:
+//                        return "트렌치코트,간절기야상을 추천드려요"
+//                    case 6..<10:
+//                        return "울코트,가죽자켓을 추천드려요"
+//                    case ...5:
+//                        return "패딩,두꺼운코트,누빔옷을 추천드려요"
+//                    default:
+//                        return "No recommendation available"
+//                        
+//                    }
+//                }
+//            
+//            func informationRecommend() -> String {
+//                    switch temperatureInCelsius {
+//                    case 27...:
+//                        return "실내 활동을 권장드려요 더위 조심하세요"
+//                    case 23..<27:
+//                        return "더운 날씨예요 수분을 충분히 섭취하세요"
+//                    case 20..<23:
+//                        return "나들이하기 좋은 날씨예요"
+//                    case 17..<20:
+//                        return "야외 활동이 잘 어울리는 날씨예요"
+//                    case 12..<17:
+//                        return "산책하기 좋은 날씨예요"
+//                    case 10..<12:
+//                        return "서늘한 날씨예요 감기조심하세요"
+//                    case 6..<10:
+//                        return "쌀쌀한 날씨예요 따뜻하게 입으시길 권장드려요"
+//                    case ...5:
+//                        return "추운날씨로 실내 활동을 권장드려요"
+//                    default:
+//                        return "추천드릴 정보가 없습니다"
+//                        
+//                    }
+//                }
+//        }
+//        setNewVCWeatherUI()
+//        mainViewController.dataViewControllers.append(newVC)
+//        mainViewController.dataViewControllers = mainViewController.dataViewControllers
+//        print(mainViewController.dataViewControllers)
         
         let mainPageVC = ViewController()
 //        self.navigationController?.pushViewController(mainPageVC, animated: true)
