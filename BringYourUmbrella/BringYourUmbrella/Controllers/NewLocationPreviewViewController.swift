@@ -21,8 +21,6 @@ class NewLocationPreviewViewController: BaseViewController {
     
     let mainViewController = MainViewController()
     
-    var mainPageVC: ViewController?
-    
     var temperatureInCelsius: Double = 0.0
     
     //위도와 경도
@@ -264,16 +262,10 @@ class NewLocationPreviewViewController: BaseViewController {
     @objc func addNewLocationButtonAction() {
         locationService.saveLocation(cityTitle: locationName, latitude: latitude, longitude: longitude)
         
-        let newVC = UIViewController()
-        newVC.view.backgroundColor = .white
-        
-        mainPageVC?.addViewController(newVC)
-        
-        if let mainPageVC = mainPageVC {
-            let navigationController = UINavigationController(rootViewController: mainPageVC)
-            UIApplication.shared.windows.first?.rootViewController = navigationController
-            UIApplication.shared.windows.first?.makeKeyAndVisible()
-        }
+        let mainPageVC = ViewController()
+        let navigationController = UINavigationController(rootViewController: mainPageVC)
+        UIApplication.shared.windows.first?.rootViewController = navigationController
+        UIApplication.shared.windows.first?.makeKeyAndVisible()
     }
     
     //x버튼 액션 함수
