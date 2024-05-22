@@ -36,6 +36,9 @@
 		CA61F8252BF59FA6004F7B47 /* myWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CA61F8152BF59FA5004F7B47 /* myWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CA61F82B2BF7543F004F7B47 /* Geocoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA61F82A2BF7543F004F7B47 /* Geocoder.swift */; };
 		CA61F8932BFD8DAA004F7B47 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA61F8922BFD8DAA004F7B47 /* UserDefaults.swift */; };
+		CA8D11262BFDE50D0031E5A1 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = CA8D11252BFDE50D0031E5A1 /* Lottie */; };
+		CA8D11282BFDE5550031E5A1 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8D11272BFDE5550031E5A1 /* SplashScreen.swift */; };
+		CA8D112A2BFDEA780031E5A1 /* Animation0522.json in Resources */ = {isa = PBXBuildFile; fileRef = CA8D11292BFDEA780031E5A1 /* Animation0522.json */; };
 		DE0C998B2BF1DC690059C655 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0C998A2BF1DC690059C655 /* AppDelegate.swift */; };
 		DE0C998D2BF1DC690059C655 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0C998C2BF1DC690059C655 /* SceneDelegate.swift */; };
 		DE0C998F2BF1DC690059C655 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0C998E2BF1DC690059C655 /* ViewController.swift */; };
@@ -97,6 +100,8 @@
 		CA61F8222BF59FA6004F7B47 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA61F82A2BF7543F004F7B47 /* Geocoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geocoder.swift; sourceTree = "<group>"; };
 		CA61F8922BFD8DAA004F7B47 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		CA8D11272BFDE5550031E5A1 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
+		CA8D11292BFDEA780031E5A1 /* Animation0522.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Animation0522.json; path = ../../../../../../Downloads/Animation0522.json; sourceTree = "<group>"; };
 		DE0C99872BF1DC690059C655 /* BringYourUmbrella.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BringYourUmbrella.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE0C998A2BF1DC690059C655 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE0C998C2BF1DC690059C655 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -123,6 +128,7 @@
 			files = (
 				CA00E5C82BF20E4000B05D3F /* Alamofire in Frameworks */,
 				CA00E5CB2BF20E4900B05D3F /* SnapKit in Frameworks */,
+				CA8D11262BFDE50D0031E5A1 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,6 +225,8 @@
 				CA00E5D12BF21F6200B05D3F /* LocationSearchResultTableViewCell.swift */,
 				4D56DC292BF2FCF8008EB3E2 /* LocationManagementViewTableViewCell.swift */,
 				4D6AF87F2BFB58EF00F0BCE0 /* LocationView.swift */,
+				CA8D11272BFDE5550031E5A1 /* SplashScreen.swift */,
+				CA8D11292BFDEA780031E5A1 /* Animation0522.json */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -273,6 +281,7 @@
 			packageProductDependencies = (
 				CA00E5C72BF20E4000B05D3F /* Alamofire */,
 				CA00E5CA2BF20E4900B05D3F /* SnapKit */,
+				CA8D11252BFDE50D0031E5A1 /* Lottie */,
 			);
 			productName = BringYourUmbrella;
 			productReference = DE0C99872BF1DC690059C655 /* BringYourUmbrella.app */;
@@ -308,6 +317,7 @@
 			packageReferences = (
 				CA00E5C62BF20E4000B05D3F /* XCRemoteSwiftPackageReference "Alamofire" */,
 				CA00E5C92BF20E4900B05D3F /* XCRemoteSwiftPackageReference "SnapKit" */,
+				CA8D11242BFDE50D0031E5A1 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 			);
 			productRefGroup = DE0C99882BF1DC690059C655 /* Products */;
 			projectDirPath = "";
@@ -335,6 +345,7 @@
 				DE0C99972BF1DC6D0059C655 /* Assets.xcassets in Resources */,
 				DE0C999A2BF1DC6D0059C655 /* Base in Resources */,
 				DE0C99922BF1DC690059C655 /* Base in Resources */,
+				CA8D112A2BFDEA780031E5A1 /* Animation0522.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,6 +385,7 @@
 				CA61F8932BFD8DAA004F7B47 /* UserDefaults.swift in Sources */,
 				CA61F82B2BF7543F004F7B47 /* Geocoder.swift in Sources */,
 				4D6BFD302BFC9546002E805A /* LocationViewController.swift in Sources */,
+				CA8D11282BFDE5550031E5A1 /* SplashScreen.swift in Sources */,
 				4D56DC282BF22045008EB3E2 /* LocationManagementView.swift in Sources */,
 				398BAFA22BF33797006883F4 /* BaseViewController.swift in Sources */,
 				4DEC6EFB2BF7301F00475B3D /* LocationService.swift in Sources */,
@@ -703,6 +715,14 @@
 				minimumVersion = 5.7.1;
 			};
 		};
+		CA8D11242BFDE50D0031E5A1 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.4.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -715,6 +735,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CA00E5C92BF20E4900B05D3F /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		CA8D11252BFDE50D0031E5A1 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA8D11242BFDE50D0031E5A1 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
 
