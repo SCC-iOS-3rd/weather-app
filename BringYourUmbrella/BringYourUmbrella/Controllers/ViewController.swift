@@ -1,14 +1,22 @@
 
 import UIKit
 import SnapKit
+import Lottie
 
 class ViewController: BaseViewController {
- 
+    
+    let locationViewController = LocationViewController()
+    
     //위도와 경도
     var latitude: Double = 0.0
     var longitude: Double = 0.0
-    //우산이미지
+    
+    //섭씨 화씨 변경 임의값 넣어둔것
+    var temperatureInCelsius: Double = 0.0
+    var maxTemperatureInCelsius: Double = 0.0
+    var minTemperatureInCelsius: Double = 0.0
     let umbrellaImage = UIImageView()
+    
     //섭씨화씨,알람,플러스버튼
     let temperatureButton = UIButton()
     let alarmButton = NoHighlightButton(type: .system)
@@ -23,15 +31,51 @@ class ViewController: BaseViewController {
     //모달창부분
     let alphaView = UIView()
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupAnimationView()
+        
         vc1.locationDelegate = self
         //처음 보여질 페이지
         if let firstVC = dataViewControllers.first {
             pageViewController.setViewControllers([firstVC], direction: .forward, animated: true)
         }
+        
+        //저장된 위도 경도값이 있는지 확인하는용도
+        if let location = UserDefaults.standard.getLocation() {
+            print("Saved latitude: \(location.latitude)")
+            print("Saved longitude: \(location.longitude)")
+        } else {
+            print("No saved location found")
+        }
     }
+    
+    
+    //런치스크린
+    func setupAnimationView() {
+            view.addSubview(animationView)
+            
+            animationView.frame = view.bounds
+            animationView.center = view.center
+            animationView.contentMode = .scaleAspectFill
+            animationView.loopMode = .playOnce
+            
+            animationView.play { (finished) in
+                if finished {
+                    UIView.animate(withDuration: 0.3, animations: {
+                       animationView.alpha = 0
+                    }, completion: { _ in
+                        animationView.isHidden = true
+                        animationView.removeFromSuperview()
+                    })
+                } else {
+                    print("Animation interrupted")
+                }
+            }
+        }
+    
     
     //상단 네비게이션뷰
     let navigationView: UIView = {
@@ -155,10 +199,16 @@ class ViewController: BaseViewController {
         pageViewController.delegate = self
         pageViewController.dataSource = self
     }
+    
+    func addViewController(_ viewController: UIViewController) {
+        dataViewControllers.append(viewController)
+        pageViewController.dataSource = self
+        pageViewController.setViewControllers([viewController], direction: .reverse, animated: true)
+    }
 }
 //MARK: - 단위변경 모달창
 extension ViewController: BullletinDelegate {
-
+    
     //단위변경모달창작업
     @objc func temperatureChange(sender: UIButton) {
         let modalVC = ModalViewController.instance()
@@ -189,13 +239,14 @@ extension ViewController: BullletinDelegate {
     //단위 버튼타이틀 바뀌는함수
     func didChangeTemperature(unit: String) {
         temperatureButton.setTitle(unit, for: .normal)
+        
         vc1.updateTemperatureLabel(unit: unit)
         vc2.updateTemperatureLabel(unit: unit)
     }
 }
 //MARK: - 시간표시
 extension ViewController {
-
+    
     func datefunc() -> String {
         let date = Date()
         let dateFormatterKR = DateFormatter()
@@ -235,6 +286,82 @@ extension ViewController: LocationDelegate {
         vc2.longitude = longitude
         vc2.fetchyesterdayweather()
         updateLocationName()
+    }
+    
+    //  //다른파일로 분리되었는지 확인
+    //      //이미지랑 레이블정보 띄우는부분
+    //        private func setWeatherUI() {
+    //            //현재위치명 업데이트
+    //            tranceLocationName(latitude: latitude, longitude: longitude) { locationName in
+    //                DispatchQueue.main.async {
+    //                    self.locationLabel.text = "\(locationName)"
+    //                }
+    //            }
+    //            temperatureInCelsius = main!.temp
+    //            maxTemperatureInCelsius = main!.tempmax
+    //            minTemperatureInCelsius = main!.tempmin
+    //            iconImageView.image = UIImage(named: weather!.icon)
+    //            todayWeatherViewLabel.text = "\(weather!.description)"
+    //            temperatureLabel.text = "\(Int(main!.temp))º"
+    //            todayTemperatureLabel.text = "\(main!.temp)º"
+    //            highloweViewLabel.text = "최고 \(Int(main!.tempmax))º ~ 최저 \(Int(main!.tempmin))º"
+    //            styleViewLabel.text = styleRecommend()
+    //            weatherDescriptionViewLabel.text = informationRecommend()
+    //            //날씨표시 페이지
+    //            todayWeatherLabel.text = "\(weather!.description)"
+    //            todayweatherImageView.image = UIImage(named: weather!.icon)
+    //            todayHighLoweLabel.text = "\(main!.tempmax)º \(main!.tempmin)º"
+    //        }
+}
+//MARK: - 스타일추천,정보추천
+extension ViewController {
+    
+    func styleRecommend() -> String {
+        switch temperatureInCelsius {
+        case 27...:
+            return "민소매,반바지,원피스를 추천드려요"
+        case 23..<27:
+            return "반팔,얇은셔츠,면바지를 추천드려요"
+        case 20..<23:
+            return "얇은가디건,긴팔,청바지를 추천드려요"
+        case 17..<20:
+            return "가디건,얇은니트,청바지를 추천드려요"
+        case 12..<17:
+            return "자켓,가디건,야상을 추천드려요"
+        case 10..<12:
+            return "트렌치코트,간절기야상을 추천드려요"
+        case 6..<10:
+            return "울코트,가죽자켓을 추천드려요"
+        case ...5:
+            return "패딩,두꺼운코트,누빔옷을 추천드려요"
+        default:
+            return "No recommendation available"
+            
+        }
+    }
+    
+    func informationRecommend() -> String {
+        switch temperatureInCelsius {
+        case 27...:
+            return "실내 활동을 권장드려요 더위 조심하세요"
+        case 23..<27:
+            return "더운 날씨예요 수분을 충분히 섭취하세요"
+        case 20..<23:
+            return "나들이하기 좋은 날씨예요"
+        case 17..<20:
+            return "야외 활동이 잘 어울리는 날씨예요"
+        case 12..<17:
+            return "산책하기 좋은 날씨예요"
+        case 10..<12:
+            return "서늘한 날씨예요 감기조심하세요"
+        case 6..<10:
+            return "쌀쌀한 날씨예요 따뜻하게 입으시길 권장드려요"
+        case ...5:
+            return "추운날씨로 실내 활동을 권장드려요"
+        default:
+            return "추천드릴 정보가 없습니다"
+            
+        }
     }
 }
 //MARK: - 페이지뷰컨트롤러

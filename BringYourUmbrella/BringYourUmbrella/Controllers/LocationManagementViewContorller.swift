@@ -15,7 +15,7 @@ class LocationManagementViewContorller: UIViewController {
     
     var locationList: [Location] = []
     
-
+    
     //위도와 경도
     var latitude: Double = 0.0
     var longitude: Double = 0.0
@@ -27,7 +27,7 @@ class LocationManagementViewContorller: UIViewController {
     var sys: Sys?
     var name: String?
     
-
+    
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "LocationModel")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -72,113 +72,97 @@ class LocationManagementViewContorller: UIViewController {
         tranceLocationName(latitude: latitude, longitude: longitude) { locationName in
             DispatchQueue.main.async {
                 self.locationManagerView.currentLocation.text = "\(locationName)"
-            }
-        }
-        guard let weatherIcon = weather?.icon else { return }
-        guard let url = URL(string: "https://openweathermap.org/img/wn/\(weatherIcon)@2x.png") else { return }
-        
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else {
-                print("Failed to fetch image data: \(error?.localizedDescription ?? "Unknown error")")
-                return
-            }
-            
-            DispatchQueue.main.async {
-                if let image = UIImage(data: data) {
+                if let image = UIImage(named: self.weather!.icon) {
                     self.locationManagerView.currentWeatherImageView.image = image
                 }
+                self.locationManagerView.currentTemperature.text = "\(self.main?.temp ?? 0)º"
             }
         }
-        task.resume()
-        
-        DispatchQueue.main.async {
-            self.locationManagerView.currentTemperature.text = "\(self.main?.temp ?? 0)º"
-        }
+}
+
+private func setAddTarget() {
+    locationManagerView.bottomSearchButton.addTarget(self, action: #selector(tappedSearchBtn), for: .touchUpInside)
+    locationManagerView.currentLocationButton.addTarget(self, action: #selector(tappedCurrentLocation), for: .touchUpInside)
+    locationManagerView.favoritesEditButton.addTarget(self, action: #selector(tappedEditButton), for: .touchUpInside)
+    locationManagerView.backButton.addTarget(self, action: #selector(tappedBackButton), for: .touchUpInside)
+}
+
+private func fetchLocations() {
+    let context = persistentContainer.viewContext
+    // 코어데이터 생성 후 Entity의 이름으로 변경해줄것
+    let fetchRequest: NSFetchRequest<Location> = Location.fetchRequest()
+  
+    do {
+        locationList = try context.fetch(fetchRequest)
+    } catch {
+        print("Failed to fetch saved Locations: \(error.localizedDescription)")
     }
+}
+
+private func setRefreshControl() {
+    locationManagerView.favoritesTableView.refreshControl = UIRefreshControl()
+    locationManagerView.favoritesTableView.refreshControl?.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+}
+
+private func setTableView() {
+    locationManagerView.favoritesTableView.dataSource = self
+    locationManagerView.favoritesTableView.delegate = self
+    locationManagerView.favoritesTableView.register(LocationManagementViewTableViewCell.self, forCellReuseIdentifier: LocationManagementViewTableViewCell.identifier)
+}
+
+@objc private func tappedSearchBtn() {
+    let nextVc = LocationSearchViewController()
+    nextVc.modalPresentationStyle = .pageSheet
+    present(nextVc, animated: true)
+}
+
+@objc private func tappedCurrentLocation() {
+    navigationController?.popViewController(animated: true)
+    print("현재 위치")
+}
+
+@objc private func tappedEditButton() {
+    if locationManagerView.favoritesTableView.isEditing {
+        locationManagerView.favoritesEditButton.setTitle("편집", for: .normal)
+        locationManagerView.favoritesTableView.setEditing(false, animated: true)
+    } else {
+        locationManagerView.favoritesEditButton.setTitle("완료", for: .normal)
+        locationManagerView.favoritesTableView.setEditing(true, animated: true)
+        locationManagerView.favoritesTableView.dragInteractionEnabled = true
+        locationManagerView.favoritesTableView.dragDelegate = self
+        locationManagerView.favoritesTableView.dropDelegate = self
+    }
+}
+
+@objc private func handleLongPress(gestureRecognizer: UILongPressGestureRecognizer) {
+    _ = gestureRecognizer.location(in: locationManagerView.favoritesTableView)
     
-    private func setAddTarget() {
-        locationManagerView.bottomSearchButton.addTarget(self, action: #selector(tappedSearchBtn), for: .touchUpInside)
-        locationManagerView.currentLocationButton.addTarget(self, action: #selector(tappedCurrentLocation), for: .touchUpInside)
-        locationManagerView.favoritesEditButton.addTarget(self, action: #selector(tappedEditButton), for: .touchUpInside)
-        locationManagerView.backButton.addTarget(self, action: #selector(tappedBackButton), for: .touchUpInside)
+    if gestureRecognizer.state == .began {
+        tappedEditButton()
+    } else if gestureRecognizer.state == .ended {
+        // 롱 프레스 터치가 끝날 떄
+    } else {
+        return
     }
+}
+
+@objc private func pullToRefresh() {
+    locationManagerView.favoritesTableView.reloadData()
     
-    private func fetchLocations() {
-        let context = persistentContainer.viewContext
-        // 코어데이터 생성 후 Entity의 이름으로 변경해줄것
-        let fetchRequest: NSFetchRequest<Location> = Location.fetchRequest()
-        
-        do {
-            locationList = try context.fetch(fetchRequest)
-        } catch {
-            print("Failed to fetch saved Locations: \(error.localizedDescription)")
-        }
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+        self.locationManagerView.favoritesTableView.refreshControl?.endRefreshing()
     }
-    
-    private func setRefreshControl() {
-        locationManagerView.favoritesTableView.refreshControl = UIRefreshControl()
-        locationManagerView.favoritesTableView.refreshControl?.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
-    }
-    
-    private func setTableView() {
-        locationManagerView.favoritesTableView.dataSource = self
-        locationManagerView.favoritesTableView.delegate = self
-        locationManagerView.favoritesTableView.register(LocationManagementViewTableViewCell.self, forCellReuseIdentifier: LocationManagementViewTableViewCell.identifier)
-    }
-    
-    @objc private func tappedSearchBtn() {
-        let nextVc = LocationSearchViewController()
-        nextVc.modalPresentationStyle = .pageSheet
-        present(nextVc, animated: true)
-    }
-    
-    @objc private func tappedCurrentLocation() {
-        navigationController?.popViewController(animated: true)
-        print("현재 위치")
-    }
-    
-    @objc private func tappedEditButton() {
-        if locationManagerView.favoritesTableView.isEditing {
-            locationManagerView.favoritesEditButton.setTitle("편집", for: .normal)
-            locationManagerView.favoritesTableView.setEditing(false, animated: true)
-        } else {
-            locationManagerView.favoritesEditButton.setTitle("완료", for: .normal)
-            locationManagerView.favoritesTableView.setEditing(true, animated: true)
-            locationManagerView.favoritesTableView.dragInteractionEnabled = true
-            locationManagerView.favoritesTableView.dragDelegate = self
-            locationManagerView.favoritesTableView.dropDelegate = self
-        }
-    }
-    
-    @objc private func handleLongPress(gestureRecognizer: UILongPressGestureRecognizer) {
-        _ = gestureRecognizer.location(in: locationManagerView.favoritesTableView)
-        
-        if gestureRecognizer.state == .began {
-            tappedEditButton()
-        } else if gestureRecognizer.state == .ended {
-            // 롱 프레스 터치가 끝날 떄
-        } else {
-            return
-        }
-    }
-    
-    @objc private func pullToRefresh() {
-        locationManagerView.favoritesTableView.reloadData()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-            self.locationManagerView.favoritesTableView.refreshControl?.endRefreshing()
-        }
-    }
-    
-    @objc private func tappedBackButton() {
-        navigationController?.popToRootViewController(animated: true)
-    }
+}
+
+@objc private func tappedBackButton() {
+    navigationController?.popToRootViewController(animated: true)
+}
 }
 
 // MARK: - extensions
 extension LocationManagementViewContorller: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = locationManagerView.favoritesTableView.cellForRow(at: indexPath) as? LocationManagementViewTableViewCell else { return }
+        guard locationManagerView.favoritesTableView.cellForRow(at: indexPath) is LocationManagementViewTableViewCell else { return }
         let selectedLocation = locationList[indexPath.row]
         let movedVC = LocationViewController()
         movedVC.locationName = selectedLocation.cityTitle ?? "현재 위치"

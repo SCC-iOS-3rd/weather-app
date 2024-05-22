@@ -118,11 +118,13 @@ class LocationManagementViewTableViewCell: UITableViewCell {
                 URLSession.shared.dataTask(with: url) { data, response, error in
                     guard let data = data, error == nil else { return }
                     DispatchQueue.main.async {
-                        self.favoritesWeatherImageView.image = UIImage(data: data)
                     }
                 }.resume()
                 
                 DispatchQueue.main.async {
+                    if let image = UIImage(named: weatherResponse.weather.first!.icon) {
+                        self.favoritesWeatherImageView.image = image
+                    }
                     self.favoritesTemperature.text = "\(weatherResponse.main.temp)º"
                 }
             case .failure(let error):

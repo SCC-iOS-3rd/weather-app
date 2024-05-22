@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class MainView: UIView {
+class LocationView: UIView {
     
     let umbrellaImage = UIImageView()
     let plusButton = NoHighlightButton(type: .system)
@@ -57,9 +57,6 @@ class MainView: UIView {
     }
     
     private func setupViews() {
-        [].forEach {
-            navigationView.addSubview($0)
-        }
         [umbrellaImage, nameLabel, buttonStackView, timeLabel, locationLabel, todayWeatherView, highloweTemperatureView, styleView, weatherDescriptionView].forEach {
             addSubview($0)
         }

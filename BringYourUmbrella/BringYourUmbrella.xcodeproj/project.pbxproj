@@ -17,7 +17,7 @@
 		4D56DC262BF21FE9008EB3E2 /* LocationManagementViewContorller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D56DC252BF21FE9008EB3E2 /* LocationManagementViewContorller.swift */; };
 		4D56DC282BF22045008EB3E2 /* LocationManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D56DC272BF22045008EB3E2 /* LocationManagementView.swift */; };
 		4D56DC2A2BF2FCF8008EB3E2 /* LocationManagementViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D56DC292BF2FCF8008EB3E2 /* LocationManagementViewTableViewCell.swift */; };
-		4D6AF8802BFB58EF00F0BCE0 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6AF87F2BFB58EF00F0BCE0 /* MainView.swift */; };
+		4D6AF8802BFB58EF00F0BCE0 /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6AF87F2BFB58EF00F0BCE0 /* LocationView.swift */; };
 		4D6BFD302BFC9546002E805A /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6BFD2F2BFC9546002E805A /* LocationViewController.swift */; };
 		4DEC6EF72BF6EF7F00475B3D /* LocationModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4DEC6EF52BF6EF7F00475B3D /* LocationModel.xcdatamodeld */; };
 		4DEC6EFB2BF7301F00475B3D /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DEC6EFA2BF7301F00475B3D /* LocationService.swift */; };
@@ -35,6 +35,10 @@
 		CA61F8212BF59FA6004F7B47 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA61F8202BF59FA6004F7B47 /* Assets.xcassets */; };
 		CA61F8252BF59FA6004F7B47 /* myWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CA61F8152BF59FA5004F7B47 /* myWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CA61F82B2BF7543F004F7B47 /* Geocoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA61F82A2BF7543F004F7B47 /* Geocoder.swift */; };
+		CA61F8932BFD8DAA004F7B47 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA61F8922BFD8DAA004F7B47 /* UserDefaults.swift */; };
+		CA8D11262BFDE50D0031E5A1 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = CA8D11252BFDE50D0031E5A1 /* Lottie */; };
+		CA8D11282BFDE5550031E5A1 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8D11272BFDE5550031E5A1 /* SplashScreen.swift */; };
+		CA8D112C2BFE10B40031E5A1 /* Animation0522.json in Resources */ = {isa = PBXBuildFile; fileRef = CA8D112B2BFE10B40031E5A1 /* Animation0522.json */; };
 		DE0C998B2BF1DC690059C655 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0C998A2BF1DC690059C655 /* AppDelegate.swift */; };
 		DE0C998D2BF1DC690059C655 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0C998C2BF1DC690059C655 /* SceneDelegate.swift */; };
 		DE0C998F2BF1DC690059C655 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0C998E2BF1DC690059C655 /* ViewController.swift */; };
@@ -83,7 +87,7 @@
 		4D56DC252BF21FE9008EB3E2 /* LocationManagementViewContorller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagementViewContorller.swift; sourceTree = "<group>"; };
 		4D56DC272BF22045008EB3E2 /* LocationManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagementView.swift; sourceTree = "<group>"; };
 		4D56DC292BF2FCF8008EB3E2 /* LocationManagementViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagementViewTableViewCell.swift; sourceTree = "<group>"; };
-		4D6AF87F2BFB58EF00F0BCE0 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		4D6AF87F2BFB58EF00F0BCE0 /* LocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationView.swift; sourceTree = "<group>"; };
 		4D6BFD2F2BFC9546002E805A /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		4DEC6EF62BF6EF7F00475B3D /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		4DEC6EFA2BF7301F00475B3D /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
@@ -100,6 +104,9 @@
 		CA61F8202BF59FA6004F7B47 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA61F8222BF59FA6004F7B47 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA61F82A2BF7543F004F7B47 /* Geocoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geocoder.swift; sourceTree = "<group>"; };
+		CA61F8922BFD8DAA004F7B47 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		CA8D11272BFDE5550031E5A1 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
+		CA8D112B2BFE10B40031E5A1 /* Animation0522.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Animation0522.json; path = BringYourUmbrella/Animation0522.json; sourceTree = SOURCE_ROOT; };
 		DE0C99872BF1DC690059C655 /* BringYourUmbrella.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BringYourUmbrella.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE0C998A2BF1DC690059C655 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE0C998C2BF1DC690059C655 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -130,6 +137,7 @@
 				CA00E5C82BF20E4000B05D3F /* Alamofire in Frameworks */,
 				DED5857F2BF5FC7300D1D8FE /* DGCharts in Frameworks */,
 				CA00E5CB2BF20E4900B05D3F /* SnapKit in Frameworks */,
+				CA8D11262BFDE50D0031E5A1 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -229,6 +237,9 @@
 				4D6AF87F2BFB58EF00F0BCE0 /* MainView.swift */,
 				DED585822BF60D8500D1D8FE /* WeatherChangeView.swift */,
 				DEC023CF2BFC40D700904795 /* HourlyWeatherCollectionViewCell.swift */,
+				4D6AF87F2BFB58EF00F0BCE0 /* LocationView.swift */,
+				CA8D11272BFDE5550031E5A1 /* SplashScreen.swift */,
+				CA8D112B2BFE10B40031E5A1 /* Animation0522.json */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -240,6 +251,7 @@
 				CA00E5E22BF33FEE00B05D3F /* WeatherAPI */,
 				4DEC6EF52BF6EF7F00475B3D /* LocationModel.xcdatamodeld */,
 				4DEC6EFA2BF7301F00475B3D /* LocationService.swift */,
+				CA61F8922BFD8DAA004F7B47 /* UserDefaults.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -283,6 +295,7 @@
 				CA00E5C72BF20E4000B05D3F /* Alamofire */,
 				CA00E5CA2BF20E4900B05D3F /* SnapKit */,
 				DED5857E2BF5FC7300D1D8FE /* DGCharts */,
+				CA8D11252BFDE50D0031E5A1 /* Lottie */,
 			);
 			productName = BringYourUmbrella;
 			productReference = DE0C99872BF1DC690059C655 /* BringYourUmbrella.app */;
@@ -319,6 +332,7 @@
 				CA00E5C62BF20E4000B05D3F /* XCRemoteSwiftPackageReference "Alamofire" */,
 				CA00E5C92BF20E4900B05D3F /* XCRemoteSwiftPackageReference "SnapKit" */,
 				DED5857D2BF5FC7300D1D8FE /* XCRemoteSwiftPackageReference "Charts" */,
+				CA8D11242BFDE50D0031E5A1 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 			);
 			productRefGroup = DE0C99882BF1DC690059C655 /* Products */;
 			projectDirPath = "";
@@ -346,6 +360,7 @@
 				DE0C99972BF1DC6D0059C655 /* Assets.xcassets in Resources */,
 				DE0C999A2BF1DC6D0059C655 /* Base in Resources */,
 				DE0C99922BF1DC690059C655 /* Base in Resources */,
+				CA8D112C2BFE10B40031E5A1 /* Animation0522.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,6 +389,7 @@
 				DE0C998F2BF1DC690059C655 /* ViewController.swift in Sources */,
 				4D6AF8802BFB58EF00F0BCE0 /* MainView.swift in Sources */,
 				DED585832BF60D8500D1D8FE /* WeatherChangeView.swift in Sources */,
+				4D6AF8802BFB58EF00F0BCE0 /* LocationView.swift in Sources */,
 				CA00E5DE2BF33A3E00B05D3F /* WeatherService.swift in Sources */,
 				398BAFA82BF38893006883F4 /* ModalTableViewCell.swift in Sources */,
 				39D2B16A2BFB35CC00B56D66 /* YesterdayWeather.swift in Sources */,
@@ -386,8 +402,10 @@
 				4DEC6EF72BF6EF7F00475B3D /* LocationModel.xcdatamodeld in Sources */,
 				CA00E5D22BF21F6200B05D3F /* LocationSearchResultTableViewCell.swift in Sources */,
 				39D2B16C2BFB9BC000B56D66 /* WeatherDisplayViewController.swift in Sources */,
+				CA61F8932BFD8DAA004F7B47 /* UserDefaults.swift in Sources */,
 				CA61F82B2BF7543F004F7B47 /* Geocoder.swift in Sources */,
 				4D6BFD302BFC9546002E805A /* LocationViewController.swift in Sources */,
+				CA8D11282BFDE5550031E5A1 /* SplashScreen.swift in Sources */,
 				4D56DC282BF22045008EB3E2 /* LocationManagementView.swift in Sources */,
 				398BAFA22BF33797006883F4 /* BaseViewController.swift in Sources */,
 				4DEC6EFB2BF7301F00475B3D /* LocationService.swift in Sources */,
@@ -725,6 +743,14 @@
 				minimumVersion = 5.1.0;
 			};
 		};
+		CA8D11242BFDE50D0031E5A1 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.4.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -742,6 +768,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DED5857D2BF5FC7300D1D8FE /* XCRemoteSwiftPackageReference "Charts" */;
 			productName = DGCharts;
+		};
+		CA8D11252BFDE50D0031E5A1 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA8D11242BFDE50D0031E5A1 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
 

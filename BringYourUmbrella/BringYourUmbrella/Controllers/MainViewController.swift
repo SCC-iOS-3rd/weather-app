@@ -151,9 +151,13 @@ extension MainViewController {
     func updateTemperatureLabel(unit: String) {
         if unit == "ºC" {
             temperatureLabel.text = "\(Int(temperatureInCelsius))º"
+            highloweViewLabel.text = "최고 \(Int(main!.tempmax))º ~ 최저 \(Int(main!.tempmin))º"
         } else {
             let temperatureInFahrenheit = Int(temperatureInCelsius * 9 / 5 + 32)
+            let maxTemperatureInFahrenheit = Int(main!.tempmax * 9 / 5 + 32)
+            let minTemperatureInFahrenheit = Int(main!.tempmin * 9 / 5 + 32)
             temperatureLabel.text = "\(temperatureInFahrenheit)º"
+            highloweViewLabel.text = "최고 \(maxTemperatureInFahrenheit)ºF ~ 최저 \(minTemperatureInFahrenheit)ºF "
         }
     }
 }

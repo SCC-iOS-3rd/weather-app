@@ -21,6 +21,8 @@ class NewLocationPreviewViewController: BaseViewController {
     
     let mainViewController = MainViewController()
     
+    var mainPageVC: ViewController?
+    
     var temperatureInCelsius: Double = 0.0
     
     //위도와 경도
@@ -44,8 +46,9 @@ class NewLocationPreviewViewController: BaseViewController {
     
     let umbrellaImage = UIImageView() //LOGO
     let nameLabel = UILabel() //"우산챙겨"
-    let timeLabel = UILabel() //"5/13 (월) 11:44 AM"
+    let timeLabel = UILabel() //"5/13 (월) 11:44 AM" 코
     
+    let xButton = UIButton() //모달창 닫기 버튼
     
     let locationLabel = UILabel() // 현재 위치
     
@@ -98,24 +101,10 @@ class NewLocationPreviewViewController: BaseViewController {
     
     private func setWeatherUI() {
         temperatureInCelsius = main!.temp
-        guard let weatherIcon = weather?.icon else { return }
-        guard let url = URL(string: "https://openweathermap.org/img/wn/\(weatherIcon)@2x.png") else { return }
-        
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else {
-                print("Failed to fetch image data: \(error?.localizedDescription ?? "Unknown error")")
-                return
-            }
-            
-            DispatchQueue.main.async {
-                if let image = UIImage(data: data) {
-                    self.iconImageView.image = image
-                }
-            }
-        }
-        task.resume()
-        
         DispatchQueue.main.async {
+            if let image = UIImage(named: self.weather!.icon) {
+                self.iconImageView.image = image
+            }
             self.todayWeatherViewLabel.text = "\(self.weather!.description)"
             self.temperatureLabel.text = "\(Int(self.main!.temp))º"
             self.highloweViewLabel.text = "최고 \(Int(self.main!.tempmax))º ~ 최저 \(Int(self.main!.tempmin))º"
@@ -129,7 +118,7 @@ class NewLocationPreviewViewController: BaseViewController {
     //MARK: - 레이아웃, addSubview
     
     override func setupConstraints() {
-        [umbrellaImage, nameLabel, timeLabel, locationLabel, todayWeatherView, highloweTemperatureView, styleView, weatherDescriptionView, addNewLocationButton].forEach {
+        [umbrellaImage, nameLabel, timeLabel, locationLabel, todayWeatherView, highloweTemperatureView, styleView, weatherDescriptionView, addNewLocationButton, xButton].forEach {
             view.addSubview($0)
         }
         [todayWeatherViewLabel, temperatureLabel].forEach {
@@ -211,6 +200,10 @@ class NewLocationPreviewViewController: BaseViewController {
             make.bottom.equalToSuperview().offset(-60)
             make.height.equalTo(47)
         }
+        xButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(20)
+            make.trailing.equalToSuperview().offset(-20)
+        }
     }
     
     //MARK: - UI 속성
@@ -258,6 +251,7 @@ class NewLocationPreviewViewController: BaseViewController {
         alphaView.alpha = 0
         
         addNewLocationButton.addTarget(self, action: #selector(addNewLocationButtonAction), for: .touchUpInside)
+        xButton.addTarget(self, action: #selector(dismissModal), for: .touchUpInside)
     }
     
     //뷰 스타일 양식
@@ -269,118 +263,22 @@ class NewLocationPreviewViewController: BaseViewController {
     //추가 버튼 액션 함수
     @objc func addNewLocationButtonAction() {
         locationService.saveLocation(cityTitle: locationName, latitude: latitude, longitude: longitude)
-//        let newVC = UIViewController()
-//        let mainView = MainView()
-//        newVC.view = mainView
-//        
-//        func setNewVCWeatherUI() {
-//            temperatureInCelsius = main!.temp
-//            guard let weatherIcon = weather?.icon else { return }
-//            guard let url = URL(string: "https://openweathermap.org/img/wn/\(weatherIcon)@2x.png") else { return }
-//            
-//            let task = URLSession.shared.dataTask(with: url) { data, response, error in
-//                guard let data = data, error == nil else {
-//                    print("Failed to fetch image data: \(error?.localizedDescription ?? "Unknown error")")
-//                    return
-//                }
-//                
-//                DispatchQueue.main.async {
-//                    if let image = UIImage(data: data) {
-//                        mainView.todayweatherImageView.image = image
-//                    }
-//                }
-//            }
-//            task.resume()
-//            
-//            DispatchQueue.main.async {
-//                self.temperatureInCelsius = self.main!.temp
-//                mainView.iconImageView.image = UIImage(named: self.weather!.icon)
-//                mainView.todayWeatherViewLabel.text = "\(self.weather!.description)"
-//                mainView.temperatureLabel.text = "\(self.main!.temp)º"
-//                mainView.todayTemperatureLabel.text = "\(self.main!.temp)º"
-//                mainView.highloweViewLabel.text = "최고 \(self.main!.tempmax)º ~ 최저 \(self.main!.tempmin)º"
-//                mainView.todayWeatherLabel.text = "\(self.weather!.description)"
-//                mainView.todayHighLoweLabel.text = "\(self.main!.tempmax)º \(self.main!.tempmin)º"
-//                
-//            }
-//            mainView.weatherDescriptionViewLabel.text = informationRecommend()
-//            mainView.styleViewLabel.text = styleRecommend()
-//            
-//            func datefunc() -> String {
-//                let date = Date()
-//                let dateFormatterKR = DateFormatter()
-//                dateFormatterKR.dateFormat = "M/dd (E) HH:mm"
-//                dateFormatterKR.locale = Locale(identifier: "ko_KR")
-//                dateFormatterKR.timeZone = TimeZone(abbreviation: "KST")
-//                let datePart = dateFormatterKR.string(from: date)
-//                
-//                let dateFormatterDefault = DateFormatter()
-//                dateFormatterDefault.dateFormat = "a"
-//                dateFormatterDefault.timeZone = TimeZone(abbreviation: "KST")
-//                let dateDefault = dateFormatterDefault.string(from: date)
-//                
-//                let todayDate = "\(datePart) \(dateDefault)"
-//                return todayDate
-//            }
-//            
-//            func styleRecommend() -> String {
-//                    switch temperatureInCelsius {
-//                    case 27...:
-//                        return "민소매,반바지,원피스를 추천드려요"
-//                    case 23..<27:
-//                        return "반팔,얇은셔츠,면바지를 추천드려요"
-//                    case 20..<23:
-//                        return "얇은가디건,긴팔,청바지를 추천드려요"
-//                    case 17..<20:
-//                        return "가디건,얇은니트,청바지를 추천드려요"
-//                    case 12..<17:
-//                        return "자켓,가디건,야상을 추천드려요"
-//                    case 10..<12:
-//                        return "트렌치코트,간절기야상을 추천드려요"
-//                    case 6..<10:
-//                        return "울코트,가죽자켓을 추천드려요"
-//                    case ...5:
-//                        return "패딩,두꺼운코트,누빔옷을 추천드려요"
-//                    default:
-//                        return "No recommendation available"
-//                        
-//                    }
-//                }
-//            
-//            func informationRecommend() -> String {
-//                    switch temperatureInCelsius {
-//                    case 27...:
-//                        return "실내 활동을 권장드려요 더위 조심하세요"
-//                    case 23..<27:
-//                        return "더운 날씨예요 수분을 충분히 섭취하세요"
-//                    case 20..<23:
-//                        return "나들이하기 좋은 날씨예요"
-//                    case 17..<20:
-//                        return "야외 활동이 잘 어울리는 날씨예요"
-//                    case 12..<17:
-//                        return "산책하기 좋은 날씨예요"
-//                    case 10..<12:
-//                        return "서늘한 날씨예요 감기조심하세요"
-//                    case 6..<10:
-//                        return "쌀쌀한 날씨예요 따뜻하게 입으시길 권장드려요"
-//                    case ...5:
-//                        return "추운날씨로 실내 활동을 권장드려요"
-//                    default:
-//                        return "추천드릴 정보가 없습니다"
-//                        
-//                    }
-//                }
-//        }
-//        setNewVCWeatherUI()
-//        mainViewController.dataViewControllers.append(newVC)
-//        mainViewController.dataViewControllers = mainViewController.dataViewControllers
-//        print(mainViewController.dataViewControllers)
         
-        let mainPageVC = ViewController()
-        //self.navigationController?.pushViewController(mainPageVC, animated: true)
-        let navigationController = UINavigationController(rootViewController: mainPageVC)
-        UIApplication.shared.windows.first?.rootViewController = navigationController
-        UIApplication.shared.windows.first?.makeKeyAndVisible()
+        let newVC = UIViewController()
+        newVC.view.backgroundColor = .white
+        
+        mainPageVC?.addViewController(newVC)
+        
+        if let mainPageVC = mainPageVC {
+            let navigationController = UINavigationController(rootViewController: mainPageVC)
+            UIApplication.shared.windows.first?.rootViewController = navigationController
+            UIApplication.shared.windows.first?.makeKeyAndVisible()
+        }
+    }
+    
+    //x버튼 액션 함수
+    @objc func dismissModal() {
+        dismiss(animated: true, completion: nil)
     }
 }
 //시간표시 함수
