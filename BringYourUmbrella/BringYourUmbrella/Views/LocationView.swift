@@ -57,9 +57,6 @@ class MainView: UIView {
     }
     
     private func setupViews() {
-        [].forEach {
-            navigationView.addSubview($0)
-        }
         [umbrellaImage, nameLabel, buttonStackView, timeLabel, locationLabel, todayWeatherView, highloweTemperatureView, styleView, weatherDescriptionView].forEach {
             addSubview($0)
         }

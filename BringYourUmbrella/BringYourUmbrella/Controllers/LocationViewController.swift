@@ -17,6 +17,7 @@ class LocationViewController: UIViewController {
     let mainView = MainView()
     let weatherService = WeatherService()
     let locationService = LocationService()
+    let viewController = ViewController()
     
     var temperatureInCelsius: Double = 0.0
     
@@ -138,6 +139,7 @@ class LocationViewController: UIViewController {
         mainView.weatherDescriptionViewLabel.text = informationRecommend()
         mainView.styleViewLabel.text = styleRecommend()
 //        mainView.locationLabel.text = locationName
+        mainView.timeLabel.text = viewController.datefunc()
     }
     
     func swipefunc() {
