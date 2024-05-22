@@ -57,6 +57,15 @@ class WeatherChangeView : UIView {
         return view
     }()
     
+
+    
+    private let divisionLineView : UIView = {
+        let view = UIView()
+        view.layer.borderColor = UIColor.black.cgColor
+        view.layer.borderWidth = 2
+        return view
+    }()
+    
     // MARK: - 주간 날씨(5d)
     private let weeklyWeatherLabel : UILabel = {
         let label = UILabel()
