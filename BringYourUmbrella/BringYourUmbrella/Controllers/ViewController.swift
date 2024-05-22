@@ -5,8 +5,6 @@ import Lottie
 
 class ViewController: BaseViewController {
     
-    let locationViewController = LocationViewController()
-    
     //위도와 경도
     var latitude: Double = 0.0
     var longitude: Double = 0.0
