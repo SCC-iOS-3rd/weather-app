@@ -11,6 +11,12 @@ import SnapKit
 
 class WeatherChangeView : UIView {
     // MARK: - Location & Time
+//    private let scrollView : UIScrollView = {
+//       let scview = UIScrollView()
+//        
+//        return scview
+//    }()
+    
 //    // 현재 사용자 위치
 //    private let currentLocationLabel: UILabel = {
 //        let label = UILabel()
@@ -27,14 +33,14 @@ class WeatherChangeView : UIView {
 //        label.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
 //        return label
 //    }()
-    private let weatherView = UIView()
     
     // MARK: - 시간대별 날씨(3h)
     lazy var hourlyCollectionView : UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
-        flowLayout.minimumLineSpacing = 15 // cell사이의 간격 설정
+//        flowLayout.minimumLineSpacing = 15 // cell사이의 간격 설정
         let view = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        view.backgroundColor = UIColor(red: 0.8275, green: 0.8275, blue: 0.8275, alpha: 1)
         view.isScrollEnabled = false
         return view
     }()
@@ -42,36 +48,33 @@ class WeatherChangeView : UIView {
     private let hourlyWeatherLabel : UILabel = {
         let label = UILabel()
         label.text = "시간대별 날씨"
-        label.font = UIFont.systemFont(ofSize: 16, weight: .light)
+        label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         return label
     }()
     
-//    private lazy var hourlyWeatherStackView: UIStackView = {
-//        let stview = UIStackView()
-//        stview.axis = .horizontal
-//        stview.distribution = .fillEqually
-//        stview.alignment = .fill
-//        stview.spacing = 15
-//        stview.addSubview(StackView)
-//        return stview
-//    }()
     
-    private let divisionLineView = UIView()
+
+    
+//    private let divisionLineView : UIView = {
+//        let view
+//    }()
     
     // MARK: - 주간 날씨(5d)
     private let weeklyWeatherLabel : UILabel = {
         let label = UILabel()
         label.text = "주간 날씨"
-        label.font = UIFont.systemFont(ofSize: 16, weight: .light)
+        label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         return label
     }()
     
-    private lazy var weeklyWeatherStackView: UIStackView = {
-        let stview = UIStackView()
-        stview.axis = .horizontal
-        stview.distribution = .fillEqually
-        stview.alignment = .fill
-        return stview
+    lazy var weeklyCollectionView : UICollectionView = {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .horizontal
+        flowLayout.minimumLineSpacing = 15 // cell사이의 간격 설정
+        let view = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        view.backgroundColor = UIColor(red: 0.8275, green: 0.8275, blue: 0.8275, alpha: 1)
+        view.isScrollEnabled = false
+        return view
     }()
     
     
@@ -97,10 +100,37 @@ class WeatherChangeView : UIView {
     }
     
     private func addViews() {
-        [weatherView, hourlyWeatherLabel, divisionLineView, weeklyWeatherLabel].forEach {
+        [hourlyWeatherLabel, hourlyCollectionView, divisionLineView, weeklyWeatherLabel, weeklyCollectionView].forEach {
             addSubview($0)
         }
-        
+        hourlyWeatherLabel.snp.makeConstraints {
+            $0.top.equalTo(safeAreaLayoutGuide.snp.top).offset(20)
+            $0.leading.equalToSuperview().offset(20)
+            $0.height.equalTo(55)
+        }
+        hourlyCollectionView.snp.makeConstraints {
+            $0.top.equalTo(hourlyWeatherLabel.snp.bottom).offset(15)
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(180)
+            $0.width.equalTo(343)
+        }
+        divisionLineView.snp.makeConstraints {
+            $0.top.equalTo(hourlyCollectionView.snp.bottom).offset(15)
+            $0.height.equalTo(1)
+            $0.leading.equalToSuperview().offset(10)
+            $0.trailing.equalToSuperview().offset(-10)
+        }
+        weeklyWeatherLabel.snp.makeConstraints {
+            $0.top.equalTo(divisionLineView.snp.bottom).offset(20)
+            $0.leading.equalToSuperview().offset(20)
+            $0.height.equalTo(55)
+        }
+        weeklyCollectionView.snp.makeConstraints {
+            $0.top.equalTo(weeklyWeatherLabel.snp.bottom).offset(15)
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(180)
+            $0.width.equalTo(343)
+        }
     }
     
     private func configureConstraints() {
