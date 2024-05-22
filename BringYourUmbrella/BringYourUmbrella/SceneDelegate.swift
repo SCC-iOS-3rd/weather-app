@@ -10,7 +10,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    var viewController: ViewController?
 
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -22,6 +22,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = navigationController
 
         window?.makeKeyAndVisible()
+
+        // viewController에 접근할 수 있도록 저장
+        self.viewController = initialViewController
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -53,6 +56,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Save changes in the application's managed object context when the application transitions to the background.
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
+        if let vc = viewController {
+            let latitude = vc.latitude
+            let longitude = vc.longitude
+            // 기존 위치 정보 지우기
+            UserDefaults.standard.clearLocation()
+            // 새 위치 정보 저장
+            UserDefaults.standard.setLocation(latitude: latitude, longitude: longitude)
+        }
+        
     }
 
 

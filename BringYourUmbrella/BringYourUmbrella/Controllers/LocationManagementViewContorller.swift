@@ -92,7 +92,7 @@ class LocationManagementViewContorller: UIViewController {
         task.resume()
         
         DispatchQueue.main.async {
-            self.locationManagerView.currentTemperature.text = "\(self.main?.temp ?? 0)º"
+            self.locationManagerView.currentTemperature.text = "\(Int(self.main?.temp ?? 0))º"
         }
     }
     
