@@ -70,9 +70,9 @@ class WeatherChangeView : UIView {
     lazy var weeklyCollectionView : UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
-        flowLayout.minimumLineSpacing = 15 // cell사이의 간격 설정
+        flowLayout.minimumLineSpacing = 13 // cell사이의 간격 설정
         let view = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-        view.backgroundColor = UIColor(red: 0.8275, green: 0.8275, blue: 0.8275, alpha: 1)
+        view.backgroundColor = .clear
         view.isScrollEnabled = false
         return view
     }()

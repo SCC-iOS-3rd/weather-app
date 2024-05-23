@@ -283,6 +283,8 @@ extension ViewController: LocationDelegate {
         vc2.latitude = latitude
         vc2.longitude = longitude
         vc2.fetchyesterdayweather()
+        vc3.latitude = latitude
+        vc3.longitude = longitude
         updateLocationName()
     }
     
