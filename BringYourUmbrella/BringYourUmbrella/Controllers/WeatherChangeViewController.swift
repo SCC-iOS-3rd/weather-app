@@ -85,6 +85,9 @@ extension WeatherChangeViewController: UICollectionViewDataSource {
             guard let cell = weatherChangeView.weeklyCollectionView.dequeueReusableCell(withReuseIdentifier: WeeklyWeatherCollectionViewCell.identifier, for: indexPath) as? WeeklyWeatherCollectionViewCell else { return UICollectionViewCell() }
             let forcastDay = forecastdays[indexPath.row]
             cell.configureCell(with: forcastDay)
+            
+            
+            
             return cell
         }
         return UICollectionViewCell()

@@ -23,6 +23,9 @@ class WeeklyWeatherCollectionViewCell: UICollectionViewCell {
     var latitude: Double = 0.0
     var longitude: Double = 0.0
     
+    private let maxBarHeight: CGFloat = 100
+    private let minBarHeight: CGFloat = 20
+    
     let daysLabel: UILabel = {
         let tl = UILabel()
         tl.text = "오늘"
@@ -62,6 +65,12 @@ class WeeklyWeatherCollectionViewCell: UICollectionViewCell {
         return cb
     }()
     
+    let barSection: UIView = {
+        let bs = UIView()
+        bs.backgroundColor = .clear
+        return bs
+    }()
+    
     // MARK: - methods
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -78,9 +87,11 @@ class WeeklyWeatherCollectionViewCell: UICollectionViewCell {
     }
     
     private func setConstraints() {
-        [daysLabel, datesLabel, maxTemp, cellBar, minTemp].forEach {
+        [daysLabel, datesLabel, maxTemp, barSection, minTemp].forEach {
             self.contentView.addSubview($0)
         }
+        
+        self.barSection.addSubview(cellBar)
         
         daysLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(2)
@@ -96,16 +107,16 @@ class WeeklyWeatherCollectionViewCell: UICollectionViewCell {
         
         maxTemp.snp.makeConstraints {
             $0.top.lessThanOrEqualTo(datesLabel.snp.bottom).offset(4)
-            $0.bottom.equalTo(cellBar.snp.top).offset(-1)
+            $0.bottom.lessThanOrEqualTo(cellBar.snp.top).offset(-1)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(20)
         }
         
-        cellBar.snp.makeConstraints {
+        barSection.snp.makeConstraints {
+            $0.top.equalTo(maxTemp.snp.bottom).offset(3)
+            $0.bottom.equalTo(minTemp.snp.top).inset(-3)
             $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(minTemp.snp.top).inset(-1)
             $0.width.equalTo(8)
-            $0.height.lessThanOrEqualTo(10)
         }
         
         minTemp.snp.makeConstraints {
@@ -120,6 +131,11 @@ class WeeklyWeatherCollectionViewCell: UICollectionViewCell {
         datesLabel.text = formatDateString(forecastDay.date)
         maxTemp.text = "\(Int(forecastDay.day.maxtempC))º"
         minTemp.text = "\(Int(forecastDay.day.mintempC))º"
+        
+        if let maxTemperature = Double(exactly: forecastDay.day.maxtempC) {
+            updateCellBarHeight(CGFloat(maxTemperature))
+        }
+        
     }
     
     func formatDateString(_ dateString: String) -> String? {
@@ -147,6 +163,16 @@ class WeeklyWeatherCollectionViewCell: UICollectionViewCell {
             return outputFormatter.string(from: date)
         } else {
             return nil
+        }
+    }
+    
+    func updateCellBarHeight(_ temperature: CGFloat) {
+        let height = minBarHeight + (maxBarHeight - minBarHeight) * (temperature / 50.0)
+        cellBar.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalTo(barSection.snp.bottom)
+            $0.width.equalTo(barSection.snp.width)
+            $0.height.equalTo(height)
         }
     }
 }
