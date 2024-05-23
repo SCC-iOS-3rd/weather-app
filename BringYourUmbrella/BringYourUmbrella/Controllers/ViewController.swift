@@ -49,7 +49,10 @@ class ViewController: BaseViewController {
             print("No saved location found")
         }
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = true
+    }
     
     //런치스크린
     func setupAnimationView() {
@@ -257,8 +260,8 @@ extension ViewController {
 extension ViewController: LocationDelegate {
     //알람 화면이동
     @objc func alarmButtonMove(sender: UIButton) {
-        //        let alarmVC =
-        //        present(alarmVC, animated: true)
+        let alarmVC = AlarmViewController()
+        self.navigationController?.pushViewController(alarmVC, animated: true)
     }
     //위치추가 화면이동
     @objc func plusButtonMove (sender: UIButton) {

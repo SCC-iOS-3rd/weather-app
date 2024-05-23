@@ -21,6 +21,11 @@
 		4D6BFD302BFC9546002E805A /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6BFD2F2BFC9546002E805A /* LocationViewController.swift */; };
 		4DEC6EF72BF6EF7F00475B3D /* LocationModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4DEC6EF52BF6EF7F00475B3D /* LocationModel.xcdatamodeld */; };
 		4DEC6EFB2BF7301F00475B3D /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DEC6EFA2BF7301F00475B3D /* LocationService.swift */; };
+		B56CD5BD2BFEC4D600D75484 /* AlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56CD5BC2BFEC4D600D75484 /* AlarmViewController.swift */; };
+		B56CD5BF2BFEC56A00D75484 /* AlarmCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56CD5BE2BFEC56A00D75484 /* AlarmCell.swift */; };
+		B56CD5C12BFEC59700D75484 /* AddAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56CD5C02BFEC59700D75484 /* AddAlarmViewController.swift */; };
+		B56CD5CC2BFEE45100D75484 /* AlarmData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56CD5CA2BFEE45100D75484 /* AlarmData+CoreDataClass.swift */; };
+		B56CD5CD2BFEE45100D75484 /* AlarmData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56CD5CB2BFEE45100D75484 /* AlarmData+CoreDataProperties.swift */; };
 		CA00E5C82BF20E4000B05D3F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = CA00E5C72BF20E4000B05D3F /* Alamofire */; };
 		CA00E5CB2BF20E4900B05D3F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CA00E5CA2BF20E4900B05D3F /* SnapKit */; };
 		CA00E5CD2BF20E5700B05D3F /* LocationSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA00E5CC2BF20E5700B05D3F /* LocationSearchViewController.swift */; };
@@ -86,6 +91,11 @@
 		4D6BFD2F2BFC9546002E805A /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		4DEC6EF62BF6EF7F00475B3D /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		4DEC6EFA2BF7301F00475B3D /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		B56CD5BC2BFEC4D600D75484 /* AlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewController.swift; sourceTree = "<group>"; };
+		B56CD5BE2BFEC56A00D75484 /* AlarmCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmCell.swift; sourceTree = "<group>"; };
+		B56CD5C02BFEC59700D75484 /* AddAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAlarmViewController.swift; sourceTree = "<group>"; };
+		B56CD5CA2BFEE45100D75484 /* AlarmData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlarmData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		B56CD5CB2BFEE45100D75484 /* AlarmData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlarmData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CA00E5CC2BF20E5700B05D3F /* LocationSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchViewController.swift; sourceTree = "<group>"; };
 		CA00E5D12BF21F6200B05D3F /* LocationSearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchResultTableViewCell.swift; sourceTree = "<group>"; };
 		CA00E5D32BF2265700B05D3F /* NewLocationPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLocationPreviewViewController.swift; sourceTree = "<group>"; };
@@ -168,6 +178,8 @@
 		DE0C997E2BF1DC680059C655 = {
 			isa = PBXGroup;
 			children = (
+				B56CD5CA2BFEE45100D75484 /* AlarmData+CoreDataClass.swift */,
+				B56CD5CB2BFEE45100D75484 /* AlarmData+CoreDataProperties.swift */,
 				DE0C99892BF1DC690059C655 /* BringYourUmbrella */,
 				CA61F81B2BF59FA5004F7B47 /* myWidget */,
 				CA61F8162BF59FA5004F7B47 /* Frameworks */,
@@ -211,6 +223,8 @@
 				4D56DC252BF21FE9008EB3E2 /* LocationManagementViewContorller.swift */,
 				39B423342BF596CF000E5C75 /* NoHighlightButton.swift */,
 				4D6BFD2F2BFC9546002E805A /* LocationViewController.swift */,
+				B56CD5BC2BFEC4D600D75484 /* AlarmViewController.swift */,
+				B56CD5C02BFEC59700D75484 /* AddAlarmViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -226,6 +240,7 @@
 				4D56DC292BF2FCF8008EB3E2 /* LocationManagementViewTableViewCell.swift */,
 				4D6AF87F2BFB58EF00F0BCE0 /* LocationView.swift */,
 				CA8D11272BFDE5550031E5A1 /* SplashScreen.swift */,
+				B56CD5BE2BFEC56A00D75484 /* AlarmCell.swift */,
 				CA8D112B2BFE10B40031E5A1 /* Animation0522.json */,
 			);
 			path = Views;
@@ -379,11 +394,16 @@
 				CA00E5CD2BF20E5700B05D3F /* LocationSearchViewController.swift in Sources */,
 				DE0C998D2BF1DC690059C655 /* SceneDelegate.swift in Sources */,
 				CA00E5DA2BF3352D00B05D3F /* Weather.swift in Sources */,
+				B56CD5BF2BFEC56A00D75484 /* AlarmCell.swift in Sources */,
+				B56CD5BD2BFEC4D600D75484 /* AlarmViewController.swift in Sources */,
+				B56CD5C12BFEC59700D75484 /* AddAlarmViewController.swift in Sources */,
 				4DEC6EF72BF6EF7F00475B3D /* LocationModel.xcdatamodeld in Sources */,
 				CA00E5D22BF21F6200B05D3F /* LocationSearchResultTableViewCell.swift in Sources */,
 				39D2B16C2BFB9BC000B56D66 /* WeatherDisplayViewController.swift in Sources */,
 				CA61F8932BFD8DAA004F7B47 /* UserDefaults.swift in Sources */,
 				CA61F82B2BF7543F004F7B47 /* Geocoder.swift in Sources */,
+				B56CD5CC2BFEE45100D75484 /* AlarmData+CoreDataClass.swift in Sources */,
+				B56CD5CD2BFEE45100D75484 /* AlarmData+CoreDataProperties.swift in Sources */,
 				4D6BFD302BFC9546002E805A /* LocationViewController.swift in Sources */,
 				CA8D11282BFDE5550031E5A1 /* SplashScreen.swift in Sources */,
 				4D56DC282BF22045008EB3E2 /* LocationManagementView.swift in Sources */,
@@ -430,7 +450,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 694BMG973X;
+				DEVELOPMENT_TEAM = 77G8URFA92;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = myWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = myWidget;
@@ -442,7 +462,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.github.Chynmn.BringYourUmbrella.myWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.Chynmn.BringYourUmbrella1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -458,7 +478,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 694BMG973X;
+				DEVELOPMENT_TEAM = 77G8URFA92;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = myWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = myWidget;
@@ -470,7 +490,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.github.Chynmn.BringYourUmbrella.myWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.Chynmn.BringYourUmbrella1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -604,17 +624,19 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 694BMG973X;
+				DEVELOPMENT_TEAM = 77G8URFA92;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BringYourUmbrella/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "현재 위치의 날씨 정보를 표시합니다";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -622,6 +644,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.Chynmn.BringYourUmbrella;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -638,17 +661,19 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 694BMG973X;
+				DEVELOPMENT_TEAM = 77G8URFA92;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BringYourUmbrella/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "현재 위치의 날씨 정보를 표시합니다";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -656,6 +681,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.Chynmn.BringYourUmbrella;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
