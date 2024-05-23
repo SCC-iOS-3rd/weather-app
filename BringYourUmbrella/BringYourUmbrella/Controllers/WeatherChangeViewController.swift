@@ -13,10 +13,8 @@ class WeatherChangeViewController : UIViewController {
     private let weatherChangeView = WeatherChangeView()
     //api
     let weatherService = WeatherService()
-    var weather: Weather?
-    var sys: Sys?
-    var main: Main?
-    var name: String?
+    var list: [WeatherEntry] = []
+    var mainInfo: MainInfo?
     //위도 경도
     var latitude: Double = 0.0
     var longitude: Double = 0.0
@@ -42,6 +40,26 @@ class WeatherChangeViewController : UIViewController {
         weatherChangeView.weeklyCollectionView.tag = 2
     }
     
+    private func forecastWeatherData() {
+        weatherService.getForecastWeather(latitude: latitude, longitude: longitude) { result in
+            switch result {
+            case .success(let forecastWeatherResponse):
+                DispatchQueue.main.async {
+                    self.list = forecastWeatherResponse.list
+                    self.mainInfo = forecastWeatherResponse.mainInfo
+                    self.setWeatherData()
+                }
+            case .failure(let error):
+                print("Error : \(error)")
+            }
+        }
+    }
+    
+    private func setWeatherData() {
+//        hourlyWeatherCell.temperatureLabel.text = "\(Int(main!.temp))º"
+        
+        
+    }
     
 }
 
@@ -58,6 +76,8 @@ extension WeatherChangeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView.tag == 1 {
             guard let cell = weatherChangeView.hourlyCollectionView.dequeueReusableCell(withReuseIdentifier: HourlyWeatherCollectionViewCell.identifier, for: indexPath) as? HourlyWeatherCollectionViewCell else { return UICollectionViewCell() }
+            
+            
             
             return cell
         } else if collectionView.tag == 2 {

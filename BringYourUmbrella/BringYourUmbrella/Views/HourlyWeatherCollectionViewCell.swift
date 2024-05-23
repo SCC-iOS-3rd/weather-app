@@ -11,7 +11,15 @@ import SnapKit
 class HourlyWeatherCollectionViewCell : UICollectionViewCell {
     
     static var identifier = String(describing: HourlyWeatherCollectionViewCell.self)
+    //api
     let weatherService = WeatherService()
+    var weather: Weather?
+    var sys: Sys?
+    var main: Main?
+    var name: String?
+    //위도 경도
+    var latitude: Double = 0.0
+    var longitude: Double = 0.0
     
     // MARK: - UI properties
     private let temperatureLabel : UILabel = {
@@ -90,5 +98,6 @@ class HourlyWeatherCollectionViewCell : UICollectionViewCell {
 //        }
 //    }
     
+
     
 }

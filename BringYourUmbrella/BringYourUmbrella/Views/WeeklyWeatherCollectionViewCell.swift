@@ -115,24 +115,24 @@ class WeeklyWeatherCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    private func forecastWeatherData() {
-        weatherService.getForecastWeather(latitude: latitude, longitude: longitude) { result in
-            switch result {
-            case .success(let weatherResponse):
-                DispatchQueue.main.async {
-                    self.weather = weatherResponse.weather.first
-                    self.main = weatherResponse.main
-                    self.name = weatherResponse.name
-                    self.setWeatherData()
-                }
-            case .failure(let error):
-                print("Error : \(error)")
-            }
-        }
-    }
-    
-    private func setWeatherData() {
-        
-    }
+//    private func forecastWeatherData() {
+//        weatherService.getForecastWeather(latitude: latitude, longitude: longitude) { result in
+//            switch result {
+//            case .success(let weatherResponse):
+//                DispatchQueue.main.async {
+//                    self.weather = weatherResponse.weather.first
+//                    self.main = weatherResponse.main
+//                    self.name = weatherResponse.name
+//                    self.setWeatherData()
+//                }
+//            case .failure(let error):
+//                print("Error : \(error)")
+//            }
+//        }
+//    }
+//    
+//    private func setWeatherData() {
+//        
+//    }
     
 }
