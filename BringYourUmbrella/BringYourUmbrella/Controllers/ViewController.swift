@@ -28,17 +28,12 @@ class ViewController: BaseViewController {
     let locationLabel = UILabel()
     //모달창부분
     let alphaView = UIView()
-<<<<<<< HEAD
     // Refresh control
     let refreshControl = UIRefreshControl()
     // ScrollView
     private let scrollView = UIScrollView()
     private let contentView = UIView()
 
-=======
-    
-    
->>>>>>> 8cf4884ebdacc5765ba2bd6045998ea1e5b7deec
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -328,35 +323,6 @@ extension ViewController: LocationDelegate {
         vc3.longitude = longitude
         updateLocationName()
     }
-<<<<<<< HEAD
-
-=======
-    
-    //  //다른파일로 분리되었는지 확인
-    //      //이미지랑 레이블정보 띄우는부분
-    //        private func setWeatherUI() {
-    //            //현재위치명 업데이트
-    //            tranceLocationName(latitude: latitude, longitude: longitude) { locationName in
-    //                DispatchQueue.main.async {
-    //                    self.locationLabel.text = "\(locationName)"
-    //                }
-    //            }
-    //            temperatureInCelsius = main!.temp
-    //            maxTemperatureInCelsius = main!.tempmax
-    //            minTemperatureInCelsius = main!.tempmin
-    //            iconImageView.image = UIImage(named: weather!.icon)
-    //            todayWeatherViewLabel.text = "\(weather!.description)"
-    //            temperatureLabel.text = "\(Int(main!.temp))º"
-    //            todayTemperatureLabel.text = "\(main!.temp)º"
-    //            highloweViewLabel.text = "최고 \(Int(main!.tempmax))º ~ 최저 \(Int(main!.tempmin))º"
-    //            styleViewLabel.text = styleRecommend()
-    //            weatherDescriptionViewLabel.text = informationRecommend()
-    //            //날씨표시 페이지
-    //            todayWeatherLabel.text = "\(weather!.description)"
-    //            todayweatherImageView.image = UIImage(named: weather!.icon)
-    //            todayHighLoweLabel.text = "\(main!.tempmax)º \(main!.tempmin)º"
-    //        }
->>>>>>> 8cf4884ebdacc5765ba2bd6045998ea1e5b7deec
 }
 //MARK: - 스타일추천,정보추천
 extension ViewController {

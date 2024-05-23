@@ -12,9 +12,9 @@ class LocationManagementViewContorller: UIViewController {
     // MARK: - properties
     let locationManagerView = LocationManagementView()
     let weatherService = WeatherService()
+    let locationService = LocationService()
     
     var locationList: [Location] = []
-    
     
     //위도와 경도
     var latitude: Double = 0.0
@@ -112,6 +112,11 @@ func setTableView() {
 
 @objc private func tappedSearchBtn() {
     let nextVc = LocationSearchViewController()
+    nextVc.completion = { [weak self] in
+        
+        self?.fetchLocations()
+        self?.locationManagerView.favoritesTableView.reloadData()
+    }
     nextVc.modalPresentationStyle = .pageSheet
     present(nextVc, animated: true)
 }
