@@ -24,7 +24,7 @@ class WeeklyWeatherCollectionViewCell: UICollectionViewCell {
     var longitude: Double = 0.0
     
     private let maxBarHeight: CGFloat = 100
-    private let minBarHeight: CGFloat = 30
+    private let minBarHeight: CGFloat = 40
     
     let daysLabel: UILabel = {
         let tl = UILabel()
@@ -94,7 +94,7 @@ class WeeklyWeatherCollectionViewCell: UICollectionViewCell {
         self.barSection.addSubview(cellBar)
         
         daysLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(2)
+            $0.top.equalToSuperview().offset(15)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(8)
         }
@@ -120,7 +120,7 @@ class WeeklyWeatherCollectionViewCell: UICollectionViewCell {
         }
         
         minTemp.snp.makeConstraints {
-            $0.bottom.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(15)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(20)
         }

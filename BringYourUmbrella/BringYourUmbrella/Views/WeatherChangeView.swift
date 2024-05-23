@@ -108,18 +108,18 @@ class WeatherChangeView : UIView {
             addSubview($0)
         }
         hourlyWeatherLabel.snp.makeConstraints {
-            $0.top.equalTo(safeAreaLayoutGuide.snp.top).offset(20)
+            $0.top.equalTo(safeAreaLayoutGuide.snp.top)
             $0.leading.equalToSuperview().offset(20)
             $0.height.equalTo(55)
         }
         hourlyCollectionView.snp.makeConstraints {
-            $0.top.equalTo(hourlyWeatherLabel.snp.bottom).offset(15)
+            $0.top.equalTo(hourlyWeatherLabel.snp.bottom).offset(8)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(200)
             $0.width.equalTo(343)
         }
         divisionLineView.snp.makeConstraints {
-            $0.top.equalTo(hourlyCollectionView.snp.bottom).offset(15)
+            $0.top.equalTo(hourlyCollectionView.snp.bottom).offset(23)
             $0.height.equalTo(1)
             $0.leading.equalToSuperview().offset(10)
             $0.trailing.equalToSuperview().offset(-10)
