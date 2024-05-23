@@ -75,7 +75,7 @@ class LocationManagementViewContorller: UIViewController {
                 if let image = UIImage(named: self.weather!.icon) {
                     self.locationManagerView.currentWeatherImageView.image = image
                 }
-                self.locationManagerView.currentTemperature.text = "\(self.main?.temp ?? 0)º"
+                self.locationManagerView.currentTemperature.text = "\(Int(self.main?.temp ?? 0))º"
             }
         }
 }

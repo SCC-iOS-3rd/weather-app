@@ -125,7 +125,7 @@ class LocationManagementViewTableViewCell: UITableViewCell {
                     if let image = UIImage(named: weatherResponse.weather.first!.icon) {
                         self.favoritesWeatherImageView.image = image
                     }
-                    self.favoritesTemperature.text = "\(weatherResponse.main.temp)º"
+                    self.favoritesTemperature.text = "\(Int(weatherResponse.main.temp))º"
                 }
             case .failure(let error):
                 print("Failed to fetch weather data: \(error)")
