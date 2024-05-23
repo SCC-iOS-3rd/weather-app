@@ -47,7 +47,7 @@ struct Sys: Decodable {
 
 struct ForecastWeatherResponse : Codable {
     let list: [WeatherEntry]
-    let mainInfo: MainInfo
+//    let mainInfo: MainInfo
 }
 
 struct WeatherEntry : Codable {

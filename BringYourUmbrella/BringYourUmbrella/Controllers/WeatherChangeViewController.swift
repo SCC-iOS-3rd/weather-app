@@ -28,6 +28,7 @@ class WeatherChangeViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print(forecastdays)
+        forecastWeatherData()
         fetchFiveDaysWeather()
         setCollectionView()
         
@@ -90,7 +91,7 @@ class WeatherChangeViewController : UIViewController {
 extension WeatherChangeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView.tag == 1 {
-            return 7
+            return weatherEntry.count > 7 ? 7 : weatherEntry.count
         } else if collectionView.tag == 2 {
             return forecastdays.count
         }

@@ -40,7 +40,8 @@ class WeatherChangeView : UIView {
         flowLayout.scrollDirection = .horizontal
 //        flowLayout.minimumLineSpacing = 15 // cell사이의 간격 설정
         let view = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-        view.backgroundColor = UIColor(red: 0.8275, green: 0.8275, blue: 0.8275, alpha: 1)
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 12
         view.isScrollEnabled = false
         return view
     }()
@@ -49,12 +50,13 @@ class WeatherChangeView : UIView {
         let label = UILabel()
         label.text = "시간대별 날씨"
         label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        label.textColor = .white
         return label
     }()
     
     private let divisionLineView : UIView = {
         let view = UIView()
-        view.layer.borderColor = UIColor.black.cgColor
+        view.layer.borderColor = UIColor.white.cgColor
         view.layer.borderWidth = 2
         return view
     }()
@@ -64,6 +66,7 @@ class WeatherChangeView : UIView {
         let label = UILabel()
         label.text = "주간 날씨"
         label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        label.textColor = .white
         return label
     }()
     
@@ -72,7 +75,8 @@ class WeatherChangeView : UIView {
         flowLayout.scrollDirection = .horizontal
         flowLayout.minimumLineSpacing = 13 // cell사이의 간격 설정
         let view = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-        view.backgroundColor = .clear
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 12
         view.isScrollEnabled = false
         return view
     }()
@@ -95,7 +99,7 @@ class WeatherChangeView : UIView {
     }
     
     func setup() {
-        backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        backgroundColor = UIColor(red: 0.4039, green: 0.7765, blue: 0.8902, alpha: 1)
 
     }
     

@@ -44,6 +44,15 @@ class HourlyWeatherCollectionViewCell : UICollectionViewCell {
         label.font = UIFont.systemFont(ofSize: 12, weight: .light)
         return label
     }()
+
+    private let maxBarHeight: CGFloat = 100
+    private let minBarHeight: CGFloat = 30
+    
+    let barSection: UIView = {
+        let bs = UIView()
+        bs.backgroundColor = .clear
+        return bs
+    }()
     
     // MARK: - init
     override init(frame: CGRect) {
@@ -58,15 +67,17 @@ class HourlyWeatherCollectionViewCell : UICollectionViewCell {
     }
     
     private func setUp() {
-        self.contentView.backgroundColor = .clear
+        self.contentView.backgroundColor = .white
     }
     
     private func configureConstraints() {
-        [temperatureLabel, barGraphView, weatherImageView, timePassageLabel].forEach {
+        [temperatureLabel, barSection, weatherImageView, timePassageLabel].forEach {
             addSubview($0)
         }
+        self.barSection.addSubview(barGraphView)
+        
         timePassageLabel.snp.makeConstraints {
-            $0.bottom.equalToSuperview().offset(-8)
+            $0.bottom.equalToSuperview().offset(-20)
             $0.centerX.equalToSuperview()
         }
         weatherImageView.snp.makeConstraints {
@@ -74,11 +85,13 @@ class HourlyWeatherCollectionViewCell : UICollectionViewCell {
             $0.centerX.equalToSuperview()
             $0.width.height.equalTo(25)
         }
-        barGraphView.snp.makeConstraints {
+
+        barSection.snp.makeConstraints {
             $0.bottom.equalTo(weatherImageView.snp.top).offset(-8)
+            $0.top.equalTo(temperatureLabel.snp.bottom).offset(8)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(8)
-            $0.height.equalTo(100)
+//            $0.height.equalTo(100)
         }
         temperatureLabel.snp.makeConstraints {
             $0.bottom.equalTo(barGraphView.snp.top).offset(-8)
@@ -92,6 +105,10 @@ class HourlyWeatherCollectionViewCell : UICollectionViewCell {
         temperatureLabel.text = "\(Int(weatherEntry.main.temp))º"
         weatherImageView.image = UIImage(named: weatherEntry.weather.first!.icon)
         timePassageLabel.text = formatDateString(weatherEntry.dt_txt)
+        
+        if let maxTemperature = Double(exactly: weatherEntry.main.temp) {
+            graphHeightControl(CGFloat(maxTemperature))
+        }
     }
     
     func formatDateString(_ dateString: String) -> String? {
@@ -99,7 +116,7 @@ class HourlyWeatherCollectionViewCell : UICollectionViewCell {
         inputFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
         let outputFormatter = DateFormatter()
-        outputFormatter.dateFormat = "HH"
+        outputFormatter.dateFormat = "HH시"
         
         if let date = inputFormatter.date(from: dateString) {
             return outputFormatter.string(from: date)
@@ -108,19 +125,16 @@ class HourlyWeatherCollectionViewCell : UICollectionViewCell {
         }
     }
     
-//    func setTime(with weatherEntry: WeatherEntry) {
-//        let now = weatherEntry.dt_txt
-//        print(now)
-//        for i in 1...7 {
-//            
-//        }
-//    }
-    
-//    private func graphHeightControl() {
-//        switch barGraphView {
-//
-//        }
-//    }
+    func graphHeightControl(_ temperature: CGFloat) {
+        let height = minBarHeight + (maxBarHeight - minBarHeight) * (temperature / 50)
+        
+        barGraphView.snp.makeConstraints {
+            $0.bottom.equalTo(barSection.snp.bottom)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(barSection.snp.width)
+            $0.height.equalTo(height)
+        }
+    }
     
 
     

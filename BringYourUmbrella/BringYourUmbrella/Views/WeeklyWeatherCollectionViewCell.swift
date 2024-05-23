@@ -24,7 +24,7 @@ class WeeklyWeatherCollectionViewCell: UICollectionViewCell {
     var longitude: Double = 0.0
     
     private let maxBarHeight: CGFloat = 100
-    private let minBarHeight: CGFloat = 20
+    private let minBarHeight: CGFloat = 30
     
     let daysLabel: UILabel = {
         let tl = UILabel()
