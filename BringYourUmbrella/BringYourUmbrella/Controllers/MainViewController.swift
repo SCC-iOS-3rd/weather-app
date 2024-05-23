@@ -215,7 +215,7 @@ extension MainViewController {
 //MARK: - 현재위치,날씨가져오기
 extension MainViewController: CLLocationManagerDelegate {
 
-    private func setLocationManager() {
+    func setLocationManager() {
         //델리게이트 설정
         locationManager.delegate = self
         //거리 정확도
