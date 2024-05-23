@@ -13,8 +13,9 @@ class WeatherChangeViewController : UIViewController {
     private let weatherChangeView = WeatherChangeView()
     //api
     let weatherService = WeatherService()
-    var list: [WeatherEntry] = []
-    var mainInfo: MainInfo?
+    var weatherEntry: [WeatherEntry] = []
+    var weatherInfo: WeatherInfo?
+    var forecastdays: [ForecastDay] = []
     //위도 경도
     var latitude: Double = 0.0
     var longitude: Double = 0.0
@@ -26,7 +27,10 @@ class WeatherChangeViewController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(forecastdays)
+        fetchFiveDaysWeather()
         setCollectionView()
+        
     }
     
     private func setCollectionView() {
@@ -39,14 +43,34 @@ class WeatherChangeViewController : UIViewController {
         weatherChangeView.hourlyCollectionView.tag = 1
         weatherChangeView.weeklyCollectionView.tag = 2
     }
+    func fetchFiveDaysWeather() {
+        let urlString = "http://api.weatherapi.com/v1/forecast.json?key=c9b70526c91341798a493546241305&q=\(latitude),\(longitude)&days=5&lang=ko"
+        guard let url = URL(string: urlString) else { return }
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            
+            do {
+                let fiveDaysdata = try JSONDecoder().decode(YesterdayWeather.self, from: data)
+                print("5daydata: \(fiveDaysdata)")
+                self.forecastdays = fiveDaysdata.forecast.forecastday
+                DispatchQueue.main.async {
+                    self.weatherChangeView.weeklyCollectionView.reloadData()
+                }
+            } catch {
+                print("디코딩 실패: \(error)")
+            }
+        }
+        task.resume()
+    }
     
     private func forecastWeatherData() {
         weatherService.getForecastWeather(latitude: latitude, longitude: longitude) { result in
             switch result {
             case .success(let forecastWeatherResponse):
+                
                 DispatchQueue.main.async {
-                    self.list = forecastWeatherResponse.list
-                    self.mainInfo = forecastWeatherResponse.mainInfo
+                    self.weatherEntry = forecastWeatherResponse.list
+                    self.weatherChangeView.hourlyCollectionView.reloadData()
                     self.setWeatherData()
                 }
             case .failure(let error):
@@ -68,7 +92,7 @@ extension WeatherChangeViewController: UICollectionViewDataSource {
         if collectionView.tag == 1 {
             return 7
         } else if collectionView.tag == 2 {
-            return 5
+            return forecastdays.count
         }
         return 0
     }
@@ -76,12 +100,14 @@ extension WeatherChangeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView.tag == 1 {
             guard let cell = weatherChangeView.hourlyCollectionView.dequeueReusableCell(withReuseIdentifier: HourlyWeatherCollectionViewCell.identifier, for: indexPath) as? HourlyWeatherCollectionViewCell else { return UICollectionViewCell() }
-            
-            
+            let weatherEntry = weatherEntry[indexPath.row]
+            cell.hourlyConfigureCell(with: weatherEntry)
             
             return cell
         } else if collectionView.tag == 2 {
             guard let cell = weatherChangeView.weeklyCollectionView.dequeueReusableCell(withReuseIdentifier: WeeklyWeatherCollectionViewCell.identifier, for: indexPath) as? WeeklyWeatherCollectionViewCell else { return UICollectionViewCell() }
+            let forcastDay = forecastdays[indexPath.row]
+            cell.weeklyConfigureCell(with: forcastDay)
             return cell
         }
         return UICollectionViewCell()

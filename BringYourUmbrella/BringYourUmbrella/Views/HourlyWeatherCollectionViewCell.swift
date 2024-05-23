@@ -13,10 +13,6 @@ class HourlyWeatherCollectionViewCell : UICollectionViewCell {
     static var identifier = String(describing: HourlyWeatherCollectionViewCell.self)
     //api
     let weatherService = WeatherService()
-    var weather: Weather?
-    var sys: Sys?
-    var main: Main?
-    var name: String?
     //위도 경도
     var latitude: Double = 0.0
     var longitude: Double = 0.0
@@ -24,7 +20,7 @@ class HourlyWeatherCollectionViewCell : UICollectionViewCell {
     // MARK: - UI properties
     private let temperatureLabel : UILabel = {
         let label = UILabel()
-        label.text = "22º" // 현재 온도
+        label.text = "24º" // 현재 온도
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         return label
     }()
@@ -92,6 +88,34 @@ class HourlyWeatherCollectionViewCell : UICollectionViewCell {
 
     
     // MARK: - methods
+    func hourlyConfigureCell(with weatherEntry: WeatherEntry) {
+        temperatureLabel.text = "\(Int(weatherEntry.main.temp))º"
+        weatherImageView.image = UIImage(named: weatherEntry.weather.first!.icon)
+        timePassageLabel.text = formatDateString(weatherEntry.dt_txt)
+    }
+    
+    func formatDateString(_ dateString: String) -> String? {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "HH"
+        
+        if let date = inputFormatter.date(from: dateString) {
+            return outputFormatter.string(from: date)
+        } else {
+            return nil
+        }
+    }
+    
+//    func setTime(with weatherEntry: WeatherEntry) {
+//        let now = weatherEntry.dt_txt
+//        print(now)
+//        for i in 1...7 {
+//            
+//        }
+//    }
+    
 //    private func graphHeightControl() {
 //        switch barGraphView {
 //

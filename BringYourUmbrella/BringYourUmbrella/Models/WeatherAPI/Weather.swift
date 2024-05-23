@@ -58,17 +58,17 @@ struct WeatherEntry : Codable {
 
 struct MainInfo : Codable {
     let temp : Double
-    let temp_min : Double
-    let temp_max : Double
-    let pressure : Double
-    let humidity : Double
+//    let temp_min : Double
+//    let temp_max : Double
+//    let pressure : Double
+//    let humidity : Double
     
     enum CodingKeys : String, CodingKey {
         case temp = "temp"
-        case temp_min = "temp_min"
-        case temp_max = "temp_max"
-        case pressure = "pressure"
-        case humidity = "humidity"
+//        case temp_min = "temp_min"
+//        case temp_max = "temp_max"
+//        case pressure = "pressure"
+//        case humidity = "humidity"
     }
 }
 
