@@ -28,30 +28,54 @@ class ViewController: BaseViewController {
     let locationLabel = UILabel()
     //모달창부분
     let alphaView = UIView()
-    
-    
+    // Refresh control
+    let refreshControl = UIRefreshControl()
+    // ScrollView
+    private let scrollView = UIScrollView()
+    private let contentView = UIView()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupConstraints()
+        setupRefreshControl()
+        
+        // 런치스크린
         setupAnimationView()
         
         vc1.locationDelegate = self
-        //처음 보여질 페이지
+        
+        // 처음 보여질 페이지
         if let firstVC = dataViewControllers.first {
             pageViewController.setViewControllers([firstVC], direction: .forward, animated: true)
         }
         
-        //저장된 위도 경도값이 있는지 확인하는용도
+        // 저장된 위도 경도값이 있는지 확인하는 용도
         if let location = UserDefaults.standard.getLocation() {
             print("Saved latitude: \(location.latitude)")
             print("Saved longitude: \(location.longitude)")
         } else {
             print("No saved location found")
         }
+        
+        
     }
     
     
-    //런치스크린
+    // MARK: - 리프레시 컨트롤러
+    
+    private func setupRefreshControl() {
+        refreshControl.addTarget(self, action: #selector(handleRefresh(_:)), for: .valueChanged)
+        scrollView.refreshControl = refreshControl
+    }
+    
+    // Refresh control handle
+    @objc private func handleRefresh(_ refreshControl: UIRefreshControl) {
+        vc1.setLocationManager() // 현재위치정보 업데이트
+        refreshControl.endRefreshing()
+    }
+    
+    // MARK: - 런치스크린
     func setupAnimationView() {
             view.addSubview(animationView)
             
@@ -73,7 +97,6 @@ class ViewController: BaseViewController {
                 }
             }
         }
-    
     
     //상단 네비게이션뷰
     let navigationView: UIView = {
@@ -118,6 +141,20 @@ class ViewController: BaseViewController {
     
     //MARK: - 오토레이아웃
     override func setupConstraints() {
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(navigationView)
+        contentView.addSubview(pageViewController.view)
+        
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        contentView.snp.makeConstraints { make in
+            make.edges.equalTo(scrollView)
+            make.width.equalTo(scrollView)
+            make.height.equalTo(scrollView)
+        }
+        
         [umbrellaImage, nameLabel, buttonStackView, timeLabel, locationLabel].forEach {
             navigationView.addSubview($0)
         }
@@ -126,18 +163,18 @@ class ViewController: BaseViewController {
         }
         //우산이미지
         umbrellaImage.snp.makeConstraints {
-            $0.top.equalTo(navigationView.snp.top).offset(60)
+            $0.top.equalTo(navigationView.snp.top)
             $0.leading.equalToSuperview().offset(20)
             $0.height.width.equalTo(30)
         }
         //우산챙겨
         nameLabel.snp.makeConstraints {
-            $0.top.equalTo(navigationView.snp.top).offset(60)
+            $0.top.equalTo(navigationView.snp.top)
             $0.leading.equalTo(umbrellaImage.snp.trailing).offset(10)
         }
         //단위변경,알람,위치추가 버튼 스택뷰
         buttonStackView.snp.makeConstraints {
-            $0.top.equalTo(navigationView.snp.top).offset(55)
+            $0.top.equalTo(navigationView.snp.top)
             $0.trailing.equalToSuperview().offset(-30)
         }
         //현재시각Label
@@ -150,14 +187,13 @@ class ViewController: BaseViewController {
             $0.top.equalTo(timeLabel.snp.bottom).offset(15)
             $0.leading.equalToSuperview().offset(20)
         }
-        view.addSubview(navigationView)
-        addChild(pageViewController)
-        view.addSubview(pageViewController.view)
+
         //상단 네비게이션 뷰
         navigationView.snp.makeConstraints {
             $0.width.top.equalToSuperview()
-            $0.height.equalTo(180)
+            $0.height.equalTo(120)
         }
+        //페이지뷰
         pageViewController.view.snp.makeConstraints {
             $0.top.equalTo(navigationView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
@@ -283,33 +319,10 @@ extension ViewController: LocationDelegate {
         vc2.latitude = latitude
         vc2.longitude = longitude
         vc2.fetchyesterdayweather()
+        vc3.latitude = latitude
+        vc3.longitude = longitude
         updateLocationName()
     }
-    
-    //  //다른파일로 분리되었는지 확인
-    //      //이미지랑 레이블정보 띄우는부분
-    //        private func setWeatherUI() {
-    //            //현재위치명 업데이트
-    //            tranceLocationName(latitude: latitude, longitude: longitude) { locationName in
-    //                DispatchQueue.main.async {
-    //                    self.locationLabel.text = "\(locationName)"
-    //                }
-    //            }
-    //            temperatureInCelsius = main!.temp
-    //            maxTemperatureInCelsius = main!.tempmax
-    //            minTemperatureInCelsius = main!.tempmin
-    //            iconImageView.image = UIImage(named: weather!.icon)
-    //            todayWeatherViewLabel.text = "\(weather!.description)"
-    //            temperatureLabel.text = "\(Int(main!.temp))º"
-    //            todayTemperatureLabel.text = "\(main!.temp)º"
-    //            highloweViewLabel.text = "최고 \(Int(main!.tempmax))º ~ 최저 \(Int(main!.tempmin))º"
-    //            styleViewLabel.text = styleRecommend()
-    //            weatherDescriptionViewLabel.text = informationRecommend()
-    //            //날씨표시 페이지
-    //            todayWeatherLabel.text = "\(weather!.description)"
-    //            todayweatherImageView.image = UIImage(named: weather!.icon)
-    //            todayHighLoweLabel.text = "\(main!.tempmax)º \(main!.tempmin)º"
-    //        }
 }
 //MARK: - 스타일추천,정보추천
 extension ViewController {
@@ -395,3 +408,5 @@ extension ViewController {
         }
     }
 }
+
+

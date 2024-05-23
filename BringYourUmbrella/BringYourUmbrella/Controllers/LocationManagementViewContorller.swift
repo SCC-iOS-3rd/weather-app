@@ -12,9 +12,9 @@ class LocationManagementViewContorller: UIViewController {
     // MARK: - properties
     let locationManagerView = LocationManagementView()
     let weatherService = WeatherService()
+    let locationService = LocationService()
     
     var locationList: [Location] = []
-    
     
     //위도와 경도
     var latitude: Double = 0.0
@@ -87,7 +87,7 @@ private func setAddTarget() {
     locationManagerView.backButton.addTarget(self, action: #selector(tappedBackButton), for: .touchUpInside)
 }
 
-private func fetchLocations() {
+func fetchLocations() {
     let context = persistentContainer.viewContext
     // 코어데이터 생성 후 Entity의 이름으로 변경해줄것
     let fetchRequest: NSFetchRequest<Location> = Location.fetchRequest()
@@ -104,7 +104,7 @@ private func setRefreshControl() {
     locationManagerView.favoritesTableView.refreshControl?.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
 }
 
-private func setTableView() {
+func setTableView() {
     locationManagerView.favoritesTableView.dataSource = self
     locationManagerView.favoritesTableView.delegate = self
     locationManagerView.favoritesTableView.register(LocationManagementViewTableViewCell.self, forCellReuseIdentifier: LocationManagementViewTableViewCell.identifier)
@@ -112,6 +112,11 @@ private func setTableView() {
 
 @objc private func tappedSearchBtn() {
     let nextVc = LocationSearchViewController()
+    nextVc.completion = { [weak self] in
+        
+        self?.fetchLocations()
+        self?.locationManagerView.favoritesTableView.reloadData()
+    }
     nextVc.modalPresentationStyle = .pageSheet
     present(nextVc, animated: true)
 }

@@ -17,6 +17,7 @@ class LocationSearchViewController: UIViewController {
     let locationSearchBar = UISearchBar()
     let locationSearchResultTableView = UITableView()
     var selectedLocation: CLLocation?
+    var completion: (() -> ())?
 
     private var searchCompleter = MKLocalSearchCompleter() // 검색을 도와주는 변수
     private var searchResults = [MKLocalSearchCompletion]() // 검색결과
@@ -149,6 +150,8 @@ extension LocationSearchViewController: UITableViewDelegate {
             let previewVC = NewLocationPreviewViewController()
             previewVC.latitude = selectedLocation.coordinate.latitude
             previewVC.longitude = selectedLocation.coordinate.longitude
+            
+            previewVC.completion = completion
             
             present(previewVC, animated: true, completion: nil)
             print("위치 정보를 가지고 프리뷰페이지로 이동합니다.")
