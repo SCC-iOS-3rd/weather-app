@@ -23,6 +23,8 @@ class NewLocationPreviewViewController: BaseViewController {
     
     var temperatureInCelsius: Double = 0.0
     
+    var completion: (() -> ())?
+    
     //위도와 경도
     var latitude: Double = 0.0
     var longitude: Double = 0.0
@@ -264,19 +266,10 @@ class NewLocationPreviewViewController: BaseViewController {
 
         let okAction = UIAlertAction(title: "OK", style: .default) { _ in
             self.locationService.saveLocation(cityTitle: self.locationName, latitude: self.latitude, longitude: self.longitude)
-            
-//            // LocationManagementViewContorller 인스턴스 생성
-            let locationManagementVC = LocationManagementViewContorller()
-//            let locationManageV = LocationManagementView()
-//            locationManagementViewContorller.setTableView()
-//            locationManageV.favoritesTableView.reloadData()
-//            
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-//                locationManageV.favoritesTableView.refreshControl?.endRefreshing()
-//            }
-            
-            self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
-
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.completion?()
+                self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+            }
         }
 
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
