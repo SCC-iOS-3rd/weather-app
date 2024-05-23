@@ -57,7 +57,7 @@ class WeeklyWeatherCollectionViewCell: UICollectionViewCell {
     
     let cellBar: UIView = {
         let cb = UIView()
-        cb.backgroundColor = UIColor(red: 0.8275, green: 0.8275, blue: 0.8275, alpha: 1)
+        cb.backgroundColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1.0)
         cb.layer.cornerRadius = 4
         return cb
     }()
@@ -74,7 +74,7 @@ class WeeklyWeatherCollectionViewCell: UICollectionViewCell {
     }
     
     private func setUI() {
-        self.contentView.backgroundColor = .green
+        self.contentView.backgroundColor = .white
     }
     
     private func setConstraints() {
@@ -104,7 +104,7 @@ class WeeklyWeatherCollectionViewCell: UICollectionViewCell {
         cellBar.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.bottom.equalTo(minTemp.snp.top).inset(-1)
-            $0.width.equalTo(10)
+            $0.width.equalTo(8)
             $0.height.lessThanOrEqualTo(10)
         }
         
@@ -115,24 +115,38 @@ class WeeklyWeatherCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    private func forecastWeatherData() {
-        weatherService.getForecastWeather(latitude: latitude, longitude: longitude) { result in
-            switch result {
-            case .success(let weatherResponse):
-                DispatchQueue.main.async {
-                    self.weather = weatherResponse.weather.first
-                    self.main = weatherResponse.main
-                    self.name = weatherResponse.name
-                    self.setWeatherData()
-                }
-            case .failure(let error):
-                print("Error : \(error)")
-            }
+    func configureCell(with forecastDay: ForecastDay) {
+        daysLabel.text = dayOfWeek(from: forecastDay.date)
+        datesLabel.text = formatDateString(forecastDay.date)
+        maxTemp.text = "\(Int(forecastDay.day.maxtempC))º"
+        minTemp.text = "\(Int(forecastDay.day.mintempC))º"
+    }
+    
+    func formatDateString(_ dateString: String) -> String? {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyy-MM-dd"
+        
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "M.dd"
+        
+        if let date = inputFormatter.date(from: dateString) {
+            return outputFormatter.string(from: date)
+        } else {
+            return nil
         }
     }
     
-    private func setWeatherData() {
+    func dayOfWeek(from dateString: String) -> String? {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyy-MM-dd"
         
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "E"  // 'E' stands for day of the week abbreviation
+        
+        if let date = inputFormatter.date(from: dateString) {
+            return outputFormatter.string(from: date)
+        } else {
+            return nil
+        }
     }
-    
 }

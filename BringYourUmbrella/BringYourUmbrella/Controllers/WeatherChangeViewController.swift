@@ -13,6 +13,7 @@ class WeatherChangeViewController : UIViewController {
     private let weatherChangeView = WeatherChangeView()
     //api
     let weatherService = WeatherService()
+    var forecastdays: [ForecastDay] = []
     var weather: Weather?
     var sys: Sys?
     var main: Main?
@@ -28,7 +29,10 @@ class WeatherChangeViewController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(forecastdays)
+        fetchFiveDaysWeather()
         setCollectionView()
+        
     }
     
     private func setCollectionView() {
@@ -41,8 +45,25 @@ class WeatherChangeViewController : UIViewController {
         weatherChangeView.hourlyCollectionView.tag = 1
         weatherChangeView.weeklyCollectionView.tag = 2
     }
-    
-    
+    func fetchFiveDaysWeather() {
+        let urlString = "http://api.weatherapi.com/v1/forecast.json?key=c9b70526c91341798a493546241305&q=\(latitude),\(longitude)&days=5&lang=ko"
+        guard let url = URL(string: urlString) else { return }
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            
+            do {
+                let fiveDaysdata = try JSONDecoder().decode(YesterdayWeather.self, from: data)
+                print("5daydata: \(fiveDaysdata)")
+                self.forecastdays = fiveDaysdata.forecast.forecastday
+                DispatchQueue.main.async {
+                    self.weatherChangeView.weeklyCollectionView.reloadData()
+                }
+            } catch {
+                print("디코딩 실패: \(error)")
+            }
+        }
+        task.resume()
+    }
 }
 
 extension WeatherChangeViewController: UICollectionViewDataSource {
@@ -50,7 +71,7 @@ extension WeatherChangeViewController: UICollectionViewDataSource {
         if collectionView.tag == 1 {
             return 7
         } else if collectionView.tag == 2 {
-            return 5
+            return forecastdays.count
         }
         return 0
     }
@@ -62,6 +83,8 @@ extension WeatherChangeViewController: UICollectionViewDataSource {
             return cell
         } else if collectionView.tag == 2 {
             guard let cell = weatherChangeView.weeklyCollectionView.dequeueReusableCell(withReuseIdentifier: WeeklyWeatherCollectionViewCell.identifier, for: indexPath) as? WeeklyWeatherCollectionViewCell else { return UICollectionViewCell() }
+            let forcastDay = forecastdays[indexPath.row]
+            cell.configureCell(with: forcastDay)
             return cell
         }
         return UICollectionViewCell()
