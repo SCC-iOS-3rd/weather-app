@@ -14,6 +14,7 @@
 		39D2B16A2BFB35CC00B56D66 /* YesterdayWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D2B1692BFB35CC00B56D66 /* YesterdayWeather.swift */; };
 		39D2B16C2BFB9BC000B56D66 /* WeatherDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D2B16B2BFB9BC000B56D66 /* WeatherDisplayViewController.swift */; };
 		39D2B16E2BFBA30500B56D66 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D2B16D2BFBA30500B56D66 /* MainViewController.swift */; };
+		4D00E43F2BFE304B00033427 /* WeeklyWeatherCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D00E43E2BFE304B00033427 /* WeeklyWeatherCollectionViewCell.swift */; };
 		4D56DC262BF21FE9008EB3E2 /* LocationManagementViewContorller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D56DC252BF21FE9008EB3E2 /* LocationManagementViewContorller.swift */; };
 		4D56DC282BF22045008EB3E2 /* LocationManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D56DC272BF22045008EB3E2 /* LocationManagementView.swift */; };
 		4D56DC2A2BF2FCF8008EB3E2 /* LocationManagementViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D56DC292BF2FCF8008EB3E2 /* LocationManagementViewTableViewCell.swift */; };
@@ -50,6 +51,11 @@
 		DE0C99922BF1DC690059C655 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = DE0C99912BF1DC690059C655 /* Base */; };
 		DE0C99972BF1DC6D0059C655 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE0C99962BF1DC6D0059C655 /* Assets.xcassets */; };
 		DE0C999A2BF1DC6D0059C655 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = DE0C99992BF1DC6D0059C655 /* Base */; };
+		DEC023D02BFC40D700904795 /* HourlyWeatherCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC023CF2BFC40D700904795 /* HourlyWeatherCollectionViewCell.swift */; };
+		DED585792BF3BFAB00D1D8FE /* (null) in Sources */ = {isa = PBXBuildFile; };
+		DED5857F2BF5FC7300D1D8FE /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = DED5857E2BF5FC7300D1D8FE /* DGCharts */; };
+		DED585832BF60D8500D1D8FE /* WeatherChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED585822BF60D8500D1D8FE /* WeatherChangeView.swift */; };
+		DED585852BF6814400D1D8FE /* WeatherChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED585842BF6814400D1D8FE /* WeatherChangeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +90,7 @@
 		39D2B1692BFB35CC00B56D66 /* YesterdayWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YesterdayWeather.swift; sourceTree = "<group>"; };
 		39D2B16B2BFB9BC000B56D66 /* WeatherDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDisplayViewController.swift; sourceTree = "<group>"; };
 		39D2B16D2BFBA30500B56D66 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		4D00E43E2BFE304B00033427 /* WeeklyWeatherCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyWeatherCollectionViewCell.swift; sourceTree = "<group>"; };
 		4D56DC252BF21FE9008EB3E2 /* LocationManagementViewContorller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagementViewContorller.swift; sourceTree = "<group>"; };
 		4D56DC272BF22045008EB3E2 /* LocationManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagementView.swift; sourceTree = "<group>"; };
 		4D56DC292BF2FCF8008EB3E2 /* LocationManagementViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagementViewTableViewCell.swift; sourceTree = "<group>"; };
@@ -120,6 +127,9 @@
 		DE0C99962BF1DC6D0059C655 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE0C99992BF1DC6D0059C655 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DE0C999B2BF1DC6D0059C655 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DEC023CF2BFC40D700904795 /* HourlyWeatherCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyWeatherCollectionViewCell.swift; sourceTree = "<group>"; };
+		DED585822BF60D8500D1D8FE /* WeatherChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherChangeView.swift; sourceTree = "<group>"; };
+		DED585842BF6814400D1D8FE /* WeatherChangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherChangeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA00E5C82BF20E4000B05D3F /* Alamofire in Frameworks */,
+				DED5857F2BF5FC7300D1D8FE /* DGCharts in Frameworks */,
 				CA00E5CB2BF20E4900B05D3F /* SnapKit in Frameworks */,
 				CA8D11262BFDE50D0031E5A1 /* Lottie in Frameworks */,
 			);
@@ -221,6 +232,7 @@
 				CA00E5CC2BF20E5700B05D3F /* LocationSearchViewController.swift */,
 				CA00E5D32BF2265700B05D3F /* NewLocationPreviewViewController.swift */,
 				4D56DC252BF21FE9008EB3E2 /* LocationManagementViewContorller.swift */,
+				DED585842BF6814400D1D8FE /* WeatherChangeViewController.swift */,
 				39B423342BF596CF000E5C75 /* NoHighlightButton.swift */,
 				4D6BFD2F2BFC9546002E805A /* LocationViewController.swift */,
 				B56CD5BC2BFEC4D600D75484 /* AlarmViewController.swift */,
@@ -238,6 +250,9 @@
 				398BAFA72BF38893006883F4 /* ModalTableViewCell.swift */,
 				CA00E5D12BF21F6200B05D3F /* LocationSearchResultTableViewCell.swift */,
 				4D56DC292BF2FCF8008EB3E2 /* LocationManagementViewTableViewCell.swift */,
+				DED585822BF60D8500D1D8FE /* WeatherChangeView.swift */,
+				DEC023CF2BFC40D700904795 /* HourlyWeatherCollectionViewCell.swift */,
+				4D00E43E2BFE304B00033427 /* WeeklyWeatherCollectionViewCell.swift */,
 				4D6AF87F2BFB58EF00F0BCE0 /* LocationView.swift */,
 				CA8D11272BFDE5550031E5A1 /* SplashScreen.swift */,
 				B56CD5BE2BFEC56A00D75484 /* AlarmCell.swift */,
@@ -296,6 +311,7 @@
 			packageProductDependencies = (
 				CA00E5C72BF20E4000B05D3F /* Alamofire */,
 				CA00E5CA2BF20E4900B05D3F /* SnapKit */,
+				DED5857E2BF5FC7300D1D8FE /* DGCharts */,
 				CA8D11252BFDE50D0031E5A1 /* Lottie */,
 			);
 			productName = BringYourUmbrella;
@@ -332,6 +348,7 @@
 			packageReferences = (
 				CA00E5C62BF20E4000B05D3F /* XCRemoteSwiftPackageReference "Alamofire" */,
 				CA00E5C92BF20E4900B05D3F /* XCRemoteSwiftPackageReference "SnapKit" */,
+				DED5857D2BF5FC7300D1D8FE /* XCRemoteSwiftPackageReference "Charts" */,
 				CA8D11242BFDE50D0031E5A1 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 			);
 			productRefGroup = DE0C99882BF1DC690059C655 /* Products */;
@@ -384,12 +401,16 @@
 				CA00E5D42BF2265700B05D3F /* NewLocationPreviewViewController.swift in Sources */,
 				4D56DC2A2BF2FCF8008EB3E2 /* LocationManagementViewTableViewCell.swift in Sources */,
 				4D56DC262BF21FE9008EB3E2 /* LocationManagementViewContorller.swift in Sources */,
+				DED585852BF6814400D1D8FE /* WeatherChangeViewController.swift in Sources */,
 				39B423352BF596CF000E5C75 /* NoHighlightButton.swift in Sources */,
 				DE0C998F2BF1DC690059C655 /* ViewController.swift in Sources */,
+				4D6AF8802BFB58EF00F0BCE0 /* LocationView.swift in Sources */,
+				DED585832BF60D8500D1D8FE /* WeatherChangeView.swift in Sources */,
 				4D6AF8802BFB58EF00F0BCE0 /* LocationView.swift in Sources */,
 				CA00E5DE2BF33A3E00B05D3F /* WeatherService.swift in Sources */,
 				398BAFA82BF38893006883F4 /* ModalTableViewCell.swift in Sources */,
 				39D2B16A2BFB35CC00B56D66 /* YesterdayWeather.swift in Sources */,
+				DEC023D02BFC40D700904795 /* HourlyWeatherCollectionViewCell.swift in Sources */,
 				DE0C998B2BF1DC690059C655 /* AppDelegate.swift in Sources */,
 				CA00E5CD2BF20E5700B05D3F /* LocationSearchViewController.swift in Sources */,
 				DE0C998D2BF1DC690059C655 /* SceneDelegate.swift in Sources */,
@@ -410,6 +431,7 @@
 				398BAFA22BF33797006883F4 /* BaseViewController.swift in Sources */,
 				4DEC6EFB2BF7301F00475B3D /* LocationService.swift in Sources */,
 				398BAFA42BF33823006883F4 /* ModalViewController.swift in Sources */,
+				4D00E43F2BFE304B00033427 /* WeeklyWeatherCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -636,7 +658,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -673,7 +695,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -749,6 +771,14 @@
 				minimumVersion = 4.4.3;
 			};
 		};
+		DED5857D2BF5FC7300D1D8FE /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ChartsOrg/Charts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -766,6 +796,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CA8D11242BFDE50D0031E5A1 /* XCRemoteSwiftPackageReference "lottie-spm" */;
 			productName = Lottie;
+		};
+		DED5857E2BF5FC7300D1D8FE /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DED5857D2BF5FC7300D1D8FE /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
 		};
 /* End XCSwiftPackageProductDependency section */
 

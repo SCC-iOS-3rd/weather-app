@@ -44,3 +44,36 @@ struct Sys: Decodable {
     let sunset: Int
 }
 
+
+struct ForecastWeatherResponse : Codable {
+    let list: [WeatherEntry]
+//    let mainInfo: MainInfo
+}
+
+struct WeatherEntry : Codable {
+    let main : MainInfo
+    let weather : [WeatherInfo]
+    let dt_txt : String
+}
+
+struct MainInfo : Codable {
+    let temp : Double
+//    let temp_min : Double
+//    let temp_max : Double
+//    let pressure : Double
+//    let humidity : Double
+    
+    enum CodingKeys : String, CodingKey {
+        case temp = "temp"
+//        case temp_min = "temp_min"
+//        case temp_max = "temp_max"
+//        case pressure = "pressure"
+//        case humidity = "humidity"
+    }
+}
+
+struct WeatherInfo : Codable {
+    let description : String
+    let icon : String
+}
+

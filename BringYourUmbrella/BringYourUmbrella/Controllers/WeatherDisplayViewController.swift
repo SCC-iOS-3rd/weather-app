@@ -12,7 +12,7 @@ import SnapKit
 class WeatherDisplayViewController: BaseViewController {
     
     //api어제날씨
-    var forecastday: Forecastday?
+    var forecastday: ForecastDay?
     //api
     let weatherService = WeatherService()
     var weather: Weather?
