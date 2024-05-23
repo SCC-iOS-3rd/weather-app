@@ -107,8 +107,8 @@ class NewLocationPreviewViewController: BaseViewController {
             self.temperatureLabel.text = "\(Int(self.main!.temp))º"
             self.highloweViewLabel.text = "최고 \(Int(self.main!.tempmax))º ~ 최저 \(Int(self.main!.tempmin))º"
         }
-        self.styleViewLabel.text = mainViewController.styleRecommend()
-        self.weatherDescriptionViewLabel.text = mainViewController.informationRecommend()
+        self.styleViewLabel.text = self.styleRecommend()
+        self.weatherDescriptionViewLabel.text = self.informationRecommend()
         self.sv.removeFromSuperview()
     }//func setWeatherUI()
     
@@ -258,14 +258,33 @@ class NewLocationPreviewViewController: BaseViewController {
         view.layer.cornerRadius = cornerRadius
     }
     
-    //추가 버튼 액션 함수
+    //추가 버튼 액션 함수: 알럿->즐찾페이지로 이동
     @objc func addNewLocationButtonAction() {
-        locationService.saveLocation(cityTitle: locationName, latitude: latitude, longitude: longitude)
-        
-        let mainPageVC = ViewController()
-        let navigationController = UINavigationController(rootViewController: mainPageVC)
-        UIApplication.shared.windows.first?.rootViewController = navigationController
-        UIApplication.shared.windows.first?.makeKeyAndVisible()
+        let alertController = UIAlertController(title: "알 림", message: "이 장소를 즐겨찾기에 추가하시겠습니까?", preferredStyle: .alert)
+
+        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+            self.locationService.saveLocation(cityTitle: self.locationName, latitude: self.latitude, longitude: self.longitude)
+            
+//            // LocationManagementViewContorller 인스턴스 생성
+            let locationManagementVC = LocationManagementViewContorller()
+//            let locationManageV = LocationManagementView()
+//            locationManagementViewContorller.setTableView()
+//            locationManageV.favoritesTableView.reloadData()
+//            
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+//                locationManageV.favoritesTableView.refreshControl?.endRefreshing()
+//            }
+            
+            self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+
+        self.present(alertController, animated: true, completion: nil)
     }
     
     //x버튼 액션 함수
@@ -293,5 +312,55 @@ extension NewLocationPreviewViewController {
         return todayDate
     }
 }
-
+//MARK: - 스타일추천,정보추천
+extension NewLocationPreviewViewController {
+    
+    func styleRecommend() -> String {
+            switch temperatureInCelsius {
+            case 27...:
+                return "민소매,반바지,원피스를 추천드려요"
+            case 23..<27:
+                return "반팔,얇은셔츠,면바지를 추천드려요"
+            case 20..<23:
+                return "얇은가디건,긴팔,청바지를 추천드려요"
+            case 17..<20:
+                return "가디건,얇은니트,청바지를 추천드려요"
+            case 12..<17:
+                return "자켓,가디건,야상을 추천드려요"
+            case 10..<12:
+                return "트렌치코트,간절기야상을 추천드려요"
+            case 6..<10:
+                return "울코트,가죽자켓을 추천드려요"
+            case ...5:
+                return "패딩,두꺼운코트,누빔옷을 추천드려요"
+            default:
+                return "No recommendation available"
+                
+            }
+        }
+    
+    func informationRecommend() -> String {
+            switch temperatureInCelsius {
+            case 27...:
+                return "실내 활동을 권장드려요 더위 조심하세요"
+            case 23..<27:
+                return "더운 날씨예요 수분을 충분히 섭취하세요"
+            case 20..<23:
+                return "나들이하기 좋은 날씨예요"
+            case 17..<20:
+                return "야외 활동이 잘 어울리는 날씨예요"
+            case 12..<17:
+                return "산책하기 좋은 날씨예요"
+            case 10..<12:
+                return "서늘한 날씨예요 감기조심하세요"
+            case 6..<10:
+                return "쌀쌀한 날씨예요 따뜻하게 입으시길 권장드려요"
+            case ...5:
+                return "추운날씨로 실내 활동을 권장드려요"
+            default:
+                return "추천드릴 정보가 없습니다"
+                
+            }
+        }
+}
 

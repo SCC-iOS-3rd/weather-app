@@ -87,7 +87,7 @@ private func setAddTarget() {
     locationManagerView.backButton.addTarget(self, action: #selector(tappedBackButton), for: .touchUpInside)
 }
 
-private func fetchLocations() {
+func fetchLocations() {
     let context = persistentContainer.viewContext
     // 코어데이터 생성 후 Entity의 이름으로 변경해줄것
     let fetchRequest: NSFetchRequest<Location> = Location.fetchRequest()
@@ -104,7 +104,7 @@ private func setRefreshControl() {
     locationManagerView.favoritesTableView.refreshControl?.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
 }
 
-private func setTableView() {
+func setTableView() {
     locationManagerView.favoritesTableView.dataSource = self
     locationManagerView.favoritesTableView.delegate = self
     locationManagerView.favoritesTableView.register(LocationManagementViewTableViewCell.self, forCellReuseIdentifier: LocationManagementViewTableViewCell.identifier)
