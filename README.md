@@ -70,3 +70,46 @@ Communication
 
 🎨 WireFrames <br>
 <img width="817" alt="Screenshot 2024-05-24 at 8 25 20 PM" src="https://github.com/SCC-iOS-3rd/weather-app/assets/131982744/c690c477-faa6-468a-b0a8-3d8d3ed1cb6d">
+
+
+
+
+
+
+
+### 👨‍👩‍👧‍👦 Developer
+
+*  **김준철/팀장** ([jungkweon93](https://github.com/jungkweon93))
+    - 알람추가 페이지 UI
+    - 알람추가 기능 (datepicker)
+    - 알람 관리 기능 (정렬, 편집)
+    - 알람 코어데이터 모델 생성
+
+*  **김민희/팀원** ([Hee48](https://github.com/Hee48))
+    - 메인 페이지 UI
+    - 온도 표시 변경기능
+    - 전일 날씨비교 차트 구현
+    - 스타일 추천 더미데이터 모델 생성
+
+*  **방기남/팀원** ([Bread-kn72](https://github.com/Bread-kn72))
+    - 즐겨찾기 페이지 UI
+    - 현재 위치 정보 뷰 구현
+    - 즐겨찾기 CoreData 모델 생성 CRUD 구현
+    - 즐겨찾기 관리 기능 (Long Press, Swipe to Delete)
+    - 저장된 위치 상세 보기 페이지 및 이동 로직 구현
+
+*  **조현민/팀원** ([Chynmn](https://github.com/Chynmn))
+    - 시간 / 주간 별 날씨 페이지 UI
+    - 시간대별 날씨 예보 정보 차트 구현
+    - 주간 날씨 정보 차트 구현
+    - API 모델 생성  (API 사이트 이름)
+
+*  **조희라/팀원** ([Heather-Cho](https://github.com/Heather-Cho))
+    - 위치 검색 페이지 UI
+    - 위치 검색 기능 구현
+    - 프리뷰 페이지 UI
+    - 프리뷰 페이지 기능 구현
+    - 지오코딩 모델 구현
+    - API 모델 생성 (openweathermap)
+    - 런치스크린 (Lottie)
+    - 위젯
