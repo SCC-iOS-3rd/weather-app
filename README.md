@@ -72,7 +72,59 @@ Communication
 
 
 
-
+### 🏛️ Project Structure
+---
+```
+WakeUpClock 
+├── Models
+│   ├── Geocoder
+│   ├── UserDefaults
+│   ├── CoreData
+│       ├── AlarmData+CoreDataClass
+│       ├── AlarmData+CoreDataProperties
+│       ├── LocationModel
+│       └── LocationService
+│   └── WeatherAPI
+│       ├── Weather
+│       ├── WeatherService
+│       └── YesterdayWeather
+├── Views
+│   ├── LaunchScreen
+│       ├── LaunchScreen
+│       ├── SplashScreen
+│       └── Animation0522
+│   ├── Cell
+│       ├── AlarmCell
+│       ├── ModalTableViewCell
+│       ├── LocationSearchResultTableViewCell
+│       ├── LocationManagementViewTableViewCell
+│       ├── HourlyWeatherCollectionViewCell
+│       └── WeeklyWeatherCollectionViewCell
+│   ├── LocationManagementView
+│   ├── WeatherChangeView
+│   └── LocationView
+├── Controllers
+│   ├── AddAlarmViewController
+│   ├── AlarmViewController
+│   ├── ViewController
+│   ├── MainViewController
+│   ├── WeatherDisplayViewController
+│   ├── ModalViewController
+│   ├── BaseViewController
+│   ├── LocationSearchViewController
+│   ├── NewLocationPreviewViewController
+│   ├── LocationManagementViewContorller
+│   ├── WeatherChangeViewController
+│   └── LocationViewController
+├── Widget
+│   ├── myWidgetBundle
+│   ├── myWidget
+│   ├── Assets
+│   └── Info
+├── Assets
+└── Info
+└ 
+```
 
 ### 👨‍👩‍👧‍👦 Developer
 
