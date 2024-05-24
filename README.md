@@ -3,13 +3,12 @@
 ### <p class="has-line-data" data-line-start="3" data-line-end="14">위치 기반으로 날씨를 알려주는 ios앱📢</p>
 
 ##  Tble of Contents<br>
-1. Description
-2. Stacks
-3. WireFrames
-4. Main
-5. Feature
-6. Project Structure
-7. Developer
+1. [Description](#-description)
+2. [Stacks](#%EF%B8%8F-stacks)
+3. [WireFrames](#-WireFrames)
+4. [Project Structure](#%EF%B8%8F-project-structure)
+5. [Developer](#-developer)
+
 <br>
 
 ## <p class="has-line-data" data-line-start="12" data-line-end="14">🌟 Description<br>
@@ -65,7 +64,7 @@ Communication
 
 <br>
 
-## 🎨 WireFrames <br>
+## WireFrames <br>
 <img width="817" alt="Screenshot 2024-05-24 at 8 25 20 PM" src="https://github.com/SCC-iOS-3rd/weather-app/assets/131982744/c690c477-faa6-468a-b0a8-3d8d3ed1cb6d">
 
 
