@@ -1,5 +1,3 @@
-### <p class="has-line-data" data-line-start="1" data-line-end="2"> :umbrella: weather-app<br></p>
-
 ### <p class="has-line-data" data-line-start="3" data-line-end="14">위치 기반으로 날씨를 알려주는 ios앱📢</p>
 
 ##  Tble of Contents<br>
@@ -126,17 +124,23 @@ WakeUpClock
 
 ## 👨‍👩‍👧‍👦 Developer
 
+<img src="https://github.com/SCC-iOS-3rd/weather-app/assets/161270633/3760cd7d-35c0-4162-871f-68b6c68dce5f" width="100">
+
 *  **김준철/팀장** ([Juncheoltree](https://github.com/Juncheoltree))
     - 알람추가 페이지 UI
     - 알람추가 기능 (datepicker)
     - 알람 관리 기능 (정렬, 편집)
     - 알람 코어데이터 모델 생성
+      
+<img src="https://github.com/SCC-iOS-3rd/weather-app/assets/161270633/7fa7f14c-caca-4ce5-b8b7-d7ba2bca4a55" width="100">
 
 *  **김민희/팀원** ([Hee48](https://github.com/Hee48))
     - 메인 페이지 UI
     - 온도 표시 변경기능
     - 전일 날씨비교 차트 구현
     - 스타일 추천 더미데이터 모델 생성
+      
+<img src="https://github.com/SCC-iOS-3rd/weather-app/assets/161270633/0138cefd-ca3e-488a-83d6-cb9274128af7" height="100">
 
 *  **방기남/팀원** ([Bread-kn72](https://github.com/Bread-kn72))
     - 즐겨찾기 페이지 UI
@@ -144,12 +148,16 @@ WakeUpClock
     - 즐겨찾기 CoreData 모델 생성 CRUD 구현
     - 즐겨찾기 관리 기능 (Long Press, Swipe to Delete)
     - 저장된 위치 상세 보기 페이지 및 이동 로직 구현
+  
+<img src="https://github.com/SCC-iOS-3rd/weather-app/assets/161270633/bcaa04fa-42da-4a5c-a4ca-a33fdd8ee497" height="100">
 
 *  **조현민/팀원** ([Chynmn](https://github.com/Chynmn))
     - 시간 / 주간 별 날씨 페이지 UI
     - 시간대별 날씨 예보 정보 차트 구현
     - 주간 날씨 정보 차트 구현
     - API 모델 생성  (API 사이트 이름)
+      
+<img src="https://github.com/SCC-iOS-3rd/weather-app/assets/161270633/5d9ae380-e853-49cf-bc59-b5166d002a01" height="100">
 
 *  **조희라/팀원** ([Heather-Cho](https://github.com/Heather-Cho))
     - 위치 검색 페이지 UI
