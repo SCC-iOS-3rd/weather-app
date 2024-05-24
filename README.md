@@ -1,8 +1,6 @@
-<p class="has-line-data" data-line-start="0" data-line-end="1"> weather-app</p>
+<p class="has-line-data" data-line-start="1" data-line-end="2"> :umbrella: weather-app<br></p>
 
-<p class="has-line-data" data-line-start="2" data-line-end="3"> :umbrella: weather-app<br></p>
-
-<p class="has-line-data" data-line-start="2" data-line-end="3">위치 기반으로 날씨를 알려주는 ios앱📢</p>
+<p class="has-line-data" data-line-start="3" data-line-end="14">위치 기반으로 날씨를 알려주는 ios앱📢</p>
 
 Tble of Contents<br>
 1. Description
