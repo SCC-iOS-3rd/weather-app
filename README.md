@@ -2,7 +2,7 @@
 
 ### <p class="has-line-data" data-line-start="3" data-line-end="14">위치 기반으로 날씨를 알려주는 ios앱📢</p>
 
-### Tble of Contents<br>
+##  Tble of Contents<br>
 1. Description
 2. Stacks
 3. WireFrames
@@ -12,7 +12,7 @@
 7. Developer
 <br>
 
-### <p class="has-line-data" data-line-start="12" data-line-end="14">🌟 Description<br>
+## <p class="has-line-data" data-line-start="12" data-line-end="14">🌟 Description<br>
 TEAM : 떡잎 6치원
 
 Period : 24.05.13 ~ 24.05.24
@@ -20,7 +20,7 @@ Period : 24.05.13 ~ 24.05.24
 위치기반 날씨를 알려주는 iOS 어플리케이션<br>
 
 
-### <p class="has-line-data" data-line-start="20" data-line-end="21">💡기능</p>
+## <p class="has-line-data" data-line-start="20" data-line-end="21">💡기능</p>
 
 원하는 알람 설정 및 삭제
 
@@ -39,7 +39,7 @@ Period : 24.05.13 ~ 24.05.24
 1주일간의 일자별 상세 날씨 <br>
 <br>
 
-### <p class="has-line-data" data-line-start="31" data-line-end="33">🛠️ Stacks<br>
+## <p class="has-line-data" data-line-start="31" data-line-end="33">🛠️ Stacks<br>
 Environment <br>
 <img src = https://camo.githubusercontent.com/d68a9ca7e7bd162a95193e369f2851d5e1548f11f6fce154642bc8291821e522/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f2d58636f64652d3134374546423f7374796c653d666c6174266c6f676f3d78636f6465266c6f676f436f6c6f723d7768697465>
 
@@ -65,14 +65,14 @@ Communication
 
 <br>
 
-### 🎨 WireFrames <br>
+## 🎨 WireFrames <br>
 <img width="817" alt="Screenshot 2024-05-24 at 8 25 20 PM" src="https://github.com/SCC-iOS-3rd/weather-app/assets/131982744/c690c477-faa6-468a-b0a8-3d8d3ed1cb6d">
 
 
 
 
 
-### 🏛️ Project Structure
+## 🏛️ Project Structure
 ---
 ```
 WakeUpClock 
@@ -126,7 +126,7 @@ WakeUpClock
 └ 
 ```
 
-### 👨‍👩‍👧‍👦 Developer
+## 👨‍👩‍👧‍👦 Developer
 
 *  **김준철/팀장** ([Juncheoltree](https://github.com/Juncheoltree))
     - 알람추가 페이지 UI
