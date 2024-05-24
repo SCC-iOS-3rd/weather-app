@@ -20,6 +20,7 @@
 		4D56DC2A2BF2FCF8008EB3E2 /* LocationManagementViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D56DC292BF2FCF8008EB3E2 /* LocationManagementViewTableViewCell.swift */; };
 		4D6AF8802BFB58EF00F0BCE0 /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6AF87F2BFB58EF00F0BCE0 /* LocationView.swift */; };
 		4D6BFD302BFC9546002E805A /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6BFD2F2BFC9546002E805A /* LocationViewController.swift */; };
+		4DE575CE2C00126E007D12E7 /* LocationModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4DE575CC2C00126E007D12E7 /* LocationModel.xcdatamodeld */; };
 		4DEC6EFB2BF7301F00475B3D /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DEC6EFA2BF7301F00475B3D /* LocationService.swift */; };
 		CA00E5C82BF20E4000B05D3F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = CA00E5C72BF20E4000B05D3F /* Alamofire */; };
 		CA00E5CB2BF20E4900B05D3F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CA00E5CA2BF20E4900B05D3F /* SnapKit */; };
@@ -47,7 +48,6 @@
 		DE106F652BFF96160039F22B /* AlarmData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE106F632BFF96160039F22B /* AlarmData+CoreDataClass.swift */; };
 		DE106F662BFF96160039F22B /* AlarmData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE106F642BFF96160039F22B /* AlarmData+CoreDataProperties.swift */; };
 		DE106F682BFF96460039F22B /* AlarmCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE106F672BFF96460039F22B /* AlarmCell.swift */; };
-		DE106F6B2BFF967A0039F22B /* LocationModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DE106F692BFF967A0039F22B /* LocationModel.xcdatamodeld */; };
 		DE106F6F2BFF96A60039F22B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE106F6C2BFF96A60039F22B /* ViewController.swift */; };
 		DE106F702BFF96A60039F22B /* AddAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE106F6D2BFF96A60039F22B /* AddAlarmViewController.swift */; };
 		DE106F712BFF96A60039F22B /* AlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE106F6E2BFF96A60039F22B /* AlarmViewController.swift */; };
@@ -96,6 +96,7 @@
 		4D56DC292BF2FCF8008EB3E2 /* LocationManagementViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagementViewTableViewCell.swift; sourceTree = "<group>"; };
 		4D6AF87F2BFB58EF00F0BCE0 /* LocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationView.swift; sourceTree = "<group>"; };
 		4D6BFD2F2BFC9546002E805A /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
+		4DE575CD2C00126E007D12E7 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		4DEC6EFA2BF7301F00475B3D /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		CA00E5CC2BF20E5700B05D3F /* LocationSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchViewController.swift; sourceTree = "<group>"; };
 		CA00E5D12BF21F6200B05D3F /* LocationSearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchResultTableViewCell.swift; sourceTree = "<group>"; };
@@ -123,7 +124,6 @@
 		DE106F632BFF96160039F22B /* AlarmData+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AlarmData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		DE106F642BFF96160039F22B /* AlarmData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AlarmData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		DE106F672BFF96460039F22B /* AlarmCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmCell.swift; sourceTree = "<group>"; };
-		DE106F6A2BFF967A0039F22B /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		DE106F6C2BFF96A60039F22B /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DE106F6D2BFF96A60039F22B /* AddAlarmViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAlarmViewController.swift; sourceTree = "<group>"; };
 		DE106F6E2BFF96A60039F22B /* AlarmViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmViewController.swift; sourceTree = "<group>"; };
@@ -267,7 +267,7 @@
 				CA61F82A2BF7543F004F7B47 /* Geocoder.swift */,
 				CA00E5E22BF33FEE00B05D3F /* WeatherAPI */,
 				4DEC6EFA2BF7301F00475B3D /* LocationService.swift */,
-				DE106F692BFF967A0039F22B /* LocationModel.xcdatamodeld */,
+				4DE575CC2C00126E007D12E7 /* LocationModel.xcdatamodeld */,
 				CA61F8922BFD8DAA004F7B47 /* UserDefaults.swift */,
 			);
 			path = Models;
@@ -412,8 +412,8 @@
 				398BAFA82BF38893006883F4 /* ModalTableViewCell.swift in Sources */,
 				39D2B16A2BFB35CC00B56D66 /* YesterdayWeather.swift in Sources */,
 				DEC023D02BFC40D700904795 /* HourlyWeatherCollectionViewCell.swift in Sources */,
-				DE106F6B2BFF967A0039F22B /* LocationModel.xcdatamodeld in Sources */,
 				DE0C998B2BF1DC690059C655 /* AppDelegate.swift in Sources */,
+				4DE575CE2C00126E007D12E7 /* LocationModel.xcdatamodeld in Sources */,
 				CA00E5CD2BF20E5700B05D3F /* LocationSearchViewController.swift in Sources */,
 				DE0C998D2BF1DC690059C655 /* SceneDelegate.swift in Sources */,
 				CA00E5DA2BF3352D00B05D3F /* Weather.swift in Sources */,
@@ -800,14 +800,14 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		DE106F692BFF967A0039F22B /* LocationModel.xcdatamodeld */ = {
+		4DE575CC2C00126E007D12E7 /* LocationModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				DE106F6A2BFF967A0039F22B /* Model.xcdatamodel */,
+				4DE575CD2C00126E007D12E7 /* Model.xcdatamodel */,
 			);
-			currentVersion = DE106F6A2BFF967A0039F22B /* Model.xcdatamodel */;
+			currentVersion = 4DE575CD2C00126E007D12E7 /* Model.xcdatamodel */;
 			name = LocationModel.xcdatamodeld;
-			path = "/Users/chynmn/GitHub/weather-app/BringYourUmbrella/BringYourUmbrella/Models/LocationModel.xcdatamodeld";
+			path = "/Users/kianm/Documents/Swift/프로젝트/weather-app/BringYourUmbrella/BringYourUmbrella/Models/LocationModel.xcdatamodeld";
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
