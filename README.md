@@ -17,9 +17,9 @@ TEAM : 떡잎 6치원
 
 Period : 24.05.13 ~ 24.05.24
 
-위치기반 날씨를 알려주는 iOS 어플리케이션
+위치기반 날씨를 알려주는 iOS 어플리케이션<br>
 
-<br>
+
 ### <p class="has-line-data" data-line-start="20" data-line-end="21">💡기능</p>
 
 원하는 알람 설정 및 삭제
