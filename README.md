@@ -73,7 +73,6 @@ Communication
 
 
 ## 🏛️ Project Structure
----
 ```
 WakeUpClock 
 ├── Models
