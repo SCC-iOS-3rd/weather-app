@@ -79,7 +79,7 @@ Communication
 
 ### 👨‍👩‍👧‍👦 Developer
 
-*  **김준철/팀장** ([jungkweon93](https://github.com/jungkweon93))
+*  **김준철/팀장** ([Juncheoltree](https://github.com/Juncheoltree))
     - 알람추가 페이지 UI
     - 알람추가 기능 (datepicker)
     - 알람 관리 기능 (정렬, 편집)
