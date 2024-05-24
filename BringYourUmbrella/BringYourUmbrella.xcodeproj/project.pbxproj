@@ -113,7 +113,7 @@
 		CA61F82A2BF7543F004F7B47 /* Geocoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geocoder.swift; sourceTree = "<group>"; };
 		CA61F8922BFD8DAA004F7B47 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		CA8D11272BFDE5550031E5A1 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
-		CA8D112B2BFE10B40031E5A1 /* Animation0522.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Animation0522.json; path = BringYourUmbrella/Animation0522.json; sourceTree = SOURCE_ROOT; };
+		CA8D112B2BFE10B40031E5A1 /* Animation0522.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Animation0522.json; path = BringYourUmbrella/Views/LaunchScreen/Animation0522.json; sourceTree = SOURCE_ROOT; };
 		DE0C99872BF1DC690059C655 /* BringYourUmbrella.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BringYourUmbrella.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE0C998A2BF1DC690059C655 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE0C998C2BF1DC690059C655 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -156,6 +156,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4DF8CC552C00AD5800BC2757 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				DE106F632BFF96160039F22B /* AlarmData+CoreDataClass.swift */,
+				DE106F642BFF96160039F22B /* AlarmData+CoreDataProperties.swift */,
+				4DE575CC2C00126E007D12E7 /* LocationModel.xcdatamodeld */,
+				4DEC6EFA2BF7301F00475B3D /* LocationService.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		4DF8CC562C00AD8B00BC2757 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				DE106F672BFF96460039F22B /* AlarmCell.swift */,
+				398BAFA72BF38893006883F4 /* ModalTableViewCell.swift */,
+				CA00E5D12BF21F6200B05D3F /* LocationSearchResultTableViewCell.swift */,
+				4D56DC292BF2FCF8008EB3E2 /* LocationManagementViewTableViewCell.swift */,
+				DEC023CF2BFC40D700904795 /* HourlyWeatherCollectionViewCell.swift */,
+				4D00E43E2BFE304B00033427 /* WeeklyWeatherCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		4DF8CC572C00ADBD00BC2757 /* LaunchScreen */ = {
+			isa = PBXGroup;
+			children = (
+				DE0C99982BF1DC6D0059C655 /* LaunchScreen.storyboard */,
+				CA8D11272BFDE5550031E5A1 /* SplashScreen.swift */,
+				CA8D112B2BFE10B40031E5A1 /* Animation0522.json */,
+			);
+			path = LaunchScreen;
+			sourceTree = "<group>";
+		};
 		CA00E5E22BF33FEE00B05D3F /* WeatherAPI */ = {
 			isa = PBXGroup;
 			children = (
@@ -210,6 +244,7 @@
 			children = (
 				DE0C998A2BF1DC690059C655 /* AppDelegate.swift */,
 				DE0C998C2BF1DC690059C655 /* SceneDelegate.swift */,
+				39B423342BF596CF000E5C75 /* NoHighlightButton.swift */,
 				DED5857C2BF3C12A00D1D8FE /* Models */,
 				DED5857B2BF3C12300D1D8FE /* Views */,
 				DED5857A2BF3C11A00D1D8FE /* Controllers */,
@@ -222,8 +257,6 @@
 		DED5857A2BF3C11A00D1D8FE /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				DE106F632BFF96160039F22B /* AlarmData+CoreDataClass.swift */,
-				DE106F642BFF96160039F22B /* AlarmData+CoreDataProperties.swift */,
 				DE106F6D2BFF96A60039F22B /* AddAlarmViewController.swift */,
 				DE106F6E2BFF96A60039F22B /* AlarmViewController.swift */,
 				DE106F6C2BFF96A60039F22B /* ViewController.swift */,
@@ -235,7 +268,6 @@
 				CA00E5D32BF2265700B05D3F /* NewLocationPreviewViewController.swift */,
 				4D56DC252BF21FE9008EB3E2 /* LocationManagementViewContorller.swift */,
 				DED585842BF6814400D1D8FE /* WeatherChangeViewController.swift */,
-				39B423342BF596CF000E5C75 /* NoHighlightButton.swift */,
 				4D6BFD2F2BFC9546002E805A /* LocationViewController.swift */,
 			);
 			path = Controllers;
@@ -244,19 +276,12 @@
 		DED5857B2BF3C12300D1D8FE /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4DF8CC572C00ADBD00BC2757 /* LaunchScreen */,
+				4DF8CC562C00AD8B00BC2757 /* Cell */,
 				DE0C99902BF1DC690059C655 /* Main.storyboard */,
-				DE0C99982BF1DC6D0059C655 /* LaunchScreen.storyboard */,
 				4D56DC272BF22045008EB3E2 /* LocationManagementView.swift */,
-				398BAFA72BF38893006883F4 /* ModalTableViewCell.swift */,
-				CA00E5D12BF21F6200B05D3F /* LocationSearchResultTableViewCell.swift */,
-				4D56DC292BF2FCF8008EB3E2 /* LocationManagementViewTableViewCell.swift */,
 				DED585822BF60D8500D1D8FE /* WeatherChangeView.swift */,
-				DEC023CF2BFC40D700904795 /* HourlyWeatherCollectionViewCell.swift */,
-				4D00E43E2BFE304B00033427 /* WeeklyWeatherCollectionViewCell.swift */,
 				4D6AF87F2BFB58EF00F0BCE0 /* LocationView.swift */,
-				CA8D11272BFDE5550031E5A1 /* SplashScreen.swift */,
-				DE106F672BFF96460039F22B /* AlarmCell.swift */,
-				CA8D112B2BFE10B40031E5A1 /* Animation0522.json */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -265,10 +290,9 @@
 			isa = PBXGroup;
 			children = (
 				CA61F82A2BF7543F004F7B47 /* Geocoder.swift */,
-				CA00E5E22BF33FEE00B05D3F /* WeatherAPI */,
-				4DEC6EFA2BF7301F00475B3D /* LocationService.swift */,
-				4DE575CC2C00126E007D12E7 /* LocationModel.xcdatamodeld */,
 				CA61F8922BFD8DAA004F7B47 /* UserDefaults.swift */,
+				4DF8CC552C00AD5800BC2757 /* CoreData */,
+				CA00E5E22BF33FEE00B05D3F /* WeatherAPI */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -806,8 +830,7 @@
 				4DE575CD2C00126E007D12E7 /* Model.xcdatamodel */,
 			);
 			currentVersion = 4DE575CD2C00126E007D12E7 /* Model.xcdatamodel */;
-			name = LocationModel.xcdatamodeld;
-			path = "/Users/kianm/Documents/Swift/프로젝트/weather-app/BringYourUmbrella/BringYourUmbrella/Models/LocationModel.xcdatamodeld";
+			path = LocationModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
